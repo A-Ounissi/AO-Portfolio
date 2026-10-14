@@ -11,7 +11,7 @@
       {
         "id": "pulpoid",
         "name": "Pulpoid",
-        "thumbnail": "",
+        "thumbnail": "content/projects/pulpoid.png",
         "description": {
           "en": "AI automation studio: agents, RAG and voice for businesses.",
           "fr": "Studio d'automatisation IA : agents, RAG et voix pour les entreprises."
@@ -61,7 +61,7 @@
       {
         "id": "real-estate-agent",
         "name": "Real Estate AI",
-        "thumbnail": "",
+        "thumbnail": "content/projects/real-estate.png",
         "description": {
           "en": "Agentic pipeline that qualifies property leads and calls homeowners.",
           "fr": "Pipeline IA qui qualifie des biens et appelle les propriétaires."
@@ -110,7 +110,7 @@
       {
         "id": "twenty-agents",
         "name": "Super Agent Team",
-        "thumbnail": "",
+        "thumbnail": "content/projects/agents.png",
         "description": {
           "en": "20 agents, 50+ tools: one request runs a whole multi-step workflow.",
           "fr": "20 agents, 50+ outils : une demande lance tout un workflow."
