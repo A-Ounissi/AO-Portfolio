@@ -4,7 +4,7 @@
 The admin writes it. Nothing else in the app holds text, links or images for the room.
 
 ```
-OIN-Portfolio/
+AO-Portfolio/
   index.html            the room (display only); room.js and room.css hold its code and styles
   style.css             shared by the room and the editor: palette, cursors, pixel scrollbars, flag menu
   icons.js              shared Pixelarticons (MIT) and the language flags

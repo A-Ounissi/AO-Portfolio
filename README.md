@@ -1,6 +1,6 @@
 # Ahmed Ounissi | Portfolio
 
-**Live:** https://a-ounissi.github.io/OIN-Portfolio/
+**Live:** https://a-ounissi.github.io/AO-Portfolio/
 
 A pixel-art globe instead of a plain resume page. I've lived and worked in a few countries, so the site follows that
 path: drag the globe, walk the character to a country, and that chapter of the story opens.
