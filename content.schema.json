@@ -192,154 +192,81 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "name",
-        "role"
+        "stops"
       ],
       "properties": {
         "placeholder": {
           "type": "boolean"
         },
-        "intro": {
-          "$ref": "#/$defs/text",
-          "description": "older files only: the editor moves it to ui.dialogue.<section>.intro"
-        },
-        "photo": {
-          "type": "string",
-          "description": "square image path/URL, empty = silhouette"
-        },
-        "name": {
-          "type": "string",
-          "maxLength": 32
-        },
-        "role": {
-          "$ref": "#/$defs/text",
-          "description": "at most 48 characters per language"
-        },
         "summary": {
-          "$ref": "#/$defs/text",
-          "description": "at most 240 characters per language"
+          "$ref": "#/$defs/text"
         },
-        "experience": {
+        "pdf": {
+          "$ref": "#/$defs/text"
+        },
+        "stops": {
           "type": "array",
-          "maxItems": 3,
+          "maxItems": 5,
           "items": {
             "type": "object",
-            "required": [
-              "company",
-              "role"
-            ],
             "additionalProperties": false,
+            "required": [
+              "id",
+              "name"
+            ],
             "properties": {
-              "company": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$"
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 40
+              },
+              "logo": {
+                "type": "string",
+                "description": "square logo path; empty or missing file = initials"
+              },
+              "initials": {
+                "type": "string",
+                "maxLength": 4
+              },
+              "accent": {
+                "type": "string",
+                "description": "CSS colour of the stamp ring and ticket stub"
+              },
+              "when": {
+                "$ref": "#/$defs/text"
+              },
+              "where": {
                 "type": "string"
               },
               "role": {
                 "$ref": "#/$defs/text"
               },
-              "start": {
-                "type": "string"
+              "story": {
+                "$ref": "#/$defs/text",
+                "description": "at most 220 characters per language"
               },
-              "end": {
-                "type": "string"
-              },
-              "bullets": {
+              "tags": {
                 "type": "array",
-                "maxItems": 2,
+                "maxItems": 4,
                 "items": {
-                  "$ref": "#/$defs/text",
-                  "description": "at most 90 characters per language"
+                  "type": "string",
+                  "maxLength": 16
                 }
-              }
-            }
-          }
-        },
-        "education": {
-          "type": "array",
-          "maxItems": 2,
-          "items": {
-            "type": "object",
-            "required": [
-              "school",
-              "degree"
-            ],
-            "additionalProperties": false,
-            "properties": {
-              "school": {
+              },
+              "url": {
                 "type": "string"
               },
-              "degree": {
+              "say": {
                 "$ref": "#/$defs/text"
-              },
-              "start": {
-                "type": "string"
-              },
-              "end": {
-                "type": "string"
               }
             }
           }
-        },
-        "skills": {
-          "type": "array",
-          "maxItems": 3,
-          "items": {
-            "type": "object",
-            "required": [
-              "items"
-            ],
-            "additionalProperties": false,
-            "properties": {
-              "group": {
-                "$ref": "#/$defs/text"
-              },
-              "items": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "languages": {
-          "description": "spoken languages as one line, e.g. Arabic (native), French; older files used a list",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/text"
-            },
-            {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          ]
-        },
-        "pdf": {
-          "$ref": "#/$defs/text",
-          "description": "path/URL of the CV PDF, one per language; empty hides the Download button"
-        },
-        "location": {
-          "$ref": "#/$defs/text",
-          "description": "city on the A4 CV contact line; at most 40 characters per language"
-        },
-        "website": {
-          "type": "string",
-          "description": "portfolio link on the A4 CV contact line"
-        },
-        "say": {
-          "$ref": "#/$defs/text",
-          "description": "the hero's line while the CV paper is hovered; at most 100 characters per language"
-        },
-        "expTitle": {
-          "$ref": "#/$defs/text",
-          "description": "title of the experience section (default: ui cv.experience)"
-        },
-        "eduTitle": {
-          "$ref": "#/$defs/text",
-          "description": "title of the education section (default: ui cv.education)"
         }
-      }
+      },
+      "description": "Canada chapter: a route of stops"
     },
     "contact": {
       "type": "object",
@@ -426,155 +353,81 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "name",
-        "role"
+        "stops"
       ],
       "properties": {
         "placeholder": {
           "type": "boolean"
         },
-        "intro": {
-          "$ref": "#/$defs/text",
-          "description": "older files only: the editor moves it to ui.dialogue.<section>.intro"
-        },
-        "photo": {
-          "type": "string",
-          "description": "square image path/URL, empty = silhouette"
-        },
-        "name": {
-          "type": "string",
-          "maxLength": 32
-        },
-        "role": {
-          "$ref": "#/$defs/text",
-          "description": "at most 48 characters per language"
-        },
         "summary": {
-          "$ref": "#/$defs/text",
-          "description": "at most 240 characters per language"
+          "$ref": "#/$defs/text"
         },
-        "experience": {
+        "pdf": {
+          "$ref": "#/$defs/text"
+        },
+        "stops": {
           "type": "array",
-          "maxItems": 3,
+          "maxItems": 5,
           "items": {
             "type": "object",
-            "required": [
-              "company",
-              "role"
-            ],
             "additionalProperties": false,
+            "required": [
+              "id",
+              "name"
+            ],
             "properties": {
-              "company": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$"
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 40
+              },
+              "logo": {
+                "type": "string",
+                "description": "square logo path; empty or missing file = initials"
+              },
+              "initials": {
+                "type": "string",
+                "maxLength": 4
+              },
+              "accent": {
+                "type": "string",
+                "description": "CSS colour of the stamp ring and ticket stub"
+              },
+              "when": {
+                "$ref": "#/$defs/text"
+              },
+              "where": {
                 "type": "string"
               },
               "role": {
                 "$ref": "#/$defs/text"
               },
-              "start": {
-                "type": "string"
+              "story": {
+                "$ref": "#/$defs/text",
+                "description": "at most 220 characters per language"
               },
-              "end": {
-                "type": "string"
-              },
-              "bullets": {
+              "tags": {
                 "type": "array",
-                "maxItems": 2,
+                "maxItems": 4,
                 "items": {
-                  "$ref": "#/$defs/text",
-                  "description": "at most 90 characters per language"
+                  "type": "string",
+                  "maxLength": 16
                 }
-              }
-            }
-          }
-        },
-        "education": {
-          "type": "array",
-          "maxItems": 2,
-          "items": {
-            "type": "object",
-            "required": [
-              "school",
-              "degree"
-            ],
-            "additionalProperties": false,
-            "properties": {
-              "school": {
+              },
+              "url": {
                 "type": "string"
               },
-              "degree": {
+              "say": {
                 "$ref": "#/$defs/text"
-              },
-              "start": {
-                "type": "string"
-              },
-              "end": {
-                "type": "string"
               }
             }
           }
-        },
-        "skills": {
-          "type": "array",
-          "maxItems": 3,
-          "items": {
-            "type": "object",
-            "required": [
-              "items"
-            ],
-            "additionalProperties": false,
-            "properties": {
-              "group": {
-                "$ref": "#/$defs/text"
-              },
-              "items": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "languages": {
-          "description": "spoken languages as one line, e.g. Arabic (native), French; older files used a list",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/text"
-            },
-            {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          ]
-        },
-        "pdf": {
-          "$ref": "#/$defs/text",
-          "description": "path/URL of the CV PDF, one per language; empty hides the Download button"
-        },
-        "location": {
-          "$ref": "#/$defs/text",
-          "description": "city on the A4 CV contact line; at most 40 characters per language"
-        },
-        "website": {
-          "type": "string",
-          "description": "portfolio link on the A4 CV contact line"
-        },
-        "say": {
-          "$ref": "#/$defs/text",
-          "description": "the hero's line while the CV paper is hovered; at most 100 characters per language"
-        },
-        "expTitle": {
-          "$ref": "#/$defs/text",
-          "description": "title of the experience section (default: ui cv.experience)"
-        },
-        "eduTitle": {
-          "$ref": "#/$defs/text",
-          "description": "title of the education section (default: ui cv.education)"
         }
       },
-      "description": "Malta chapter paper, same shape as cv"
+      "description": "Malta chapter: a route of stops"
     }
   },
   "$defs": {

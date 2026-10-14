@@ -66,7 +66,7 @@ the `<script>` line yourself.
 | `init()`   | no     | Runs once when the globe starts: room-wide listeners such as resize or keyboard.                                                  |
 
 Helpers declared at the top of a zone file share one global scope with the rest of the globe code, so give them names
-that belong to the zone (`drawDesk`, `fitCv`) to keep two files from clashing.
+that belong to the zone (`routePanel`) to keep two files from clashing.
 
 ## The hero's animation at a zone
 

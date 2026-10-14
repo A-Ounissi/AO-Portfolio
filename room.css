@@ -606,27 +606,6 @@ a {
   color: var(--amber);
 }
 
-/* stack of CV rows */
-.cv-rows {
-  display: grid;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-/* CV row: fixed label column, value beside it */
-.cv-rows div {
-  display: grid;
-  grid-template-columns: 7.5em 1fr;
-  gap: 10px;
-}
-
-/* CV labels in muted display font */
-.cv-rows dt,
-.cv-rows span:first-child {
-  font-family: var(--display);
-  color: var(--muted);
-}
-
 /* =================================================================================================
    RPG dialogue banner: slides up when the character reaches an object
    ================================================================================================= */
@@ -1608,276 +1587,6 @@ body.floating .banner-next {
   }
 }
 
-/* =================================================================================================
-   CV: a vertical paper on the bureau, the desk and trophies barely there behind it
-   ================================================================================================= */
-
-/* CV stage sized to the window, paper centred */
-.cvscene {
-  position: relative;
-  width: min(900px, 100%);
-  height: clamp(380px, calc(100dvh - 232px), 860px);
-  margin: 0 auto;
-  display: grid;
-  place-items: center;
-}
-
-/* faded desk picture behind the paper, edges fading out */
-.cvscene .desk {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  image-rendering: pixelated;
-  opacity: 0.26;
-  background: none;
-  box-shadow: none;
-  border-radius: 0;
-  animation: rise 0.3s steps(4) backwards;
-  -webkit-mask-image: radial-gradient(ellipse at 50% 55%, #000 45%, transparent 80%);
-  mask-image: radial-gradient(ellipse at 50% 55%, #000 45%, transparent 80%);
-}
-
-/* =================================================================================================
-   .cvdoc
-   ================================================================================================= */
-
-/* CV sheet of paper, A4-shaped, slightly tilted on the desk */
-.cvdoc {
-  position: relative;
-  height: 100%;
-  width: auto;
-  aspect-ratio: 1 / 1.41;
-  max-width: 92vw;
-  box-sizing: border-box;
-  padding: clamp(18px, 3.4vh, 34px) clamp(18px, 3vh, 32px) clamp(14px, 2.6vh, 26px);
-  font-size: clamp(14px, 2.1vh, 19px);
-  container-type: inline-size;
-  background: #f4ead8;
-  color: #2a1d14;
-  transform: rotate(-1.5deg);
-  box-shadow:
-    inset 0 0 0 2px #d8c7a6,
-    0 0 0 3px #120e1a,
-    8px 10px 0 3px rgba(0, 0, 0, 0.45),
-    0 0 70px rgba(255, 233, 184, 0.28);
-  animation: pop 0.55s 0.2s backwards;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8em;
-  overflow: hidden;
-}
-
-/* folded dog-ear in the paper's bottom-right corner */
-.cvdoc::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  border: 9px solid;
-  border-color: #d8c7a6 #1c1530 #1c1530 #d8c7a6;
-}
-
-/* CV header row: photo beside name and role */
-.cvtop {
-  display: flex;
-  gap: 1em;
-  align-items: center;
-}
-
-/* photo frame on the CV */
-.cvphoto {
-  flex: 0 0 26cqw;
-  height: 31cqw;
-  background: #c9b896;
-  box-shadow: inset 0 0 0 2px #2a1d14;
-  position: relative;
-  overflow: hidden;
-}
-
-/* placeholder head of the empty photo */
-.cvphoto::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 18%;
-  width: 40%;
-  height: 34%;
-  margin-left: -20%;
-  background: #9c8a68;
-}
-
-/* placeholder shoulders of the empty photo */
-.cvphoto::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 72%;
-  height: 30%;
-  margin-left: -36%;
-  background: #9c8a68;
-}
-
-/* name on the CV in big display type */
-.cvname {
-  font: 600 2em var(--display);
-  margin: 0;
-}
-
-/* job title under the name, small caps in brown */
-.cvrole {
-  font: 0.9em var(--display);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #8a5a3c;
-  margin: 2px 0 0;
-}
-
-/* CV section heading, uppercase with a rule beneath */
-.cvsec h4 {
-  font: 600 0.9em var(--display);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin: 0 0 5px;
-  padding-bottom: 3px;
-  border-bottom: 2px solid #2a1d14;
-}
-
-/* grey bars standing in for lines of text */
-.cvsec i {
-  display: block;
-  height: 0.4em;
-  margin: 0 0 0.5em;
-  background: #cdbd9c;
-}
-
-/* every third placeholder line is shorter */
-.cvsec i:nth-child(3n) {
-  width: 72%;
-}
-
-/* next placeholder line is nearly full width */
-.cvsec i:nth-child(3n + 1) {
-  width: 90%;
-}
-
-/* sample stamp pinned to the bottom of the paper */
-.cvdoc .sample {
-  align-self: flex-start;
-  margin: auto 0 0;
-}
-
-/* CV paper is clickable and springs when it moves */
-.cvdoc {
-  cursor: var(--hand);
-  outline: none;
-  transition:
-    transform 0.35s cubic-bezier(0.3, 1.4, 0.5, 1),
-    box-shadow 0.25s;
-  z-index: 1;
-}
-
-/* hovered or focused CV straightens, lifts and glows */
-.cvdoc:hover,
-.cvdoc:focus-visible {
-  transform: translateY(-6px) rotate(0deg) scale(1.05);
-  box-shadow:
-    inset 0 0 0 2px #d8c7a6,
-    0 0 0 3px #120e1a,
-    12px 16px 0 3px rgba(0, 0, 0, 0.5),
-    0 0 90px rgba(255, 233, 184, 0.4);
-}
-
-/* keyboard focus gives the CV an amber outline */
-.cvdoc:focus-visible {
-  box-shadow:
-    inset 0 0 0 2px #d8c7a6,
-    0 0 0 3px var(--amber),
-    12px 16px 0 3px rgba(0, 0, 0, 0.5),
-    0 0 90px rgba(255, 233, 184, 0.4);
-}
-
-/* desk fades almost out while the CV is hovered */
-.cvscene:has(.cvdoc:hover, .cvdoc:focus-visible) .desk {
-  opacity: 0.12;
-  transition: opacity 0.25s;
-}
-
-/* zoomed-in CV with a deeper shadow */
-.cvdoc.zoom {
-  cursor: var(--hand);
-  box-shadow:
-    inset 0 0 0 2px #d8c7a6,
-    0 0 0 3px #120e1a,
-    14px 18px 0 3px rgba(0, 0, 0, 0.55),
-    0 0 140px rgba(255, 233, 184, 0.35);
-}
-
-/* darker overlay above the room while the CV is zoomed */
-body.cvzoom .overlay.floating {
-  z-index: 7;
-  background: rgba(8, 6, 14, 0.9);
-  transition: background 0.25s;
-}
-
-/* dialog title bar hidden while the CV is zoomed */
-body.cvzoom .dialog-head {
-  visibility: hidden;
-}
-
-/* desk hidden completely while the CV is zoomed */
-body.cvzoom .cvscene .desk {
-  opacity: 0;
-}
-
-/* =================================================================================================
-   .cvlens
-   ================================================================================================= */
-
-/* reading strip over the CV paper: a gold-framed band that follows the mouse and shows the lines enlarged */
-.cvlens {
-  position: fixed;
-  z-index: 30;
-  overflow: hidden;
-  pointer-events: none;
-  background: #f4ead8;
-  box-shadow:
-    0 0 0 3px var(--amber),
-    0 0 0 6px #120e1a,
-    0 14px 30px rgba(0, 0, 0, 0.55);
-  opacity: 0;
-  transition: opacity 0.15s;
-}
-
-/* strip shown while the mouse is over the paper */
-.cvlens.on {
-  opacity: 1;
-}
-
-/* the enlarged copy of the paper: flat, still and unframed, scaled from its top-left corner */
-.cvlens .cvdoc {
-  position: absolute;
-  left: 0;
-  top: 0;
-  max-width: none;
-  aspect-ratio: auto;
-  transform-origin: 0 0;
-  animation: none;
-  transition: none;
-  box-shadow: none;
-}
-
-/* reduced motion: CV and desk stay still */
-@media (prefers-reduced-motion: reduce) {
-  .cvdoc,
-  .cvscene .desk {
-    animation: none;
-    transition: none;
-  }
-}
-
 /* language flag in the corner (next to the title on phones); the menu itself is styled in style.css */
 .lang {
   pointer-events: auto;
@@ -2043,154 +1752,11 @@ body.cvzoom .cvscene .desk {
   object-fit: cover;
 }
 
-/* real CV photo fills the photo frame */
-.cvphoto img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* placeholder silhouette hidden once a photo is set */
-.cvphoto.has::before,
-.cvphoto.has::after {
-  display: none;
-}
-
-/* CV summary paragraph */
-.cvsum {
-  margin: 0;
-  font-size: 0.8em;
-  line-height: 1.4;
-}
-
-/* CV section text, small and tight */
-.cvsec {
-  font-size: 0.8em;
-  line-height: 1.35;
-}
-
-/* smaller CV section headings */
-.cvsec h4 {
-  font-size: 0.9em;
-}
-
-/* one CV entry, such as a job or a degree */
-.cvent {
-  margin: 0 0 0.55em;
-}
-
-/* entry title in the display font */
-.cvent b {
-  font-family: var(--display);
-  font-weight: 600;
-}
-
-/* entry dates floated to the right in brown */
-.cvent .cvwhen {
-  float: right;
-  font: 0.85em var(--display);
-  color: #8a5a3c;
-}
-
-/* bullet points under a CV entry */
-.cvent ul {
-  margin: 0.15em 0 0;
-  padding-left: 1.1em;
-}
-
-/* one skill line on the CV */
-.cvskill {
-  margin: 0 0 0.3em;
-}
-
-/* skill group name in the display font */
-.cvskill b {
-  font-family: var(--display);
-  font-weight: 600;
-}
-
-/* download CV button at the bottom of the paper */
-.cvdl {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  align-self: flex-start;
-  margin-top: auto;
-  font: 600 0.8em var(--display);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: #f4ead8;
-  background: #2a1d14;
-  padding: 0.4em 0.9em;
-  box-shadow:
-    0 0 0 2px #120e1a,
-    3px 3px 0 2px rgba(0, 0, 0, 0.35);
-  cursor: var(--hand);
-  transition:
-    transform 0.12s steps(2),
-    box-shadow 0.12s steps(2);
-}
-
-/* download button on hover or focus: turns amber, lifts off the paper, and its arrow drops like a download */
-.cvdl:hover,
-.cvdl:focus-visible {
-  background: var(--amber);
-  color: #2a1d14;
-  transform: translate(-2px, -2px);
-  box-shadow:
-    0 0 0 2px #120e1a,
-    5px 5px 0 2px rgba(0, 0, 0, 0.45);
-  outline: none;
-}
-
-/* the download arrow bobs down while the button is hovered */
-.cvdl:hover .pxi,
-.cvdl:focus-visible .pxi {
-  animation: dlbob 0.6s steps(2) infinite;
-}
-
-/* pressed download button sinks back onto the paper */
-.cvdl:active {
-  transform: translate(1px, 1px);
-  box-shadow: 0 0 0 2px #120e1a;
-}
-
 /* arrow bob: two pixel-steps down and back */
 @keyframes dlbob {
   50% {
     transform: translateY(3px);
   }
-}
-
-/* reduced motion: the button only changes colour */
-@media (prefers-reduced-motion: reduce) {
-  .cvdl,
-  .cvdl .pxi {
-    animation: none !important;
-    transform: none !important;
-  }
-}
-
-/* sample stamp sits flush in the CV footer */
-.cvfoot .sample {
-  margin: 0;
-}
-
-/* CV footer row: download button and sample stamp */
-.cvfoot {
-  margin-top: auto;
-  display: flex;
-  gap: 0.8em;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-/* download button keeps its place inside the footer */
-.cvfoot .cvdl {
-  margin-top: 0;
 }
 
 /* =================================================================================================
@@ -2907,4 +2473,291 @@ body.pfocus .pdesc {
   max-width: 46ch;
   text-align: center;
   line-height: 1.5;
+}
+
+/* =================================================================================================
+   Route: Canada and Malta as a trip of stops, each a paper ticket with a passport stamp on top
+   ================================================================================================= */
+
+/* the route panels run as wide as the projects screen */
+.dialog.wide[data-panel="cv"],
+.dialog.wide[data-panel="malta"] {
+  width: min(1180px, 92%);
+}
+
+.route {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* intro line and the CV button on one row */
+.route-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.route-intro {
+  margin: 0 !important;
+  max-width: 72ch;
+  color: var(--ink);
+  line-height: 1.5;
+  text-shadow: 2px 2px 0 #120e1a;
+}
+
+/* gold pixel button, same family as the panel's Back button */
+.route-cv {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  font: 600 0.85rem var(--display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #120e1a;
+  background: var(--gold);
+  box-shadow:
+    0 0 0 3px #120e1a,
+    4px 4px 0 3px rgba(0, 0, 0, 0.45);
+  cursor: var(--hand);
+  transition: transform 0.15s, background 0.15s;
+}
+
+.route-cv:hover,
+.route-cv:focus-visible {
+  background: var(--gold-light);
+  transform: translate(-2px, -2px);
+  outline: none;
+}
+
+/* the row of stops, with the dashed flight path behind the stamps */
+.route-stops {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  list-style: none;
+  margin: 0;
+  padding: 46px 6px 12px;
+}
+
+.route-stops::before {
+  content: "";
+  position: absolute;
+  left: 40px;
+  right: 40px;
+  top: 46px;
+  border-top: 3px dashed rgba(255, 233, 184, 0.55);
+}
+
+/* one stop: the stamp over its ticket, tilted a little, popping in one after another */
+.stop {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 220px;
+  max-width: 300px;
+  scroll-snap-align: center;
+  outline: none;
+  transform: rotate(var(--tilt, -1deg));
+  transition: transform 0.25s cubic-bezier(0.3, 1.4, 0.5, 1);
+  animation: pop 0.5s backwards;
+  animation-delay: calc(0.12s + var(--i) * 0.12s);
+}
+
+.stop:nth-child(even) {
+  --tilt: 1deg;
+}
+
+.stop:nth-child(odd) {
+  --tilt: -1deg;
+}
+
+.stop:hover,
+.stop:focus-visible {
+  transform: translateY(-6px) rotate(0deg);
+  z-index: 2;
+}
+
+/* passport stamp: a round badge in the stop's colour, half over the ticket's top edge */
+.stamp {
+  position: absolute;
+  z-index: 1;
+  top: -30px;
+  left: 18px;
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fffaf0;
+  box-shadow:
+    0 0 0 3px var(--accent),
+    0 0 0 6px #fffaf0,
+    0 0 0 8px #120e1a,
+    4px 5px 0 8px rgba(0, 0, 0, 0.4);
+  transform: rotate(-8deg);
+  transition: transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.stop:hover .stamp,
+.stop:focus-visible .stamp {
+  transform: rotate(4deg) scale(1.08);
+}
+
+.stamp img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+}
+
+.stamp-ini {
+  font: 600 1.35rem var(--display);
+  color: var(--accent);
+  letter-spacing: 0.02em;
+  filter: brightness(0.75);
+}
+
+.stamp.has-logo .stamp-ini {
+  display: none;
+}
+
+/* the ticket: cream paper with a coloured band on the left like a boarding pass stub */
+.ticket {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 52px 16px 14px 20px;
+  background:
+    linear-gradient(90deg, var(--accent) 0 6px, transparent 6px),
+    #f4ead8;
+  color: #2a1d14;
+  box-shadow:
+    inset 0 0 0 2px #d8c7a6,
+    0 0 0 3px #120e1a,
+    6px 8px 0 3px rgba(0, 0, 0, 0.45);
+}
+
+.stop:hover .ticket,
+.stop:focus-visible .ticket {
+  box-shadow:
+    inset 0 0 0 2px #d8c7a6,
+    0 0 0 3px #120e1a,
+    6px 12px 0 3px rgba(0, 0, 0, 0.45),
+    0 0 40px rgba(255, 233, 184, 0.3);
+}
+
+.ticket-when {
+  margin: 0 !important;
+  font: 600 0.72rem var(--display);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8a6a4a;
+}
+
+.ticket-name {
+  margin: 0;
+  font: 600 1.25rem/1.15 var(--display);
+  color: #1a120c;
+}
+
+.ticket-role {
+  margin: 0 !important;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #6b3f1d;
+}
+
+.ticket-story {
+  margin: 2px 0 0 !important;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: #3a2a1e;
+}
+
+.ticket-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+.ticket-tags span {
+  font: 600 0.7rem var(--display);
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+  background: #2a1d14;
+  color: #f4ead8;
+}
+
+/* website link at the foot of the ticket, like a perforated stub */
+.ticket-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 2px dashed #c9b48e;
+  font: 600 0.8rem var(--display);
+  color: #6b3f1d;
+  text-decoration: none;
+  cursor: var(--hand);
+}
+
+.ticket-link:hover,
+.ticket-link:focus-visible {
+  color: #120e1a;
+  text-decoration: underline;
+  outline: none;
+}
+
+/* shorter screens: tighter tickets so the row fits above the banner */
+@media (max-height: 820px) {
+  .ticket {
+    padding-top: 48px;
+    gap: 4px;
+  }
+
+  .ticket-story {
+    font-size: 0.84rem;
+    line-height: 1.38;
+  }
+}
+
+/* phones: the tickets scroll sideways, the intro and button stack */
+@media (max-width: 700px) {
+  .dialog.wide[data-panel="cv"],
+  .dialog.wide[data-panel="malta"] {
+    width: 100%;
+  }
+
+  .route-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .route-stops {
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+  }
+
+  .stop {
+    min-width: 76%;
+  }
+}
+
+/* reduced motion: tickets and stamps stay still */
+@media (prefers-reduced-motion: reduce) {
+  .stop,
+  .stamp {
+    animation: none;
+    transition: none;
+  }
 }

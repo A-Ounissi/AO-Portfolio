@@ -156,117 +156,133 @@
   },
   "cv": {
     "placeholder": false,
-    "photo": "assets/picture.png",
-    "name": "Ahmed Ounissi",
-    "role": {
-      "en": "Chapter 2 · Canada",
-      "fr": "Chapitre 2 · Canada"
-    },
     "summary": {
-      "en": "Canada is where coding became my job. Algonquin College in Ottawa, then two internships back to back: a full website for an industrial company in Quebec, then features at SurveyMonkey. Then almost a year of IT support at TD.",
-      "fr": "Le Canada, c'est là où coder est devenu mon métier. Le Collège Algonquin à Ottawa, puis deux stages à la suite : un site complet pour une entreprise industrielle au Québec, puis des fonctionnalités chez SurveyMonkey. Ensuite, presque un an de support informatique chez TD."
+      "en": "Canada is where coding turned into a job. A college diploma in Ottawa, two internships back to back, then almost a year inside one of the country's biggest banks.",
+      "fr": "Le Canada, c'est là où coder est devenu un métier. Un diplôme collégial à Ottawa, deux stages à la suite, puis presque un an dans une des plus grandes banques du pays."
     },
-    "experience": [
+    "pdf": "content/cv/Ahmed_Ounissi_Resume.pdf",
+    "stops": [
       {
-        "company": "TD, Ottawa",
-        "role": {
-          "en": "IT Support Specialist",
-          "fr": "Spécialiste support informatique"
+        "id": "algonquin",
+        "name": "Algonquin College",
+        "logo": "assets/logos/algonquin.png",
+        "initials": "AC",
+        "accent": "#3fb6a8",
+        "when": {
+          "en": "Jan 2022 - Apr 2023",
+          "fr": "janv. 2022 - avr. 2023"
         },
-        "start": "Nov 2023",
-        "end": "Aug 2024",
-        "bullets": [
-          {
-            "en": "Kept a bank running: hardware, software, network and account access issues.",
-            "fr": "Faire tourner une banque : matériel, logiciel, réseau et accès aux comptes."
-          },
-          {
-            "en": "Tracked down login and config problems, escalated the big ones by the security book.",
-            "fr": "Résoudre les problèmes de connexion et de config, escalader le reste selon la sécurité."
-          }
-        ]
+        "where": "Ottawa, ON",
+        "role": {
+          "en": "Diploma, Computer Programming",
+          "fr": "Diplôme, programmation informatique"
+        },
+        "story": {
+          "en": "Where it got serious. Java, databases and web development, four semesters back to back.",
+          "fr": "Là où c'est devenu sérieux. Java, bases de données et développement web, quatre sessions d'affilée."
+        },
+        "tags": [
+          "Java",
+          "SQL",
+          "Web"
+        ],
+        "url": "https://www.algonquincollege.com",
+        "say": {
+          "en": "Algonquin. Sixteen months, no summer break.",
+          "fr": "Algonquin. Seize mois, sans pause estivale."
+        }
       },
       {
-        "company": "SurveyMonkey, Ottawa",
-        "role": {
-          "en": "Software Engineer Intern",
-          "fr": "Stagiaire ingénieur logiciel"
+        "id": "pont-roulant",
+        "name": "Pont Roulant Servi-Tech",
+        "logo": "assets/logos/pont-roulant.png",
+        "initials": "PR",
+        "accent": "#ff8a3d",
+        "when": {
+          "en": "Jan - Apr 2023",
+          "fr": "janv. - avr. 2023"
         },
-        "start": "Apr 2023",
-        "end": "Jul 2023",
-        "bullets": [
-          {
-            "en": "Shipped features and data-processing scripts in Python and JavaScript.",
-            "fr": "Livré des fonctionnalités et des scripts de données en Python et JavaScript."
-          },
-          {
-            "en": "Worked on REST APIs and backend services in an Agile team, on Git.",
-            "fr": "Travaillé sur des API REST et des services backend, en équipe Agile, sur Git."
-          }
-        ]
-      },
-      {
-        "company": "Pont Roulant Servi-Tech, Blainville QC",
+        "where": "Blainville, QC",
         "role": {
           "en": "Full-Stack Web Developer Intern",
           "fr": "Stagiaire développeur web full-stack"
         },
-        "start": "Jan 2023",
-        "end": "Apr 2023",
-        "bullets": [
-          {
-            "en": "Built the company's whole website, React and Node.js front to back.",
-            "fr": "Construit tout le site de l'entreprise, en React et Node.js de A à Z."
-          }
-        ]
-      }
-    ],
-    "education": [
-      {
-        "school": "Algonquin College",
-        "degree": {
-          "en": "Diploma, Computer Programming",
-          "fr": "Diplôme, programmation informatique"
+        "story": {
+          "en": "They build and service overhead cranes, and they needed a website. I turned what they asked for into the whole site, React front end, Node.js and SQL behind it.",
+          "fr": "Ils fabriquent et entretiennent des ponts roulants, et il leur fallait un site. J'ai transformé leurs besoins en site complet : React devant, Node.js et SQL derrière."
         },
-        "start": "Jan 2022",
-        "end": "Apr 2023"
-      }
-    ],
-    "skills": [
-      {
-        "group": "Code",
-        "items": [
-          "Python",
-          "JavaScript",
-          "SQL",
+        "tags": [
           "React",
           "Node.js",
-          "Git"
-        ]
+          "SQL"
+        ],
+        "url": "https://service-tech.ca/",
+        "say": {
+          "en": "My first real client. A crane company, in French.",
+          "fr": "Mon premier vrai client. Une entreprise de ponts roulants, en français."
+        }
       },
       {
-        "group": {
-          "en": "Spoken",
-          "fr": "Langues"
+        "id": "surveymonkey",
+        "name": "SurveyMonkey",
+        "logo": "assets/logos/surveymonkey.svg",
+        "initials": "SM",
+        "accent": "#00bf6f",
+        "when": {
+          "en": "Apr - Jul 2023",
+          "fr": "avr. - juil. 2023"
         },
-        "items": [
-          "English",
-          "French",
-          "Spanish",
-          "Arabic"
-        ]
+        "where": "Ottawa, ON",
+        "role": {
+          "en": "Software Engineer Intern",
+          "fr": "Stagiaire ingénieur logiciel"
+        },
+        "story": {
+          "en": "Product code at real scale. I built features and data-processing scripts in Python and JavaScript, worked on REST APIs and backend services, in an Agile team on Git.",
+          "fr": "Du code produit à vraie échelle. Fonctionnalités et scripts de données en Python et JavaScript, API REST et services backend, en équipe Agile sur Git."
+        },
+        "tags": [
+          "Python",
+          "JavaScript",
+          "REST"
+        ],
+        "url": "https://www.surveymonkey.com",
+        "say": {
+          "en": "SurveyMonkey. Code that real people actually click on.",
+          "fr": "SurveyMonkey. Du code sur lequel de vraies personnes cliquent."
+        }
+      },
+      {
+        "id": "td",
+        "name": "TD Bank",
+        "logo": "assets/logos/td.png",
+        "initials": "TD",
+        "accent": "#3fa34d",
+        "when": {
+          "en": "Nov 2023 - Aug 2024",
+          "fr": "nov. 2023 - août 2024"
+        },
+        "where": "Ottawa, ON",
+        "role": {
+          "en": "IT Support Specialist",
+          "fr": "Spécialiste support informatique"
+        },
+        "story": {
+          "en": "Keeping a bank's people working: hardware, software, network and account access. I tracked down login and config problems and escalated the big ones by the security book.",
+          "fr": "Faire tourner les équipes d'une banque : matériel, logiciel, réseau et accès. Je réglais les problèmes de connexion et de config, et j'escaladais le reste selon les règles de sécurité."
+        },
+        "tags": [
+          "IT support",
+          "Security",
+          "Networking"
+        ],
+        "url": "https://www.td.com",
+        "say": {
+          "en": "TD. You learn fast when people can't log in to a bank.",
+          "fr": "TD. On apprend vite quand les gens n'arrivent plus à se connecter à une banque."
+        }
       }
-    ],
-    "languages": [],
-    "pdf": "content/cv/Ahmed_Ounissi_Resume.pdf",
-    "expTitle": {
-      "en": "Work",
-      "fr": "Expérience"
-    },
-    "say": {
-      "en": "Two internships and a bank job, all in under two years.",
-      "fr": "Deux stages et un job en banque, en moins de deux ans."
-    }
+    ]
   },
   "contact": {
     "placeholder": false,
@@ -333,8 +349,8 @@
         "section": "global",
         "where": "Dialogue banner when the hero reaches Malta.",
         "text": {
-          "en": "Malta. The engineering degree,\nand a capstone that runs AI pipelines.",
-          "fr": "Malte. Le diplôme d'ingénieur,\net un projet qui fait tourner des pipelines IA."
+          "en": "Malta. The engineering degree,\nand the capstone.",
+          "fr": "Malte. Le diplôme d'ingénieur,\net le projet de fin d'études."
         }
       }
     },
@@ -677,8 +693,8 @@
         "section": "cv",
         "where": "Read aloud for the CV paper.",
         "text": {
-          "en": "Chapter paper. Press Enter to zoom.",
-          "fr": "Page du chapitre. Appuie sur Entrée pour zoomer."
+          "en": "Chapter route. Hover a stop to hear about it.",
+          "fr": "Itinéraire du chapitre. Survole une étape pour en savoir plus."
         }
       },
       "sr.photo": {
@@ -725,81 +741,72 @@
   },
   "malta": {
     "placeholder": false,
-    "photo": "assets/picture.png",
-    "name": "Ahmed Ounissi",
-    "role": {
-      "en": "Chapter 3 · Malta",
-      "fr": "Chapitre 3 · Malte"
-    },
     "summary": {
-      "en": "College taught me to build. AUM is where I learned the engineering behind it: a B.S. in Software Engineering, wrapping up in January 2027 with a capstone that runs AI document pipelines end to end.",
-      "fr": "Le collège m'a appris à construire. L'AUM, c'est là où j'ai appris l'ingénierie derrière : une licence en génie logiciel, qui se termine en janvier 2027 avec un projet qui fait tourner des pipelines IA de documents de bout en bout."
+      "en": "College taught me to build. AUM is where I learned the engineering behind it, and it ends with a capstone that runs AI pipelines on its own.",
+      "fr": "Le collège m'a appris à construire. L'AUM, c'est là où j'ai appris l'ingénierie derrière, et ça se termine par un projet qui fait tourner des pipelines IA tout seul."
     },
-    "expTitle": {
-      "en": "Capstone",
-      "fr": "Projet de fin d'études"
-    },
-    "experience": [
+    "pdf": "content/cv/Ahmed_Ounissi_Resume.pdf",
+    "stops": [
       {
-        "company": "AUM",
-        "role": {
-          "en": "Configurable AI Workflow Orchestrator",
-          "fr": "Orchestrateur de workflows IA configurable"
+        "id": "aum",
+        "name": "American University of Malta",
+        "logo": "assets/logos/aum.png",
+        "initials": "AUM",
+        "accent": "#8a6cff",
+        "when": {
+          "en": "Sep 2024 - Jan 2027",
+          "fr": "sept. 2024 - janv. 2027"
         },
-        "start": "",
-        "end": "2026",
-        "bullets": [
-          {
-            "en": "Docker stack: FastAPI, Celery, Redis and MySQL, with OCR and GPT doing the extraction.",
-            "fr": "Stack Docker : FastAPI, Celery, Redis et MySQL, avec OCR et GPT pour l'extraction."
-          },
-          {
-            "en": "Runs steps as a DAG (Kahn's algorithm), takes plugins, and resumes after a crash.",
-            "fr": "Exécute les étapes en DAG (algorithme de Kahn), accepte des plugins et reprend après un crash."
-          }
-        ]
-      }
-    ],
-    "education": [
-      {
-        "school": "American University of Malta",
-        "degree": {
+        "where": "Cospicua, Malta",
+        "role": {
           "en": "B.S. Software Engineering",
           "fr": "Licence en génie logiciel"
         },
-        "start": "Sep 2024",
-        "end": "Jan 2027"
-      }
-    ],
-    "skills": [
+        "story": {
+          "en": "An American-style university in a restored building on Dock No. 1, across the Grand Harbour from Valletta. Four years, 240 ECTS, taught in English.",
+          "fr": "Une université à l'américaine dans un bâtiment restauré du Dock No. 1, face à La Valette de l'autre côté du Grand Port. Quatre ans, 240 ECTS, en anglais."
+        },
+        "tags": [
+          "240 ECTS",
+          "In English"
+        ],
+        "url": "https://aum.edu.mt",
+        "say": {
+          "en": "AUM. A university on an old dockyard. Not bad.",
+          "fr": "AUM. Une université sur un ancien chantier naval. Pas mal."
+        }
+      },
       {
-        "group": "Stack",
-        "items": [
-          "Python",
+        "id": "capstone",
+        "name": "Capstone: AI Workflow Orchestrator",
+        "logo": "",
+        "initials": "AI",
+        "accent": "#ffb347",
+        "when": {
+          "en": "2026",
+          "fr": "2026"
+        },
+        "where": "AUM",
+        "role": {
+          "en": "Final-year project",
+          "fr": "Projet de fin d'études"
+        },
+        "story": {
+          "en": "Give it a pile of documents and it runs the whole pipeline: OCR, GPT extraction, steps ordered as a DAG with Kahn's algorithm, plugins, and it picks up where it left off after a crash.",
+          "fr": "Donne-lui une pile de documents et il fait tourner tout le pipeline : OCR, extraction GPT, étapes ordonnées en DAG avec l'algorithme de Kahn, plugins, et il reprend là où il s'était arrêté après un crash."
+        },
+        "tags": [
           "FastAPI",
           "Celery",
           "Redis",
-          "MySQL",
           "Docker"
-        ]
-      },
-      {
-        "group": {
-          "en": "Certs",
-          "fr": "Certifs"
-        },
-        "items": [
-          "IBM AI Fundamentals",
-          "IBM Data Fundamentals",
-          "PMI Agile"
-        ]
+        ],
+        "url": "",
+        "say": {
+          "en": "The capstone. It runs a pipeline and survives a crash.",
+          "fr": "Le projet de fin. Il fait tourner un pipeline et survit à un crash."
+        }
       }
-    ],
-    "languages": [],
-    "pdf": "content/cv/Ahmed_Ounissi_Resume.pdf",
-    "say": {
-      "en": "Zoom in, the capstone is the good part.",
-      "fr": "Zoome, le projet de fin d'études c'est le meilleur."
-    }
+    ]
   }
 }
