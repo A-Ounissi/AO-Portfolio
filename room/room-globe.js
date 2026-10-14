@@ -130,7 +130,7 @@
       gS.push(0.62 + 0.38 * Math.max(0, -0.35 * X + 0.45 * Y + 0.82 * Z));
     }
 
-  // The earth picture's pixels (assets/globe-earth.jpg, an equirectangular map), read once it has loaded.
+  // The earth picture's pixels (assets/globe-earth.png, an equirectangular map drawn by tools/make-earth.py), read once it has loaded.
   let tex = null,
     texW = 0,
     texH = 0,

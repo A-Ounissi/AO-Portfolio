@@ -13,7 +13,6 @@ zone({
   float: true, // the content floats over the dimmed room while the dialogue banner stays up
   country: "United States of America", // the country that glows and takes taps (its name in assets/countries.json)
   at: [39.5, -98.5], // where he stands, [lat, lon]: the globe turns this spot under his feet
-  color: "#291ce3", // its country's outline and tint on the globe
   // </zone-settings>
 
   // Default text of the zone's own lines; the editor lists them and content.json overrides them.

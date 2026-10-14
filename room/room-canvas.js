@@ -207,19 +207,24 @@
   function countryPath(name, v) {
     ctx.beginPath();
     for (const ring of COUNTRIES[name] || []) {
-      let pen = false;
+      let pen = false,
+        broke = false,
+        prev = null;
       for (const [lo, la] of ring) {
         const [x, y, d] = project([la, lo], v);
-        if (d <= 0) {
+        // lift the pen on the far side, and where a ring jumps across the date line (Alaska, Russia, Fiji)
+        if (d <= 0 || (prev !== null && Math.abs(lo - prev) > 180)) {
           pen = false;
-          continue;
+          broke = true;
         }
+        prev = lo;
+        if (d <= 0) continue;
 
         pen ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
         pen = true;
       }
 
-      ctx.closePath();
+      if (!broke) ctx.closePath(); // a ring cut in pieces stays open, so no chord is drawn across the globe
     }
   }
 

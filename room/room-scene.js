@@ -13,7 +13,7 @@
 
   // Image files to preload: the earth map and the hero's animations.
   const SPRITES = {
-    earth: "assets/globe-earth.jpg",
+    earth: "assets/globe-earth.png",
     walk: "assets/hero-sheet-walk.png",
     idle: "assets/hero-sheet-idle.png",
     interact: "assets/hero-sheet-idle.png",
