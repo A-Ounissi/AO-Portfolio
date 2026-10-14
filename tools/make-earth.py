@@ -41,13 +41,33 @@ for k, name in enumerate(names, 1):
         for sh in (-360, 0, 360):
             bd.polygon([xy(lo + sh, la, W * SS, H * SS) for lo, la in u], fill=255)
             idd.polygon([xy(lo + sh, la, W, H) for lo, la in u], fill=k)
+# Antarctica's mainland is missing from the simplified outlines, so it is drawn from an approximate coastline
+# ([lon, lat], west to east), with a little wobble so the coast isn't smooth.
+ANT = [(-180, -78.2), (-170, -78.4), (-160, -77.6), (-150, -76.8), (-140, -75.2), (-130, -74.3), (-120, -73.6),
+       (-110, -74.2), (-100, -73.0), (-90, -72.6), (-80, -73.2), (-75, -71.8), (-70, -69.5), (-67, -67.0),
+       (-64, -65.0), (-60, -63.6), (-57, -63.3), (-58.5, -64.6), (-61, -66.2), (-62, -68.5), (-61, -71.0),
+       (-60, -74.5), (-55, -76.5), (-48, -77.9), (-40, -78.0), (-33, -77.0), (-27, -75.0), (-20, -73.2),
+       (-12, -71.5), (-5, -70.6), (5, -70.1), (15, -70.0), (25, -69.9), (33, -69.4), (40, -68.6), (48, -67.2),
+       (55, -66.9), (62, -67.6), (68, -68.2), (71, -70.0), (75, -69.6), (80, -67.8), (88, -66.6), (95, -66.3),
+       (105, -66.0), (112, -66.3), (120, -66.6), (130, -66.3), (138, -66.6), (145, -67.4), (152, -68.6),
+       (160, -70.4), (166, -71.6), (170, -72.5), (167, -75.0), (164, -77.0), (170, -78.0), (180, -78.2)]
+rngA = np.random.default_rng(3)
+coast = []
+for (lo1, la1), (lo2, la2) in zip(ANT, ANT[1:]):
+    for t in np.linspace(0, 1, 12, endpoint=False):
+        coast.append((lo1 + (lo2 - lo1) * t, la1 + (la2 - la1) * t + rngA.normal(0, 0.25)))
+coast.append(ANT[-1])
+bd.polygon([xy(lo_, la_, W * SS, H * SS) for lo_, la_ in coast + [(180, -90), (-180, -90)]], fill=255)
+ANT_ID = len(names) + 1
+idd.polygon([xy(lo_, la_, W, H) for lo_, la_ in coast + [(180, -90), (-180, -90)]], fill=ANT_ID)
+
 land = np.array(big.resize((W, H), Image.BOX)) > 110
 cid = np.array(ids)
 # Antarctica's ring may not reach the pole: fill everything south of -84 as land
 lat = 90 - (np.arange(H) + 0.5) / H * 180
 lon = (np.arange(W) + 0.5) / W * 360 - 180
 LAT, LON = np.meshgrid(lat, lon, indexing='ij')
-land |= LAT < -78
+land |= LAT < -86   # only the tiny hole right at the pole
 
 # --- smooth value noise for natural edges ------------------------------------------------------------
 rng = np.random.default_rng(7)
@@ -82,11 +102,10 @@ img[d3 & ~land] = P['ocean']
 img[d2 & ~land] = P['mid']
 img[d1 & ~land] = P['shallow']
 # a faint dithered sparkle in open water
-spark = (n2 > 0.86) & ~d3 & (np.indices((H, W)).sum(0) % 2 == 0)
+spark = (n2 > 0.86) & ~d3 & (np.indices((H, W)).sum(0) % 2 == 0) & (np.abs(LAT) < 62)
 img[spark] = P['ocean']
 # polar sea ice
 img[(LAT > 80 + 3 * N) & ~land] = P['ice_sea']
-img[(LAT < -70 - 3 * N) & ~land] = P['ice_sea']
 
 # --- land biomes ------------------------------------------------------------------------------------------
 la = LAT + (N - 0.5) * 6     # wobbly latitude so bands don't look ruled
@@ -111,7 +130,7 @@ des = (box(15, 33, -17, 35) | box(15, 31, 35, 60) | box(25, 36, 55, 71) | box(-3
 biome[des] = 'desert'
 biome[des & (N > 0.62)] = 'desert2'
 gr = cid == (names.index('Greenland') + 1)
-ant = (cid == (names.index('Antarctica') + 1)) | (LAT < -60)
+ant = (cid == (names.index('Antarctica') + 1)) | (cid == ANT_ID) | (LAT < -86)
 biome[(la > 72) | gr | ant] = 'snow'
 biome[((la > 72) | gr | ant) & (N > 0.6)] = 'snow2'
 for k in ['rain', 'forest', 'grass', 'grass2', 'savanna', 'steppe', 'desert', 'desert2', 'boreal', 'tundra', 'snow', 'snow2']:
@@ -119,7 +138,7 @@ for k in ['rain', 'forest', 'grass', 'grass2', 'savanna', 'steppe', 'desert', 'd
     img[m] = P[k]
 
 # --- flat ice caps near the poles (the map is stretched there, so any texture turns into streaks) ---
-img[LAT < -70] = P['snow']
+img[land & ant] = P['snow']          # Antarctica: one flat ice colour, real coastline
 img[(LAT > 84)] = P['ice_sea']
 
 # --- light shading on land: a lighter top-left edge, darker bottom-right, for a bit of relief -------
@@ -149,7 +168,7 @@ for g in range(-60, 61, 30):
     r = int((90 - g) / 180 * H); grid[r, ::4] = True
 for g in range(-180, 180, 30):
     c = int((g + 180) / 360 * W); grid[::4, c] = True
-gm = grid & ~d2 & (np.abs(LAT) < 78)
+gm = grid & ~d2 & (np.abs(LAT) < 62)
 img[gm] = np.minimum(255, img[gm].astype(int) + 22).astype(np.uint8)
 
 out = Image.fromarray(img).resize((W * 2, H * 2), Image.NEAREST)
