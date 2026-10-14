@@ -71,20 +71,29 @@
   <!-- Big title -->
   <h2 class="title-name">My <span>Room</span></h2>
 
-  <!-- How to move: only one of the two shows, depending on mouse or touch -->
-  <p class="title-hint">
-    <!-- Shown with a mouse -->
-    <span class="mouse">Click a country or drag the globe</span>
+  <!-- Role line under the name -->
+  <p class="title-role"></p>
 
-    <!-- Shown on touch screens -->
-    <span class="touch">Tap a country or drag the globe</span>
-  </p>
+  <!-- What this site is, in one or two sentences -->
+  <p class="title-about"></p>
 
-  <!-- Loading bar, filled while the sprites load -->
-  <div class="title-load" role="progressbar" aria-label="Loading the room"><i id="load-bar"></i></div>
-
-  <!-- Quick links for visitors in a hurry: open a panel without walking (room.js adds one button per zone) -->
+  <!-- The chapters in order: one button per zone (room.js adds them); each opens that chapter directly -->
   <div class="title-quick"><small></small></div>
+
+  <!-- Start hint and loading bar share one spot: the bar while loading, then the hint -->
+  <div class="title-go">
+    <!-- How to start: only one of the two shows, depending on mouse or touch -->
+    <p class="title-hint">
+      <!-- Shown with a mouse -->
+      <span class="mouse">Click anywhere to start</span>
+
+      <!-- Shown on touch screens -->
+      <span class="touch">Tap anywhere to start</span>
+    </p>
+
+    <!-- Loading bar, filled while the sprites load -->
+    <div class="title-load" role="progressbar" aria-label="Loading"><i id="load-bar"></i></div>
+  </div>
 </div>
 
 <!-- Panel window (Projects, CV, Contact or any other zone), opened by the room code when a zone is reached -->

@@ -71,7 +71,7 @@ h1 span {
   display: grid;
   place-content: center;
   justify-items: center;
-  gap: clamp(18px, 4vh, 40px);
+  gap: clamp(10px, 2.4vh, 26px);
   padding: 16px;
   text-align: center;
   background: rgba(12, 9, 18, 0.62);
@@ -115,10 +115,14 @@ h1 span {
   color: var(--amber);
 }
 
-/* hint and loading bar share the same grid cell */
-.title-hint,
-.title-load {
-  grid-area: 2 / 1;
+/* hint and loading bar share one spot under the chapters */
+.title-go {
+  display: grid;
+  justify-items: center;
+}
+
+.title-go > * {
+  grid-area: 1 / 1;
 }
 
 /* show the loading bar first, then swap in the hint */
@@ -159,7 +163,7 @@ h1 span {
 .title-name {
   position: relative;
   margin: 0;
-  font: 600 clamp(3.4rem, 13vw, 8.5rem)/0.95 var(--display);
+  font: 600 clamp(2.8rem, 10vw, 6.6rem)/0.95 var(--display);
   color: #e6ecea;
   letter-spacing: 0.02em;
   text-shadow:
@@ -251,54 +255,132 @@ h1 span {
   }
 }
 
-/* quick links under the hint: open a panel without walking, shown once the room has loaded */
-.title-quick {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  align-items: center;
+/* role line under the name: small amber caps */
+.title-role {
+  margin: 4px 0 0;
+  font: 600 clamp(0.85rem, 2vw, 1.15rem) var(--display);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--amber);
+  text-shadow: 2px 2px 0 #120e1a;
 }
 
-/* hidden while the room loads, like the hint */
+/* what the site is: one or two calm sentences */
+.title-about {
+  margin: 0;
+  max-width: 58ch;
+  font: 400 clamp(0.95rem, 1.9vw, 1.15rem) / 1.55 var(--body);
+  color: #e6dff0;
+  text-shadow: 2px 2px 0 #120e1a;
+}
+
+/* the chapters: four numbered cards in story order, joined by a dashed path */
+.title-quick {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px;
+  justify-content: center;
+  align-items: stretch;
+  margin-top: 4px;
+}
+
 .title:not(.ready) .title-quick {
   visibility: hidden;
 }
 
-/* "Short on time? Jump to" before the links */
+/* "Or jump straight to a chapter" above the cards */
 .title-quick small {
   width: 100%;
+  margin-bottom: -10px;
   font: 400 0.8rem var(--display);
   color: var(--muted);
-  letter-spacing: 0.04em;
-}
-
-/* one quick link: a small pixel tab like the header shortcuts */
-.title-quick button {
-  font: 600 0.75rem var(--display);
   letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink);
-  background: rgba(27, 22, 38, 0.85);
-  border: 2px solid var(--wall);
-  padding: 6px 14px;
-  border-radius: 2px;
-  cursor: var(--hand);
 }
 
-/* quick link hover and keyboard focus turn amber */
+/* one chapter card */
+.title-quick button {
+  position: relative;
+  display: grid;
+  justify-items: start;
+  gap: 2px;
+  width: 168px;
+  padding: 10px 14px 12px;
+  text-align: left;
+  color: var(--ink);
+  background: rgba(27, 22, 38, 0.9);
+  border: 0;
+  box-shadow:
+    0 0 0 2px var(--wall),
+    0 0 0 4px #120e1a,
+    5px 6px 0 4px rgba(0, 0, 0, 0.4);
+  cursor: var(--hand);
+  transition: transform 0.15s, box-shadow 0.15s;
+  animation: pop 0.5s backwards;
+}
+
+.title-quick button:nth-of-type(1) { animation-delay: 0.2s; }
+.title-quick button:nth-of-type(2) { animation-delay: 0.3s; }
+.title-quick button:nth-of-type(3) { animation-delay: 0.4s; }
+.title-quick button:nth-of-type(4) { animation-delay: 0.5s; }
+
+/* the dashed path from one chapter to the next */
+.title-quick button + button::before {
+  content: "";
+  position: absolute;
+  left: -26px;
+  top: 50%;
+  width: 26px;
+  border-top: 3px dashed rgba(255, 233, 184, 0.55);
+}
+
 .title-quick button:hover,
 .title-quick button:focus-visible {
-  border-color: var(--amber);
-  color: var(--amber);
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 0 2px var(--amber),
+    0 0 0 4px #120e1a,
+    5px 10px 0 4px rgba(0, 0, 0, 0.4);
   outline: none;
+}
+
+.q-num {
+  font: 600 0.8rem var(--display);
+  letter-spacing: 0.1em;
+  color: var(--amber);
+}
+
+.q-name {
+  font: 600 1.25rem/1.1 var(--display);
+  color: var(--ink);
+}
+
+.q-what {
+  font: 400 0.82rem/1.35 var(--body);
+  color: var(--muted);
+}
+
+/* phones: the chapters stack in two columns, no path between them */
+@media (max-width: 760px) {
+  .title-quick {
+    gap: 12px;
+  }
+
+  .title-quick button {
+    width: calc(50% - 10px);
+    min-width: 140px;
+  }
+
+  .title-quick button + button::before {
+    display: none;
+  }
 }
 
 /* press-to-start hint under the title, pulsing */
 .title-hint {
   position: relative;
   margin: 0;
-  font: 400 clamp(1.1rem, 3.4vw, 1.9rem) var(--display);
+  font: 400 clamp(1rem, 2.6vw, 1.45rem) var(--display);
   color: #d9d2e6;
   letter-spacing: 0.04em;
   text-shadow: 3px 3px 0 #120e1a;

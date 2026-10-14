@@ -9,7 +9,7 @@
 
   // The globe: centre and radius in room pixels, how far up the disc the hero stands (degrees from its middle),
   // walking speed (degrees a second), pixels drawn per room pixel, and where he starts ([lat, lon]).
-  const GLOBE = { cx: 284, cy: 228, r: 138, stand: 62, speed: 45, res: 2, start: [34.5, 9.6] };
+  const GLOBE = { cx: 284, cy: 228, r: 138, stand: 62, speed: 45, res: 2, start: [47, -52] };
 
   // Image files to preload: the earth map and the hero's animations.
   const SPRITES = {

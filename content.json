@@ -352,6 +352,22 @@
           "en": "Malta. The engineering degree,\nand the capstone.",
           "fr": "Malte. Le diplôme d'ingénieur,\net le projet de fin d'études."
         }
+      },
+      "welcome.1": {
+        "section": "global",
+        "where": "The hero's first line after the start screen.",
+        "text": {
+          "en": "Hey, I'm Ahmed! This globe is my story,\none country per chapter.",
+          "fr": "Salut, moi c'est Ahmed ! Ce globe, c'est mon histoire,\nun pays par chapitre."
+        }
+      },
+      "welcome.2": {
+        "section": "global",
+        "where": "The hero's second line after the start screen.",
+        "text": {
+          "en": "Follow the dashed route from 1 to 4, or drag the globe\nand click any glowing country.",
+          "fr": "Suis la route en pointillés de 1 à 4, ou fais tourner le globe\net clique sur un pays qui brille."
+        }
       }
     },
     "titles": {
@@ -482,6 +498,54 @@
           "en": "Malta",
           "fr": "Malte"
         }
+      },
+      "title.role": {
+        "section": "global",
+        "where": "Start screen: the role line under the name.",
+        "text": {
+          "en": "AI & Automation Engineer",
+          "fr": "Ingénieur IA & automatisation"
+        }
+      },
+      "title.about": {
+        "section": "global",
+        "where": "Start screen: what the site is, under the role.",
+        "text": {
+          "en": "This portfolio is my story laid out on a globe. Every country I've lived, studied or worked in is a chapter: walk the little me there and it opens.",
+          "fr": "Ce portfolio, c'est mon histoire posée sur un globe. Chaque pays où j'ai vécu, étudié ou travaillé est un chapitre : emmène le petit moi là-bas et il s'ouvre."
+        }
+      },
+      "chapter.socials": {
+        "section": "global",
+        "where": "Start screen: what the Tunisia chapter holds.",
+        "text": {
+          "en": "Where it started, and how to reach me",
+          "fr": "Là où tout a commencé, et comment me joindre"
+        }
+      },
+      "chapter.cv": {
+        "section": "global",
+        "where": "Start screen: what the Canada chapter holds.",
+        "text": {
+          "en": "College, two internships, first job",
+          "fr": "Collège, deux stages, premier emploi"
+        }
+      },
+      "chapter.malta": {
+        "section": "global",
+        "where": "Start screen: what the Malta chapter holds.",
+        "text": {
+          "en": "Software engineering degree and capstone",
+          "fr": "Licence en génie logiciel et projet de fin d'études"
+        }
+      },
+      "chapter.projects": {
+        "section": "global",
+        "where": "Start screen: what the USA chapter holds.",
+        "text": {
+          "en": "The AI systems I build, starting with Pulpoid",
+          "fr": "Les systèmes IA que je construis, à commencer par Pulpoid"
+        }
       }
     },
     "buttons": {
@@ -579,24 +643,24 @@
         "section": "global",
         "where": "Hint under the title on the start screen, on computers.",
         "text": {
-          "en": "Click a country or drag the globe",
-          "fr": "Clique sur un pays ou fais tourner le globe"
+          "en": "Click anywhere to start the trip",
+          "fr": "Clique n'importe où pour commencer le voyage"
         }
       },
       "start.tap": {
         "section": "global",
         "where": "Hint under the title on the start screen, on phones and tablets.",
         "text": {
-          "en": "Tap a country or drag the globe",
-          "fr": "Touche un pays ou fais tourner le globe"
+          "en": "Tap anywhere to start the trip",
+          "fr": "Touche n'importe où pour commencer le voyage"
         }
       },
       "start.quick": {
         "section": "global",
         "where": "Start screen, before the quick links that open a panel without walking.",
         "text": {
-          "en": "Short on time? Jump to",
-          "fr": "Pas le temps ? Va direct à"
+          "en": "Four chapters, in order. Click one to jump straight in.",
+          "fr": "Quatre chapitres, dans l'ordre. Clique sur un pour y aller direct."
         }
       },
       "placeholder.tag": {

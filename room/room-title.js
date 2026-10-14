@@ -28,6 +28,7 @@
     title.classList.add("out");
     removeEventListener("keydown", startRoom, true);
     setTimeout(() => title.remove(), 400);
+    setTimeout(greet, 650); // then the hero says hello and explains the globe
   }
 
   // Lets a pointer press or any key dismiss the title screen.

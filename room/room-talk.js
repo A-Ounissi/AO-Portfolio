@@ -12,6 +12,11 @@
 
   // Starts the dialogue banner for an object, then opens its panel when the lines are done.
   function talk(id) {
+    // a talk already running (like the welcome) stops typing first, so two lines never type into the banner at once
+    if (talkState) {
+      clearInterval(talkState.timer);
+      clearTimeout(talkState.hold);
+    }
     talkState = { id, i: 0, shown: 0, timer: null };
     if (!hasPanel(id)) restZone = id; // no panel: he stays in the zone's animation until he walks off
     banner.hidden = false;
@@ -97,3 +102,11 @@
     } else if (talkState && e.key === "Escape") endTalk(false);
   });
 
+
+  // The hero's hello right after the start screen: who he is and how to get around (click the banner to go on).
+  function greet() {
+    if (talkState || !overlay.hidden) return; // something else already started (a chapter link was clicked)
+    talkState = { id: "welcome", i: 0, shown: 0, timer: null };
+    banner.hidden = false;
+    say();
+  }

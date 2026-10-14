@@ -234,6 +234,46 @@
   const alpha = (hex, a) =>
     "rgba(" + [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) || 0).join(",") + "," + a + ")";
 
+  // The chapters in story order (the order of the zone files in index.html), for the route and the numbers.
+  const ROUTE = ZONES.filter((z) => z.at && z.panel !== false);
+
+  // Draws the trip as a dashed line along the globe from chapter to chapter (only the side facing us).
+  function drawRoute(v, t) {
+    ctx.save();
+    ctx.strokeStyle = "rgba(255, 233, 184, .75)";
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3, 3]);
+    ctx.lineDashOffset = -t * 6; // the dashes march along the way the story goes
+    for (let k = 0; k < ROUTE.length - 1; k++) {
+      const p = vec(ROUTE[k].at),
+        q = vec(ROUTE[k + 1].at),
+        a = Math.acos(Math.max(-1, Math.min(1, p[0] * q[0] + p[1] * q[1] + p[2] * q[2])));
+      if (a < 1e-3) continue;
+      ctx.beginPath();
+      let pen = false;
+      const n = Math.max(8, Math.round(a / RAD / 2));
+      for (let i = 0; i <= n; i++) {
+        // slerp between the two chapters, lifted a little off the ground in the middle so it reads as a flight
+        const e = i / n,
+          f = Math.sin((1 - e) * a) / Math.sin(a),
+          g = Math.sin(e * a) / Math.sin(a),
+          h = 1 + 0.06 * Math.sin(Math.PI * e) * Math.min(1, a / 0.6),
+          pt = latLon([0, 1, 2].map((j) => f * p[j] + g * q[j])),
+          [x, y, d] = project(pt, v),
+          X = SCALE.cx + (x - SCALE.cx) * h,
+          Y = SCALE.cy + (y - SCALE.cy) * h;
+        if (d <= 0.02) {
+          pen = false;
+          continue;
+        }
+        pen ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y);
+        pen = true;
+      }
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
   // Draws each zone's country tinted and outlined in its colour, in its hover colour (pulsing) when hovered, and a
   // pin on its spot.
   function drawZones(v, t) {
@@ -489,7 +529,8 @@
     // Draws one label per zone, over its pin, fading out toward the globe's edge.
     for (const [o, [px, py, d]] of shown) {
       // Label text (with an arrow when hovered), box width and left edge.
-      const text = (hover === o.id ? "▸ " : "") + ui(o.place || o.name),
+      const num = ROUTE.indexOf(o) + 1, // chapter number, in the order of the story
+        text = (hover === o.id ? "▸ " : "") + (num ? num + " " : "") + ui(o.place || o.name),
         w = ctx.measureText(text).width + 30,
         near = arc(player.at, o.at) < 9, // a neighbour right under his feet (Tunisia and Malta): label sits beside him
         x0 = Math.round(near ? px + 22 : px - w / 2);
@@ -533,6 +574,7 @@
     ctx.clearRect(0, 0, ROOM_W, ROOM_H);
     drawGlobe(v, clock);
     drawZones(v, clock);
+    drawRoute(v, clock);
     // Draws the pulsing ring on the globe where the player clicked.
     if (marker) {
       marker.t += dt;
@@ -631,9 +673,15 @@
 
     document.querySelectorAll(".title-hint .mouse").forEach((x) => (x.textContent = ui("start.click")));
     document.querySelectorAll(".title-hint .touch").forEach((x) => (x.textContent = ui("start.tap")));
-    document
-      .querySelectorAll("nav [data-open], .title-quick [data-open]")
-      .forEach((b) => (b.textContent = ui(zoneById(b.dataset.open).name)));
+    document.querySelectorAll("nav [data-open]").forEach((b) => (b.textContent = ui(zoneById(b.dataset.open).name)));
+    // Start screen: role, what the site is, and one card per chapter (number, country, what is inside).
+    document.querySelectorAll(".title-role").forEach((x) => (x.textContent = ui("title.role")));
+    document.querySelectorAll(".title-about").forEach((x) => (x.textContent = ui("title.about")));
+    document.querySelectorAll(".title-quick [data-open]").forEach((b, i) => {
+      const z = zoneById(b.dataset.open);
+      const part = (cls, text) => Object.assign(document.createElement("span"), { className: cls, textContent: text });
+      b.replaceChildren(part("q-num", String(i + 1).padStart(2, "0")), part("q-name", ui(z.name)), part("q-what", ui("chapter." + z.id)));
+    });
     document.querySelectorAll(".title-quick small").forEach((x) => (x.textContent = ui("start.quick")));
     const back = document.getElementById("close");
     back.replaceChildren(pxi("arrow-left"), ui("panel.back"));
@@ -652,6 +700,7 @@
   // description.
   function applyContent() {
     ZONES.forEach((z) => (LINES[z.id] = [ui(z.intro)]));
+    LINES.welcome = [ui("welcome.1"), ui("welcome.2")]; // the hero's hello right after the start screen
     const site = CONTENT.site || {};
     if (tr(site.title)) document.title = tr(site.title);
     const d = document.querySelector('meta[name="description"]');
