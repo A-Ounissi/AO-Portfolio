@@ -1,0 +1,2910 @@
+/* =================================================================================================
+   Room styles
+   ================================================================================================= */
+
+/* Room styles. Layout: one full-screen night room drawn on canvas;
+   panels slide over it like game dialog boxes. Deliberately single-theme. */
+
+/* let the page and body fill the whole window */
+html,
+body {
+  height: 100%;
+}
+
+/* night background, ink text, no page scrolling */
+body {
+  background: var(--night);
+  color: var(--ink);
+  font-family: var(--body);
+  overflow: hidden;
+}
+
+/* app shell: full-height column holding header, stage and nav */
+.app {
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-block: 8px;
+  padding-inline: 16px;
+  box-sizing: border-box;
+}
+
+/* site header floating over the top of the room, click-through */
+header {
+  position: absolute;
+  top: 10px;
+  left: 16px;
+  right: 16px;
+  z-index: 1;
+  pointer-events: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+
+/* site name in the display font */
+h1 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.35rem;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+/* amber highlight on part of the site name */
+h1 span {
+  color: var(--amber);
+}
+
+/* =================================================================================================
+   Title screen: shown on first load over the blurred room, gone on the first click, tap or key
+   ================================================================================================= */
+
+/* title screen: dark blurred veil centred over the whole room */
+.title {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: clamp(18px, 4vh, 40px);
+  padding: 16px;
+  text-align: center;
+  background: rgba(12, 9, 18, 0.62);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+  cursor: var(--hand);
+  transition: opacity 0.35s steps(4);
+}
+
+/* faint CRT scanlines across the title screen */
+.title::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 2px, transparent 2px 4px);
+}
+
+/* title screen fading away once dismissed */
+.title.out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* plain arrow cursor while the room is still loading */
+.title:not(.ready) {
+  cursor: var(--arrow);
+}
+
+/* hide the big title until the pixel font is ready */
+.title-name {
+  visibility: hidden;
+}
+
+/* show the big title once fonts have loaded */
+.fonts .title-name {
+  visibility: visible;
+} /* no flash of a fallback font */
+
+.title-name span {
+  color: var(--amber);
+}
+
+/* hint and loading bar share the same grid cell */
+.title-hint,
+.title-load {
+  grid-area: 2 / 1;
+}
+
+/* show the loading bar first, then swap in the hint */
+.title:not(.ready) .title-hint,
+.title.ready .title-load {
+  visibility: hidden;
+}
+
+/* loading bar frame: dark pixel trough */
+.title-load {
+  position: relative;
+  align-self: center;
+  width: min(240px, 60vw);
+  height: 14px;
+  background: #241d33;
+  box-shadow:
+    0 0 0 3px #120e1a,
+    inset 0 0 0 2px #3b2d57;
+}
+
+/* loading bar fill: striped amber that grows in steps */
+.title-load i {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  bottom: 2px;
+  width: 0;
+  max-width: calc(100% - 4px);
+  background: repeating-linear-gradient(90deg, var(--amber) 0 8px, #e8902a 8px 10px);
+  transition: width 0.2s steps(3);
+}
+
+/* =================================================================================================
+   .title-name
+   ================================================================================================= */
+
+/* big title name with a chunky pixel outline, rising then floating */
+.title-name {
+  position: relative;
+  margin: 0;
+  font: 600 clamp(3.4rem, 13vw, 8.5rem)/0.95 var(--display);
+  color: #e6ecea;
+  letter-spacing: 0.02em;
+  text-shadow:
+    0 6px 0 #120e1a,
+    6px 0 0 #120e1a,
+    -6px 0 0 #120e1a,
+    0 -6px 0 #120e1a,
+    6px 6px 0 #120e1a,
+    -6px 6px 0 #120e1a,
+    6px -6px 0 #120e1a,
+    -6px -6px 0 #120e1a,
+    0 12px 0 #120e1a,
+    6px 12px 0 #120e1a,
+    -6px 12px 0 #120e1a;
+  animation:
+    rise 0.5s steps(5) backwards,
+    titlefloat 3.6s linear 0.5s infinite;
+}
+
+/* =================================================================================================
+   a full sine, sampled so it never eases to a stop at the top or bottom
+   ================================================================================================= */
+
+/* title float: gentle up and down bob */
+@keyframes titlefloat {
+  /* start at rest */
+  0% {
+    transform: translateY(-0px);
+  }
+
+  /* lift barely off the baseline */
+  8.33333% {
+    transform: translateY(-0.335px);
+  }
+
+  /* keep rising */
+  16.6667% {
+    transform: translateY(-1.25px);
+  }
+
+  /* quarter way: halfway up */
+  25% {
+    transform: translateY(-2.5px);
+  }
+
+  /* nearing the top */
+  33.3333% {
+    transform: translateY(-3.75px);
+  }
+
+  /* almost at the highest point */
+  41.6667% {
+    transform: translateY(-4.665px);
+  }
+
+  /* top of the bob, 5px up */
+  50% {
+    transform: translateY(-5px);
+  }
+
+  /* start coming back down */
+  58.3333% {
+    transform: translateY(-4.665px);
+  }
+
+  /* falling past three quarters height */
+  66.6667% {
+    transform: translateY(-3.75px);
+  }
+
+  /* halfway back down */
+  75% {
+    transform: translateY(-2.5px);
+  }
+
+  /* nearly back at rest */
+  83.3333% {
+    transform: translateY(-1.25px);
+  }
+
+  /* a hair above the baseline */
+  91.6667% {
+    transform: translateY(-0.335px);
+  }
+
+  /* back at rest, ready to loop */
+  100% {
+    transform: translateY(-0px);
+  }
+}
+
+/* quick links under the hint: open a panel without walking, shown once the room has loaded */
+.title-quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* hidden while the room loads, like the hint */
+.title:not(.ready) .title-quick {
+  visibility: hidden;
+}
+
+/* "Short on time? Jump to" before the links */
+.title-quick small {
+  width: 100%;
+  font: 400 0.8rem var(--display);
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+/* one quick link: a small pixel tab like the header shortcuts */
+.title-quick button {
+  font: 600 0.75rem var(--display);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: rgba(27, 22, 38, 0.85);
+  border: 2px solid var(--wall);
+  padding: 6px 14px;
+  border-radius: 2px;
+  cursor: var(--hand);
+}
+
+/* quick link hover and keyboard focus turn amber */
+.title-quick button:hover,
+.title-quick button:focus-visible {
+  border-color: var(--amber);
+  color: var(--amber);
+  outline: none;
+}
+
+/* press-to-start hint under the title, pulsing */
+.title-hint {
+  position: relative;
+  margin: 0;
+  font: 400 clamp(1.1rem, 3.4vw, 1.9rem) var(--display);
+  color: #d9d2e6;
+  letter-spacing: 0.04em;
+  text-shadow: 3px 3px 0 #120e1a;
+  animation: hintpulse 1.8s steps(3) infinite 0.6s;
+}
+
+/* hint pulse: dims and brightens */
+@keyframes hintpulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* touch wording hidden by default */
+.title-hint .touch {
+  display: none;
+}
+
+/* touch screens: show the tap wording instead of the click one */
+@media (hover: none) {
+  /* hide the mouse wording */
+  .title-hint .mouse {
+    display: none;
+  }
+
+  /* show the tap wording */
+  .title-hint .touch {
+    display: inline;
+  }
+}
+
+/* phones: thinner title outline */
+@media (max-width: 520px) {
+  .title-name {
+    text-shadow:
+      0 4px 0 #120e1a,
+      4px 0 0 #120e1a,
+      -4px 0 0 #120e1a,
+      0 -4px 0 #120e1a,
+      4px 4px 0 #120e1a,
+      -4px 4px 0 #120e1a,
+      4px -4px 0 #120e1a,
+      -4px -4px 0 #120e1a,
+      0 8px 0 #120e1a;
+  }
+}
+
+/* reduced motion: keep the title screen still */
+@media (prefers-reduced-motion: reduce) {
+  .title-name,
+  .title-hint {
+    animation: none;
+  }
+}
+
+/* stage: centres the room canvas in the space left */
+.stage {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+}
+
+/* room canvas: crisp pixels, dark frame and drop shadow */
+canvas {
+  touch-action: none;
+  cursor: var(--hand);
+  image-rendering: pixelated;
+  max-width: 100%;
+  border-radius: 4px;
+  background: #2a2133;
+  box-shadow:
+    0 0 0 4px #120e1a,
+    0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* shortcut buttons row pinned to the bottom of the screen */
+nav {
+  position: absolute;
+  bottom: 12px;
+  left: 16px;
+  right: 16px;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+/* shortcut buttons: small uppercase pixel tabs */
+nav button {
+  font: 600 0.68rem var(--display);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: rgba(27, 22, 38, 0.8);
+  border: 2px solid var(--wall);
+  padding: 5px 10px;
+  border-radius: 2px;
+  cursor: var(--hand);
+}
+
+/* shortcut button hover and keyboard focus turn amber */
+nav button:hover,
+nav button:focus-visible {
+  border-color: var(--amber);
+  color: var(--amber);
+  outline: none;
+}
+
+/* shortcut helper note, hidden unless a layout shows it */
+nav small {
+  display: none;
+  width: 100%;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+/* overlay: dims the room and docks the panel at the bottom */
+.overlay {
+  z-index: 5;
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 9, 18, 0.62);
+  display: grid;
+  place-items: end center;
+  padding: 16px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+}
+
+/* panel dialog box: bordered game-style window that rises in */
+.dialog {
+  width: min(640px, 100%);
+  max-height: 78%;
+  overflow: auto;
+  background: var(--panel);
+  border: 4px solid var(--ink);
+  box-shadow:
+    0 0 0 4px var(--night),
+    8px 8px 0 4px rgba(0, 0, 0, 0.35);
+  padding: 18px 20px 20px;
+  box-sizing: border-box;
+  animation: rise 0.22s steps(4);
+}
+
+/* rise: slide up from below while fading in */
+@keyframes rise {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+}
+
+/* reduced motion: panels appear without sliding */
+@media (prefers-reduced-motion: reduce) {
+  .dialog {
+    animation: none;
+  }
+}
+
+/* panel header: title on the left, close button on the right */
+.dialog-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+/* panel title in amber */
+.dialog h2 {
+  font: 600 1.3rem var(--display);
+  margin: 0;
+  color: var(--amber);
+}
+
+/* close button: inverted ink label with icon */
+.close {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font: 600 0.8rem var(--display);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--ink);
+  color: var(--night);
+  border: 0;
+  padding: 2px 10px 2px 4px;
+  cursor: var(--hand);
+}
+
+/* hovered close button: fills amber, lifts onto a hard shadow and its arrow nudges back toward the room */
+.close {
+  transition:
+    background 0.15s steps(3),
+    transform 0.15s steps(3),
+    box-shadow 0.15s steps(3);
+}
+
+/* the lifted, amber state */
+.close:hover {
+  background: var(--amber);
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 #120e1a;
+}
+
+/* the arrow's loop while the button is hovered */
+.close:hover .pxi {
+  animation: backnudge 0.6s steps(2) infinite;
+}
+
+/* back nudge: two pixel-steps left and back */
+@keyframes backnudge {
+  50% {
+    transform: translateX(-3px);
+  }
+}
+
+/* pressed: back down onto the page */
+.close:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+/* amber ring around the close button on keyboard focus */
+.close:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 2px;
+}
+
+/* placeholder tag marking sample content */
+.sample {
+  display: inline-block;
+  font: 0.72rem var(--display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--night);
+  background: var(--muted);
+  padding: 2px 6px;
+  margin-bottom: 12px;
+}
+
+/* panel paragraphs: comfy line height and readable width */
+.dialog p {
+  line-height: 1.55;
+  margin: 0 0 12px;
+  max-width: 62ch;
+}
+
+/* responsive grid of small cards */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 10px;
+}
+
+/* simple bordered card */
+.card {
+  border: 2px solid var(--wall);
+  padding: 12px;
+  min-width: 0;
+}
+
+/* card heading */
+.card h3 {
+  font: 600 1rem var(--display);
+  margin: 0 0 4px;
+}
+
+/* card text: smaller and muted */
+.card p {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* plain list of links with no bullets */
+.links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+/* link row: label and value spread apart, dotted divider */
+.links li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 2px dotted var(--wall);
+  padding-block: 6px;
+  flex-wrap: wrap;
+}
+
+/* link label in the display font */
+.links b {
+  font-family: var(--display);
+  font-weight: 600;
+}
+
+/* links in amber */
+a {
+  color: var(--amber);
+}
+
+/* stack of CV rows */
+.cv-rows {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+/* CV row: fixed label column, value beside it */
+.cv-rows div {
+  display: grid;
+  grid-template-columns: 7.5em 1fr;
+  gap: 10px;
+}
+
+/* CV labels in muted display font */
+.cv-rows dt,
+.cv-rows span:first-child {
+  font-family: var(--display);
+  color: var(--muted);
+}
+
+/* =================================================================================================
+   RPG dialogue banner: slides up when the character reaches an object
+   ================================================================================================= */
+
+/* dialogue banner wrapper pinned to the bottom, centred */
+.banner {
+  z-index: 4;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px calc(14px + env(safe-area-inset-bottom, 0px));
+  pointer-events: none;
+}
+
+/* clickable banner body that slides up when shown */
+.banner-inner {
+  position: relative;
+  width: min(760px, 100%);
+  pointer-events: auto;
+  cursor: var(--hand);
+  animation: slideup 0.28s steps(5);
+}
+
+/* slideup: banner pops up from below */
+@keyframes slideup {
+  from {
+    transform: translateY(60%);
+    opacity: 0;
+  }
+}
+
+/* banner text box: purple gradient with gold pixel border */
+.banner-box {
+  min-height: 104px;
+  background: linear-gradient(#2b2140, #1c1530);
+  border: 3px solid #e8c98a;
+  outline: 3px solid #120e1a;
+  box-shadow:
+    0 0 0 6px #120e1a,
+    inset 0 0 0 3px #3b2d57,
+    6px 8px 0 6px rgba(0, 0, 0, 0.4);
+  padding: 26px 22px 20px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* speaker name tab on the top edge, right of the portrait */
+.banner-name {
+  position: absolute;
+  top: -18px;
+  left: calc(var(--pw) + 44px);
+  font: 600 1rem var(--display);
+  letter-spacing: 0.06em;
+  color: #ffe9b8;
+  background: #4a2f3a;
+  border: 3px solid #e8c98a;
+  outline: 3px solid #120e1a;
+  padding: 2px 16px;
+}
+
+/* spoken line in the banner, keeping line breaks */
+.banner-text {
+  font: 400 1.18rem/1.5 var(--display);
+  color: var(--ink);
+  margin: 0;
+  min-height: 3em;
+  white-space: pre-line;
+}
+
+/* blinking next arrow in the banner corner */
+.banner-next {
+  display: flex;
+  position: absolute;
+  right: 14px;
+  bottom: 8px;
+  font-size: 0.9rem;
+  color: var(--amber);
+  animation: blink 1s steps(2) infinite;
+}
+
+/* blink: on and off */
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* speaker portrait standing on top of the banner */
+.banner-portrait {
+  position: absolute;
+  left: 22px;
+  bottom: calc(100% + 3px);
+  width: var(--pw);
+  image-rendering: pixelated;
+  filter: drop-shadow(4px 0 0 #120e1a) drop-shadow(-4px 0 0 #120e1a) drop-shadow(0 -4px 0 #120e1a);
+  pointer-events: none;
+}
+
+/* reduced motion: no banner slide or blinking arrow */
+@media (prefers-reduced-motion: reduce) {
+  .banner-inner,
+  .banner-next {
+    animation: none;
+  }
+}
+
+/* =================================================================================================
+   Projects: listing-style pixel cards
+   ================================================================================================= */
+
+/* wide frameless panel for the floating project cards */
+.dialog.wide {
+  width: min(1100px, 100%);
+  max-height: 100%;
+  align-self: end;
+  overflow: visible;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  padding: 8px 4px 24px;
+  animation: none;
+}
+
+/* floating overlay: centred and a bit darker */
+.overlay.floating {
+  place-items: center;
+  grid-template-columns: minmax(0, 1fr);
+  background: rgba(8, 6, 14, 0.72);
+}
+
+/* let the wide panel shrink and stay centred */
+.dialog.wide {
+  min-width: 0;
+  justify-self: center;
+}
+
+/* tighter gap under the wide panel header */
+.dialog.wide .dialog-head {
+  margin-bottom: 4px;
+}
+
+/* bigger shadowed title on the wide panel */
+.dialog.wide h2 {
+  font-size: 1.6rem;
+  text-shadow: 3px 3px 0 #120e1a;
+}
+
+/* shadow on the note so it reads over the room */
+.dialog.wide .sample-note {
+  text-shadow: 2px 2px 0 #120e1a;
+}
+
+/* no text shadow on the placeholder tag */
+.dialog.wide .sample {
+  text-shadow: none;
+}
+
+/* hide header and shortcuts while cards float */
+body.floating header,
+body.floating nav {
+  visibility: hidden;
+}
+
+/* keep the hero banner above the floating overlay */
+body.floating .banner {
+  z-index: 6;
+}
+
+/* banner stays still and unclickable under floating cards */
+body.floating .banner-inner {
+  animation: none;
+  cursor: var(--arrow);
+}
+
+/* no next arrow while cards float */
+body.floating .banner-next {
+  display: none;
+}
+
+/* leave room under the cards for the banner and portrait */
+.overlay.floating {
+  padding-bottom: calc(190px + var(--ph) * 0.6 + env(safe-area-inset-bottom, 0px));
+}
+
+/* phones: smaller banner and less bottom room */
+@media (max-width: 520px) {
+  /* less space reserved under the floating cards */
+  .overlay.floating {
+    padding-bottom: calc(176px + var(--ph) * 0.6 + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* smaller banner text */
+  .banner-text {
+    font-size: 0.95rem;
+  }
+
+  /* tighter, shorter banner box */
+  .banner-box {
+    padding: 22px 14px 14px;
+    min-height: 92px;
+  }
+}
+
+/* muted intro note above the cards */
+.sample-note {
+  margin: 0 0 14px !important;
+  color: var(--muted);
+}
+
+/* project cards in a horizontal snapping scroller */
+.pcards {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  padding: 6px 6px 12px;
+}
+
+/* cards sized from the free height and width (bigger again while the screen is enlarged), snapping at their start */
+.pcards > .pcard {
+  flex: 0 0 var(--cw);
+  scroll-snap-align: start;
+  transition: flex-basis 0.25s steps(5);
+}
+
+/* card width: as big as the height above the banner allows (a card is about 0.56 x its width + 175px tall), and
+   three cards side by side */
+.pcards {
+  --cw: clamp(240px, min((min(1200px, 80vw) - 170px) / 3, 178vh - 1262px), 440px);
+}
+
+/* when all the cards fit on the screen they sit in the middle; when they don't, the row still starts at the left
+   edge and scrolls (auto margins, unlike justify-content: center, never push cards out of reach) */
+.pcards > .pcard:first-child {
+  margin-left: auto;
+}
+
+.pcards > .pcard:last-child {
+  margin-right: auto;
+}
+
+/* =================================================================================================
+   timid pixel scrollbar (custom, so it looks the same everywhere): shows while scrolling, then fades out
+   ================================================================================================= */
+
+/* hide the native scrollbar in Firefox */
+.pcards {
+  scrollbar-width: none;
+}
+
+/* hide the native scrollbar in WebKit browsers */
+.pcards::-webkit-scrollbar {
+  display: none;
+}
+
+/* custom scrollbar track, hidden until scrolling */
+.pscroll {
+  position: relative;
+  height: 8px;
+  margin: 2px 8px 0;
+  opacity: 0;
+  transition: opacity 0.25s steps(3);
+  background: repeating-linear-gradient(90deg, rgba(185, 174, 203, 0.14) 0 4px, transparent 4px 8px);
+  touch-action: none;
+}
+
+/* track shown while the cards are scrolling */
+.pscroll.on {
+  opacity: 0.75;
+  transition: opacity 0.08s steps(2);
+}
+
+/* track brighter on hover */
+.pscroll:hover {
+  opacity: 0.9;
+}
+
+/* draggable gold scrollbar thumb */
+.pscroll i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  /* same pixel thumb as the native scrollbars in style.css */
+  background: var(--gold);
+  box-shadow:
+    inset 2px 2px 0 var(--gold-light),
+    inset -2px -2px 0 var(--gold-dark),
+    0 0 0 2px var(--outline);
+  cursor: var(--hand);
+}
+
+/* project card: reset button styles into a framed pixel card */
+.pcard {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background: #1c1530;
+  border: 3px solid #e8c98a;
+  box-shadow:
+    0 0 0 3px #120e1a,
+    5px 6px 0 3px rgba(0, 0, 0, 0.45);
+  cursor: var(--hand);
+  text-align: left;
+  color: var(--ink);
+  animation: pop 0.5s backwards;
+}
+
+/* =================================================================================================
+   sticker pop: each card slaps in with an overshoot and a wobble, in chunky steps
+   ================================================================================================= */
+
+/* pop: sticker slap-in with bounce */
+@keyframes pop {
+  /* start tiny, tilted and invisible */
+  0% {
+    transform: scale(0.25) rotate(-12deg);
+    opacity: 0;
+    animation-timing-function: steps(3);
+  }
+
+  /* overshoot big with a white flash border */
+  40% {
+    transform: scale(1.14) rotate(5deg);
+    opacity: 1;
+    border-color: #fff;
+    animation-timing-function: steps(2);
+  }
+
+  /* bounce back undersized */
+  60% {
+    transform: scale(0.93) rotate(-3deg);
+    animation-timing-function: steps(2);
+  }
+
+  /* small overshoot again */
+  78% {
+    transform: scale(1.04) rotate(1deg);
+    animation-timing-function: steps(2);
+  }
+
+  /* settle at normal size */
+  100% {
+    transform: none;
+  }
+}
+
+/* first card pops in first */
+.pcard:nth-child(1) {
+  animation-delay: 0.15s;
+}
+
+/* second card a little later */
+.pcard:nth-child(2) {
+  animation-delay: 0.27s;
+}
+
+/* third card delay */
+.pcard:nth-child(3) {
+  animation-delay: 0.39s;
+}
+
+/* fourth card delay */
+.pcard:nth-child(4) {
+  animation-delay: 0.51s;
+}
+
+/* fifth card delay */
+.pcard:nth-child(5) {
+  animation-delay: 0.63s;
+}
+
+/* sixth card delay */
+.pcard:nth-child(6) {
+  animation-delay: 0.75s;
+}
+
+/* card lifts with an amber border on hover or focus */
+.pcard:hover,
+.pcard:focus-visible {
+  transform: translate(-2px, -3px);
+  border-color: var(--amber);
+  box-shadow:
+    0 0 0 3px #120e1a,
+    8px 10px 0 3px rgba(0, 0, 0, 0.45);
+}
+
+/* amber outline around a keyboard-focused card */
+.pcard:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 4px;
+}
+
+/* card presses down when clicked */
+.pcard:active {
+  transform: translate(1px, 1px);
+}
+
+/* card thumbnail area, 16:9 like the screen captures, under a gold line */
+.pthumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  border-bottom: 3px solid #e8c98a;
+  background: #0c0912;
+  overflow: hidden;
+}
+
+/* thumbnail canvas filling the area with crisp pixels */
+.pthumb canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: pixelated;
+}
+
+/* amber badge in the thumbnail corner */
+.pbadge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font: 600 0.7rem var(--display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1b1626;
+  background: var(--amber);
+  border: 2px solid #120e1a;
+  padding: 1px 7px;
+}
+
+/* card body: stacked title, text and tags */
+.pbody {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 12px 6px;
+  flex: 1;
+}
+
+/* project title in pale gold */
+.ptitle {
+  font: 600 1.1rem var(--display);
+  color: #ffe9b8;
+}
+
+/* project blurb cut to two lines */
+.pdesc {
+  font-size: 0.84rem;
+  line-height: 1.35;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* tag chips pushed to the bottom of the body */
+.ptags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+/* single tag chip */
+.ptags span {
+  font: 0.7rem var(--display);
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  background: #3b2d57;
+  border: 2px solid #120e1a;
+  padding: 1px 6px;
+}
+
+/* project card footer: role on the left, link on the right */
+.pfoot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px 10px;
+  border-top: 2px dotted #3b2d57;
+  font: 600 0.85rem var(--display);
+}
+
+/* role label in amber */
+.pfoot > span:first-child {
+  color: var(--amber);
+}
+
+/* call-to-action: a cyan pixel chip with a hard shadow */
+.pcta {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  gap: 4px;
+  margin-left: 8px;
+  padding: 3px 8px;
+  white-space: nowrap;
+  color: #7ff3ff;
+  border: 2px solid #7ff3ff;
+  box-shadow: 2px 2px 0 #1d6f78;
+  transition:
+    background 0.15s steps(3),
+    color 0.15s steps(3),
+    transform 0.15s steps(3),
+    box-shadow 0.15s steps(3);
+}
+
+/* its arrow, ready to slide */
+.pcta .pxi {
+  transition: transform 0.15s steps(3);
+}
+
+/* hovered: the chip fills, lifts onto a longer shadow and its arrow nudges right in a loop */
+.pcta:hover {
+  background: #7ff3ff;
+  color: #14101f;
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 #1d6f78;
+}
+
+/* the arrow's loop while the chip is hovered */
+.pcta:hover .pxi {
+  animation: ctanudge 0.6s steps(2) infinite;
+}
+
+/* arrow nudge: two pixel-steps right and back */
+@keyframes ctanudge {
+  50% {
+    transform: translateX(3px);
+  }
+}
+
+/* phones: bigger cards that snap one at a time */
+@media (max-width: 640px) {
+  /* smaller gap and strict snapping */
+  .pcards {
+    gap: 14px;
+    scroll-snap-type: x mandatory;
+  }
+
+  /* cards take most of the width, snapping to centre */
+  .pcards > .pcard {
+    flex: 0 0 min(72%, var(--cw));
+    scroll-snap-align: center;
+  }
+
+  /* less padding around the wide panel */
+  .dialog.wide {
+    padding: 8px 0 8px;
+    align-self: end;
+  }
+}
+
+/* reduced motion: no card pop or hover lift */
+@media (prefers-reduced-motion: reduce) {
+  /* no pop-in on cards */
+  .pcard {
+    animation: none;
+  }
+
+  /* no lift on hovered cards */
+  .pcard:hover {
+    transform: none;
+  }
+
+  /* no lift or arrow loop on the hovered call-to-action */
+  .pcta:hover,
+  .pcta:hover .pxi {
+    transform: none;
+    animation: none;
+  }
+}
+
+/* =================================================================================================
+   Socials: big frameless pixel logos, each tilted a little
+   ================================================================================================= */
+
+/* social icons in a centred two-column grid */
+.socials {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  gap: 22px clamp(36px, 8vw, 72px);
+  padding: 18px 8px 10px;
+}
+
+/* odd last icon centred on its own row */
+.socials .sicon.mail {
+  grid-column: 1 / -1;
+  justify-self: center;
+}
+
+/* social link: logo above its label, popping in */
+.sicon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+  color: var(--ink);
+  animation: pop 0.5s backwards;
+  outline: none;
+}
+
+/* first logo pops in first */
+.sicon:nth-child(1) {
+  animation-delay: 0.15s;
+}
+
+/* second logo delay */
+.sicon:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+/* third logo delay */
+.sicon:nth-child(3) {
+  animation-delay: 0.45s;
+}
+
+/* logo box with a random slight tilt */
+.slogo {
+  display: grid;
+  place-items: center;
+  width: clamp(84px, 18vw, 112px);
+  aspect-ratio: 1;
+  transform: rotate(var(--tilt, 0deg));
+}
+
+/* logo canvas: frameless crisp pixels with a springy hover */
+.slogo canvas {
+  width: 100%;
+  max-width: none;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  cursor: var(--hand);
+  image-rendering: pixelated;
+  transition:
+    transform 0.32s cubic-bezier(0.3, 1.9, 0.5, 1),
+    filter 0.2s;
+  filter: drop-shadow(3px 3px 0 #120e1a);
+}
+
+/* LinkedIn blue glow colour */
+.slogo.li canvas {
+  --glow: #2f8fff;
+}
+
+/* GitHub logo glows pale cyan */
+.slogo.gh canvas {
+  --glow: #b9f5ff;
+}
+
+/* Gmail logo glows coral red */
+.slogo.gm canvas {
+  --glow: #ff6b5e;
+}
+
+/* hovered or focused social logo grows and glows in its brand colour */
+.sicon:hover .slogo canvas,
+.sicon:focus-visible .slogo canvas {
+  transform: scale(1.16);
+  filter: drop-shadow(3px 3px 0 #120e1a) drop-shadow(0 0 6px var(--glow)) drop-shadow(0 0 14px var(--glow));
+}
+
+/* keyboard focus underlines the social label in amber */
+.sicon:focus-visible .slabel {
+  color: var(--amber);
+  text-decoration: underline;
+}
+
+/* social label: bold pixel font with a dark drop shadow */
+.slabel {
+  font: 600 1.05rem var(--display);
+  letter-spacing: 0.06em;
+  text-shadow: 2px 2px 0 #120e1a;
+}
+
+/* =================================================================================================
+   email pin menu: write in Gmail or Outlook on the web, open a mail app, or copy the address
+   ================================================================================================= */
+
+/* the menu: a dark pixel box under the pin, above the panel */
+.mailmenu {
+  position: fixed;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  min-width: 210px;
+  padding: 6px;
+  background: #1c1530;
+  border: 3px solid #e8c98a;
+  box-shadow:
+    0 0 0 3px #120e1a,
+    5px 6px 0 3px rgba(0, 0, 0, 0.45);
+  animation: pop 0.2s steps(3) backwards;
+}
+
+/* the address on top, selectable */
+.mailto {
+  padding: 4px 8px 8px;
+  margin-bottom: 4px;
+  border-bottom: 2px dotted #3b2d57;
+  color: var(--amber);
+  font: 600 0.85rem var(--display);
+  user-select: all;
+  word-break: break-all;
+}
+
+/* one line of the menu: icon and label */
+.mailitem {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 8px;
+  color: var(--ink);
+  font: 600 0.9rem var(--display);
+  cursor: var(--hand);
+}
+
+/* hovered or focused line fills cyan, like the card buttons */
+.mailitem:hover,
+.mailitem:focus-visible {
+  background: #7ff3ff;
+  color: #14101f;
+}
+
+/* wide dialog header: extra room between title and close button */
+.dialog.wide .dialog-head {
+  gap: 56px;
+}
+
+/* the projects screen may run wider than the other panels, but keeps a fifth of the window free so the room shows
+   around it (phones use the whole width) */
+.dialog.wide[data-panel="projects"] {
+  width: min(1200px, 80%);
+}
+
+/* phones: the screen takes the whole width again */
+@media (max-width: 700px) {
+  /* full width */
+  .dialog.wide[data-panel="projects"] {
+    width: 100%;
+  }
+}
+
+/* socials dialog shrinks to fit its icons */
+.dialog.wide[data-panel="socials"] {
+  width: auto;
+}
+
+/* social label under each logo, restated after the dialog rules */
+.slabel {
+  font: 600 1.05rem var(--display);
+  letter-spacing: 0.06em;
+  text-shadow: 2px 2px 0 #120e1a;
+}
+
+/* =================================================================================================
+   Projects sit on a pixel computer screen
+   ================================================================================================= */
+
+/* monitor bezel framing the project list, switching on as it opens */
+.monitor {
+  position: relative;
+  padding: 14px;
+  background: #3a3350;
+  box-shadow:
+    inset 4px 4px 0 #5a5175,
+    inset -4px -4px 0 #231d33,
+    0 0 0 4px #120e1a,
+    8px 10px 0 4px rgba(0, 0, 0, 0.4);
+  animation: poweron 0.45s steps(5) backwards;
+}
+
+/* green power light blinking in the monitor's bottom corner */
+.monitor::after {
+  content: "";
+  position: absolute;
+  right: 18px;
+  bottom: 4px;
+  width: 6px;
+  height: 6px;
+  background: #5cf2c6;
+  box-shadow:
+    0 0 0 2px #120e1a,
+    0 0 8px #5cf2c6;
+  animation: blink 2.4s steps(2) infinite;
+}
+
+/* dark teal glass of the screen holding the project cards */
+.screen {
+  position: relative;
+  background: radial-gradient(ellipse at 50% 40%, #12384a 0, #0b2030 55%, #08141f 100%);
+  box-shadow:
+    inset 0 0 0 3px #120e1a,
+    inset 0 0 28px rgba(92, 242, 198, 0.18);
+  padding: 26px 12px 22px;
+  overflow: hidden;
+}
+
+/* scanline stripes laid over the screen */
+.screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.18) 0 2px, transparent 2px 4px);
+}
+
+/* sample-data note in terminal green on the screen */
+.screen .sample-note {
+  margin: 0 6px 18px !important;
+  color: #9ff5dc;
+  font-family: var(--display);
+}
+
+/* terminal prompt printed before the sample note */
+.screen .sample-note::before {
+  content: attr(data-prompt);
+  color: #5cf2c6;
+}
+
+/* monitor neck under the screen, tall enough to lift the screen off the desk */
+.stand {
+  width: 64px;
+  height: 40px;
+  margin: 0 auto;
+  background: #2c2640;
+  box-shadow:
+    inset 4px 0 0 #4a4263,
+    0 0 0 4px #120e1a;
+  position: relative;
+  z-index: -1;
+  animation: poweron 0.45s steps(5) backwards;
+}
+
+/* flat monitor foot under the neck */
+.stand::after {
+  content: "";
+  position: absolute;
+  left: -48px;
+  right: -48px;
+  top: 40px;
+  height: 12px;
+  background: #3a3350;
+  box-shadow:
+    inset 0 4px 0 #5a5175,
+    0 0 0 4px #120e1a;
+}
+
+/* the two faint screens beside the main one: as wide as the free space allows (none on a phone), dimmer and a
+   little lower, each on its own short neck */
+.sidescreen {
+  --sw: max(0px, min(150px, (100vw - 100%) / 2 - 34px));
+  position: absolute;
+  top: 12%;
+  bottom: 6%;
+  width: var(--sw);
+  padding: 8px;
+  background: #2c2640;
+  box-shadow:
+    inset 3px 3px 0 #453d5e,
+    inset -3px -3px 0 #1d1829,
+    0 0 0 4px #120e1a;
+  filter: brightness(0.5);
+  pointer-events: none;
+}
+
+/* left one, a gap away from the main screen */
+.sidescreen.left {
+  left: calc(-1 * var(--sw) - 18px);
+}
+
+/* right one, the same gap on the other side */
+.sidescreen.right {
+  right: calc(-1 * var(--sw) - 18px);
+}
+
+/* its dark glass with a faint glow and scanlines */
+.sidescreen::before {
+  content: "";
+  display: block;
+  height: 100%;
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.25) 0 2px, transparent 2px 4px),
+    radial-gradient(ellipse at 50% 40%, #12384a 0, #08141f 100%);
+  box-shadow: inset 0 0 0 2px #120e1a;
+}
+
+/* its neck, from the bottom edge down */
+.sidescreen::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 28px;
+  height: 30px;
+  margin: 4px 0 0 -14px;
+  background: #2c2640;
+  box-shadow: 0 0 0 4px #120e1a;
+}
+
+/* no room for side screens when the stand would sit under nothing (very narrow windows) */
+@media (max-width: 700px) {
+  .sidescreen {
+    display: none;
+  }
+}
+
+/* no gap above whatever follows the stand */
+.stand + * {
+  margin-top: 0;
+}
+
+/* space below the monitor stand */
+.monitor + .stand {
+  margin-bottom: 34px;
+}
+
+/* first project card appears once the screen is on */
+.monitor .pcard:nth-child(1) {
+  animation-delay: 0.52s;
+}
+
+/* second project card appears a beat later */
+.monitor .pcard:nth-child(2) {
+  animation-delay: 0.64s;
+}
+
+/* third project card follows */
+.monitor .pcard:nth-child(3) {
+  animation-delay: 0.76s;
+}
+
+/* fourth project card follows */
+.monitor .pcard:nth-child(4) {
+  animation-delay: 0.88s;
+}
+
+/* fifth project card follows */
+.monitor .pcard:nth-child(5) {
+  animation-delay: 1s;
+}
+
+/* sixth project card appears last */
+.monitor .pcard:nth-child(6) {
+  animation-delay: 1.12s;
+}
+
+/* monitor switching on like an old CRT */
+@keyframes poweron {
+  /* start: a thin bright invisible line */
+  0% {
+    transform: scale(1, 0.02);
+    filter: brightness(3);
+    opacity: 0;
+  }
+
+  /* the bright line flashes into view */
+  40% {
+    transform: scale(1, 0.02);
+    filter: brightness(3);
+    opacity: 1;
+  }
+
+  /* screen stretches open, overshooting slightly */
+  70% {
+    transform: scale(1, 1.03);
+  }
+}
+
+/* =================================================================================================
+   CV: a vertical paper on the bureau, the desk and trophies barely there behind it
+   ================================================================================================= */
+
+/* CV stage sized to the window, paper centred */
+.cvscene {
+  position: relative;
+  width: min(900px, 100%);
+  height: clamp(380px, calc(100dvh - 232px), 860px);
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+}
+
+/* faded desk picture behind the paper, edges fading out */
+.cvscene .desk {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  image-rendering: pixelated;
+  opacity: 0.26;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  animation: rise 0.3s steps(4) backwards;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 55%, #000 45%, transparent 80%);
+  mask-image: radial-gradient(ellipse at 50% 55%, #000 45%, transparent 80%);
+}
+
+/* =================================================================================================
+   .cvdoc
+   ================================================================================================= */
+
+/* CV sheet of paper, A4-shaped, slightly tilted on the desk */
+.cvdoc {
+  position: relative;
+  height: 100%;
+  width: auto;
+  aspect-ratio: 1 / 1.41;
+  max-width: 92vw;
+  box-sizing: border-box;
+  padding: clamp(18px, 3.4vh, 34px) clamp(18px, 3vh, 32px) clamp(14px, 2.6vh, 26px);
+  font-size: clamp(14px, 2.1vh, 19px);
+  container-type: inline-size;
+  background: #f4ead8;
+  color: #2a1d14;
+  transform: rotate(-1.5deg);
+  box-shadow:
+    inset 0 0 0 2px #d8c7a6,
+    0 0 0 3px #120e1a,
+    8px 10px 0 3px rgba(0, 0, 0, 0.45),
+    0 0 70px rgba(255, 233, 184, 0.28);
+  animation: pop 0.55s 0.2s backwards;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+  overflow: hidden;
+}
+
+/* folded dog-ear in the paper's bottom-right corner */
+.cvdoc::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border: 9px solid;
+  border-color: #d8c7a6 #1c1530 #1c1530 #d8c7a6;
+}
+
+/* CV header row: photo beside name and role */
+.cvtop {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
+/* photo frame on the CV */
+.cvphoto {
+  flex: 0 0 26cqw;
+  height: 31cqw;
+  background: #c9b896;
+  box-shadow: inset 0 0 0 2px #2a1d14;
+  position: relative;
+  overflow: hidden;
+}
+
+/* placeholder head of the empty photo */
+.cvphoto::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 18%;
+  width: 40%;
+  height: 34%;
+  margin-left: -20%;
+  background: #9c8a68;
+}
+
+/* placeholder shoulders of the empty photo */
+.cvphoto::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 72%;
+  height: 30%;
+  margin-left: -36%;
+  background: #9c8a68;
+}
+
+/* name on the CV in big display type */
+.cvname {
+  font: 600 2em var(--display);
+  margin: 0;
+}
+
+/* job title under the name, small caps in brown */
+.cvrole {
+  font: 0.9em var(--display);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8a5a3c;
+  margin: 2px 0 0;
+}
+
+/* CV section heading, uppercase with a rule beneath */
+.cvsec h4 {
+  font: 600 0.9em var(--display);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 5px;
+  padding-bottom: 3px;
+  border-bottom: 2px solid #2a1d14;
+}
+
+/* grey bars standing in for lines of text */
+.cvsec i {
+  display: block;
+  height: 0.4em;
+  margin: 0 0 0.5em;
+  background: #cdbd9c;
+}
+
+/* every third placeholder line is shorter */
+.cvsec i:nth-child(3n) {
+  width: 72%;
+}
+
+/* next placeholder line is nearly full width */
+.cvsec i:nth-child(3n + 1) {
+  width: 90%;
+}
+
+/* sample stamp pinned to the bottom of the paper */
+.cvdoc .sample {
+  align-self: flex-start;
+  margin: auto 0 0;
+}
+
+/* CV paper is clickable and springs when it moves */
+.cvdoc {
+  cursor: var(--hand);
+  outline: none;
+  transition:
+    transform 0.35s cubic-bezier(0.3, 1.4, 0.5, 1),
+    box-shadow 0.25s;
+  z-index: 1;
+}
+
+/* hovered or focused CV straightens, lifts and glows */
+.cvdoc:hover,
+.cvdoc:focus-visible {
+  transform: translateY(-6px) rotate(0deg) scale(1.05);
+  box-shadow:
+    inset 0 0 0 2px #d8c7a6,
+    0 0 0 3px #120e1a,
+    12px 16px 0 3px rgba(0, 0, 0, 0.5),
+    0 0 90px rgba(255, 233, 184, 0.4);
+}
+
+/* keyboard focus gives the CV an amber outline */
+.cvdoc:focus-visible {
+  box-shadow:
+    inset 0 0 0 2px #d8c7a6,
+    0 0 0 3px var(--amber),
+    12px 16px 0 3px rgba(0, 0, 0, 0.5),
+    0 0 90px rgba(255, 233, 184, 0.4);
+}
+
+/* desk fades almost out while the CV is hovered */
+.cvscene:has(.cvdoc:hover, .cvdoc:focus-visible) .desk {
+  opacity: 0.12;
+  transition: opacity 0.25s;
+}
+
+/* zoomed-in CV with a deeper shadow */
+.cvdoc.zoom {
+  cursor: var(--hand);
+  box-shadow:
+    inset 0 0 0 2px #d8c7a6,
+    0 0 0 3px #120e1a,
+    14px 18px 0 3px rgba(0, 0, 0, 0.55),
+    0 0 140px rgba(255, 233, 184, 0.35);
+}
+
+/* darker overlay above the room while the CV is zoomed */
+body.cvzoom .overlay.floating {
+  z-index: 7;
+  background: rgba(8, 6, 14, 0.9);
+  transition: background 0.25s;
+}
+
+/* dialog title bar hidden while the CV is zoomed */
+body.cvzoom .dialog-head {
+  visibility: hidden;
+}
+
+/* desk hidden completely while the CV is zoomed */
+body.cvzoom .cvscene .desk {
+  opacity: 0;
+}
+
+/* =================================================================================================
+   .cvlens
+   ================================================================================================= */
+
+/* reading strip over the CV paper: a gold-framed band that follows the mouse and shows the lines enlarged */
+.cvlens {
+  position: fixed;
+  z-index: 30;
+  overflow: hidden;
+  pointer-events: none;
+  background: #f4ead8;
+  box-shadow:
+    0 0 0 3px var(--amber),
+    0 0 0 6px #120e1a,
+    0 14px 30px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+/* strip shown while the mouse is over the paper */
+.cvlens.on {
+  opacity: 1;
+}
+
+/* the enlarged copy of the paper: flat, still and unframed, scaled from its top-left corner */
+.cvlens .cvdoc {
+  position: absolute;
+  left: 0;
+  top: 0;
+  max-width: none;
+  aspect-ratio: auto;
+  transform-origin: 0 0;
+  animation: none;
+  transition: none;
+  box-shadow: none;
+}
+
+/* reduced motion: CV and desk stay still */
+@media (prefers-reduced-motion: reduce) {
+  .cvdoc,
+  .cvscene .desk {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* language flag in the corner (next to the title on phones); the menu itself is styled in style.css */
+.lang {
+  pointer-events: auto;
+  align-self: flex-start;
+}
+
+/* language flag button image size */
+.lang .lang-btn img {
+  width: 44px;
+  height: 30px;
+}
+
+/* =================================================================================================
+   Phone only: the room is a backdrop, the three big buttons are the way in
+   ================================================================================================= */
+
+/* phones: room as backdrop, stacked big nav buttons */
+@media (max-width: 640px) {
+  /* no grey flash on tap */
+  *,
+  *::before,
+  *::after {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* no text selection or long-press menu on the room and controls */
+  html,
+  body,
+  .app,
+  .stage,
+  canvas,
+  header,
+  nav,
+  .title {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* selection stays invisible if it happens anyway */
+  .app ::selection,
+  .title ::selection {
+    background: transparent;
+  }
+
+  /* room canvas shows no focus ring and cannot be dragged */
+  canvas {
+    outline: none;
+    -webkit-user-drag: none;
+  }
+
+  /* room the title above and the buttons below need */
+  .app {
+    padding-top: 84px;
+    padding-bottom: 204px;
+  }
+
+  /* title bar centred near the top on one line */
+  header {
+    top: 18px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 12px;
+    text-align: center;
+  }
+
+  /* language flag lined up with the title */
+  .lang {
+    align-self: center;
+  }
+
+  /* smaller title with a pixel shadow */
+  h1 {
+    font-size: 2.6rem;
+    line-height: 1;
+    text-shadow: 3px 3px 0 #120e1a;
+  }
+
+  /* nav pinned at the bottom as a column above the safe area */
+  nav {
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    left: 16px;
+    right: 16px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 9px;
+  }
+
+  /* big full-width-ish nav buttons sized for thumbs */
+  nav button {
+    width: 80%;
+    font-size: 1.09rem;
+    letter-spacing: 0.1em;
+    padding: 0;
+    height: 49px;
+    color: #ffe9b8;
+    background: #241d33;
+    border: 3px solid #e8c98a;
+    border-radius: 0;
+    box-shadow:
+      0 0 0 3px #120e1a,
+      5px 6px 0 3px rgba(0, 0, 0, 0.45);
+    touch-action: manipulation;
+  }
+
+  /* nav button presses down on tap */
+  nav button:active {
+    transform: translate(2px, 3px);
+    box-shadow:
+      0 0 0 3px #120e1a,
+      2px 3px 0 3px rgba(0, 0, 0, 0.45);
+    background: #3b2d57;
+  }
+
+  /* keyboard hints hidden on phones */
+  nav small {
+    display: none;
+  }
+}
+
+/* =================================================================================================
+   touch screens of any width: never select or highlight the room on tap or long-press
+   ================================================================================================= */
+
+/* touch screens: no selection or tap highlight on the room */
+@media (pointer: coarse) {
+  /* no grey flash on tap */
+  *,
+  *::before,
+  *::after {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* no text selection or long-press menu on the room and controls */
+  .app,
+  .stage,
+  canvas,
+  header,
+  nav,
+  .title {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* no focus ring on the room canvas */
+  canvas {
+    outline: none;
+  }
+}
+
+/* =================================================================================================
+   content-driven bits
+   ================================================================================================= */
+
+/* real project thumbnail fills its frame */
+.pthumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* real CV photo fills the photo frame */
+.cvphoto img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* placeholder silhouette hidden once a photo is set */
+.cvphoto.has::before,
+.cvphoto.has::after {
+  display: none;
+}
+
+/* CV summary paragraph */
+.cvsum {
+  margin: 0;
+  font-size: 0.8em;
+  line-height: 1.4;
+}
+
+/* CV section text, small and tight */
+.cvsec {
+  font-size: 0.8em;
+  line-height: 1.35;
+}
+
+/* smaller CV section headings */
+.cvsec h4 {
+  font-size: 0.9em;
+}
+
+/* one CV entry, such as a job or a degree */
+.cvent {
+  margin: 0 0 0.55em;
+}
+
+/* entry title in the display font */
+.cvent b {
+  font-family: var(--display);
+  font-weight: 600;
+}
+
+/* entry dates floated to the right in brown */
+.cvent .cvwhen {
+  float: right;
+  font: 0.85em var(--display);
+  color: #8a5a3c;
+}
+
+/* bullet points under a CV entry */
+.cvent ul {
+  margin: 0.15em 0 0;
+  padding-left: 1.1em;
+}
+
+/* one skill line on the CV */
+.cvskill {
+  margin: 0 0 0.3em;
+}
+
+/* skill group name in the display font */
+.cvskill b {
+  font-family: var(--display);
+  font-weight: 600;
+}
+
+/* download CV button at the bottom of the paper */
+.cvdl {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  margin-top: auto;
+  font: 600 0.8em var(--display);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #f4ead8;
+  background: #2a1d14;
+  padding: 0.4em 0.9em;
+  box-shadow:
+    0 0 0 2px #120e1a,
+    3px 3px 0 2px rgba(0, 0, 0, 0.35);
+  cursor: var(--hand);
+  transition:
+    transform 0.12s steps(2),
+    box-shadow 0.12s steps(2);
+}
+
+/* download button on hover or focus: turns amber, lifts off the paper, and its arrow drops like a download */
+.cvdl:hover,
+.cvdl:focus-visible {
+  background: var(--amber);
+  color: #2a1d14;
+  transform: translate(-2px, -2px);
+  box-shadow:
+    0 0 0 2px #120e1a,
+    5px 5px 0 2px rgba(0, 0, 0, 0.45);
+  outline: none;
+}
+
+/* the download arrow bobs down while the button is hovered */
+.cvdl:hover .pxi,
+.cvdl:focus-visible .pxi {
+  animation: dlbob 0.6s steps(2) infinite;
+}
+
+/* pressed download button sinks back onto the paper */
+.cvdl:active {
+  transform: translate(1px, 1px);
+  box-shadow: 0 0 0 2px #120e1a;
+}
+
+/* arrow bob: two pixel-steps down and back */
+@keyframes dlbob {
+  50% {
+    transform: translateY(3px);
+  }
+}
+
+/* reduced motion: the button only changes colour */
+@media (prefers-reduced-motion: reduce) {
+  .cvdl,
+  .cvdl .pxi {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* sample stamp sits flush in the CV footer */
+.cvfoot .sample {
+  margin: 0;
+}
+
+/* CV footer row: download button and sample stamp */
+.cvfoot {
+  margin-top: auto;
+  display: flex;
+  gap: 0.8em;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* download button keeps its place inside the footer */
+.cvfoot .cvdl {
+  margin-top: 0;
+}
+
+/* =================================================================================================
+   Socials are pinned to a corkboard
+   ================================================================================================= */
+
+/* corkboard behind the social links, in a wooden frame */
+.cork {
+  position: relative;
+  margin: 6px auto 0;
+  width: fit-content;
+  max-width: 100%;
+  padding: 26px clamp(18px, 5vw, 44px) 18px;
+  background: url(assets/cork.png) 0 0 / 144px 144px;
+  image-rendering: pixelated;
+  box-shadow:
+    inset 0 0 0 3px #5b3418,
+    inset 6px 6px 0 3px rgba(0, 0, 0, 0.22),
+    0 0 0 10px #8a5530,
+    0 0 0 13px #5b3418,
+    0 0 0 16px #120e1a,
+    10px 12px 0 16px rgba(0, 0, 0, 0.4);
+  animation: rise 0.25s steps(4) backwards;
+}
+
+/* social icons spaced inside the corkboard */
+.cork .socials {
+  padding: 6px 4px 0;
+}
+
+/* social labels as paper notes, tilted against the logo */
+.cork .slabel {
+  background: #f4ead8;
+  color: #2a1d14;
+  text-shadow: none;
+  padding: 1px 8px;
+  border: 2px solid #120e1a;
+  transform: rotate(calc(var(--tilt, 0deg) * -0.5));
+}
+
+/* logo box anchors its pushpin */
+.slogo {
+  position: relative;
+}
+
+/* red pushpin stuck in the top of each social logo */
+.cork .slogo::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  z-index: 1;
+  background: #e5483f;
+  box-shadow:
+    inset 3px 3px 0 #ff8a7a,
+    inset -2px -2px 0 #8f1f2a,
+    0 0 0 2px #120e1a,
+    2px 3px 0 2px rgba(0, 0, 0, 0.35);
+}
+
+/* reduced motion: monitor, stand, corkboard and power light stay still */
+@media (prefers-reduced-motion: reduce) {
+  .monitor,
+  .stand,
+  .cork,
+  .monitor::after {
+    animation: none;
+  }
+}
+
+/* reduced motion: social icons appear without popping in */
+@media (prefers-reduced-motion: reduce) {
+  /* no pop-in for the social icons */
+  .sicon {
+    animation: none;
+  }
+
+  /* no grow on hover for the social logos */
+  .slogo canvas {
+    transition: none;
+  }
+}
+
+/* =================================================================================================
+   Project detail view: the clicked card grows into this centred modal while the room dims
+   ================================================================================================= */
+
+/* card hidden while its copy grows into the detail view */
+.pcard.lifted {
+  visibility: hidden;
+}
+
+/* thumbnail video or image fills the card frame */
+.pthumb video,
+.pthumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* dark backdrop behind the project detail view, faded out */
+.pback {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: rgba(12, 9, 18, 0.72);
+  opacity: 0;
+  transition: opacity 0.25s steps(4);
+}
+
+/* backdrop fades in when the detail view opens */
+.pback.in {
+  opacity: 1;
+}
+
+/* =================================================================================================
+   .pmodal
+   ================================================================================================= */
+
+/* project detail modal centred over the room */
+.pmodal {
+  position: fixed;
+  z-index: 31;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  transform-origin: 0 0;
+  box-sizing: border-box;
+  width: min(1280px, 94vw);
+  height: min(760px, 86vh);
+  display: grid;
+  grid-template-columns: minmax(0, 2.3fr) minmax(300px, 1fr);
+  background: #1c1530;
+  border: 3px solid #e8c98a;
+  box-shadow:
+    0 0 0 3px #120e1a,
+    10px 12px 0 3px rgba(0, 0, 0, 0.5);
+  color: var(--ink);
+  transition: transform 0.26s steps(6);
+  cursor: var(--arrow);
+}
+
+/* links and buttons in the modal use the hand cursor */
+.pmodal a,
+.pmodal button {
+  cursor: var(--hand);
+}
+
+/* square close button in the modal's top-right corner */
+.pclose {
+  all: unset;
+  position: absolute;
+  z-index: 2;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  background: #1c1530;
+  border: 2px solid #e8c98a;
+  color: var(--ink);
+}
+
+/* close button turns amber on hover or focus */
+.pclose:hover,
+.pclose:focus-visible {
+  color: var(--amber);
+  border-color: var(--amber);
+}
+
+/* left column of the modal holding the media: the preview takes most of the modal, centred in its column */
+.pmedia {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  border-right: 3px solid #e8c98a;
+  background: #0c0912;
+  min-width: 0;
+}
+
+/* 16:9 media frame on a black background, as wide as the column allows without growing taller than it */
+.phero {
+  width: min(100%, (min(760px, 86vh) - 40px) * 16 / 9);
+  align-self: center;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 2px solid #3b2d57;
+  overflow: hidden;
+}
+
+/* picture, video, embed or canvas fills the media frame */
+.phero img,
+.phero video,
+.phero iframe,
+.phero canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: contain;
+}
+
+/* pixel art canvases stay crisp when scaled */
+.phero canvas {
+  image-rendering: pixelated;
+}
+
+/* badge position on the modal's media */
+.pmedia .pbadge {
+  top: 18px;
+  left: 18px;
+}
+
+/* right column of the modal with the project text, scrolling */
+.pinfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 20px 18px;
+  overflow-y: auto;
+  min-width: 0;
+}
+
+/* project title in big light gold type */
+.pname {
+  margin: 0 40px 0 0;
+  font: 600 1.6rem var(--display);
+  color: #ffe9b8;
+}
+
+/* project role in amber just under the title */
+.prole {
+  margin: -6px 0 0;
+  font: 600 0.95rem var(--display);
+  color: var(--amber);
+}
+
+/* one-line project pitch in muted text */
+.plead {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* project summary, keeping its line breaks */
+.psum {
+  margin: 0;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+/* highlight box with an amber bar on the left */
+.phigh {
+  padding: 8px 12px;
+  border-left: 4px solid var(--amber);
+  background: #241d33;
+}
+
+/* small uppercase heading inside the text column */
+.pinfo h3 {
+  margin: 0 0 5px;
+  font: 600 0.8rem var(--display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* no margin on highlight text */
+.phigh p {
+  margin: 0;
+}
+
+/* row of project link buttons at the bottom */
+.plinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+/* project link button with an outline */
+.pbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font: 600 0.9rem var(--display);
+  color: #7ff3ff;
+  text-decoration: none;
+  border: 2px solid #3b2d57;
+  background: #241d33;
+}
+
+/* main project link filled in gold */
+.pbtn.main {
+  color: #1b1626;
+  background: var(--gold);
+  border-color: #120e1a;
+}
+
+/* link buttons get an amber border on hover or focus */
+.pbtn:hover,
+.pbtn:focus-visible {
+  border-color: var(--amber);
+}
+
+/* main link turns amber on hover or focus */
+.pbtn.main:hover,
+.pbtn.main:focus-visible {
+  background: var(--amber);
+}
+
+/* narrow screens: modal stacks media above text */
+@media (max-width: 720px) {
+  /* one column modal that scrolls as a whole */
+  .pmodal {
+    grid-template-columns: 1fr;
+    width: 94vw;
+    height: auto;
+    max-height: 88dvh;
+    overflow-y: auto;
+  }
+
+  /* divider under the media instead of beside it */
+  .pmedia {
+    border-right: 0;
+    border-bottom: 3px solid #e8c98a;
+  }
+
+  /* text column no longer scrolls on its own */
+  .pinfo {
+    overflow: visible;
+  }
+
+  /* smaller project title */
+  .pname {
+    font-size: 1.3rem;
+  }
+}
+
+/* reduced motion: modal and backdrop appear without fading */
+@media (prefers-reduced-motion: reduce) {
+  .pmodal,
+  .pback {
+    transition: none;
+  }
+}
+
+/* =================================================================================================
+   project slideshow (card thumbnail and detail view): arrows and dots show on hover, it moves on every 5 s
+   ================================================================================================= */
+
+/* slideshow box the slides stack inside */
+.pcar {
+  position: relative;
+}
+
+/* each slide fills the slideshow box */
+.pslide {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+/* slide image, video or embed fills its slide */
+.pslide > * {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* card thumbnail slides crop to fill */
+.pthumb .pslide > * {
+  object-fit: cover;
+}
+
+/* detail view slides show the whole picture */
+.phero .pslide > * {
+  object-fit: contain;
+}
+
+/* new slide fades in */
+.pslide .pin {
+  animation: pin 0.24s steps(3);
+}
+
+/* slide fade in */
+@keyframes pin {
+  from {
+    opacity: 0;
+  }
+}
+
+/* round arrow buttons over the slideshow, hidden until hover */
+.parr {
+  all: unset;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  translate: 0 -50%;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  color: var(--ink);
+  background: rgba(18, 14, 26, 0.8);
+  border: 2px solid #e8c98a;
+  opacity: 0;
+  transition: opacity 0.15s steps(2);
+  cursor: var(--hand);
+}
+
+/* previous arrow on the left edge */
+.parr.prev {
+  left: 6px;
+}
+
+/* next arrow on the right edge */
+.parr.next {
+  right: 6px;
+}
+
+/* arrow turns amber on hover or focus */
+.parr:hover,
+.parr:focus-visible {
+  color: var(--amber);
+  border-color: var(--amber);
+}
+
+/* bigger arrows in the detail view */
+.phero .parr {
+  width: 34px;
+  height: 34px;
+}
+
+/* row of dots along the bottom of the slideshow */
+.pdots {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 6px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 0.15s steps(2);
+}
+
+/* one dot per slide */
+.pdot {
+  all: unset;
+  width: 8px;
+  height: 8px;
+  background: rgba(244, 234, 216, 0.45);
+  box-shadow: 0 0 0 2px #120e1a;
+  cursor: var(--hand);
+}
+
+/* current slide's dot in amber */
+.pdot.on {
+  background: var(--amber);
+}
+
+/* keyboard focus ring around a dot */
+.pdot:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+/* arrows and dots show when the card or media is hovered or focused */
+.pcard:hover .parr,
+.pcard:hover .pdots,
+.pcard:focus-visible .pdots,
+.phero:hover .parr,
+.phero:hover .pdots,
+.phero:focus-within .parr,
+.phero:focus-within .pdots {
+  opacity: 1;
+}
+
+/* touch screens have no hover: dots always show, and the detail view keeps its arrows */
+@media (hover: none) {
+  .pdots,
+  .phero .parr {
+    opacity: 1;
+  }
+}
+
+/* reduced motion: slides switch without fading */
+@media (prefers-reduced-motion: reduce) {
+  .pslide .pin {
+    animation: none;
+  }
+}
+
+/* short windows: the monitor loses its stand and some padding so the cards keep a readable size above the banner */
+@media (max-height: 860px) {
+  /* no side screens */
+  .sidescreen {
+    display: none;
+  }
+
+  /* a shorter neck, so the screen still stands on its foot */
+  .stand {
+    height: 18px;
+  }
+
+  /* the foot right under the shorter neck */
+  .stand::after {
+    top: 18px;
+  }
+
+  /* less space under the foot */
+  .monitor + .stand {
+    margin-bottom: 18px;
+  }
+
+  /* cards sized from the height the stand gave back */
+  .pcards {
+    --cw: clamp(220px, min(21vw, 178vh - 1109px), 330px);
+  }
+
+  /* tighter screen */
+  .screen {
+    padding: 16px 12px 12px;
+  }
+
+  /* tighter prompt line */
+  .screen .sample-note {
+    margin-bottom: 10px !important;
+  }
+
+  /* thinner bezel */
+  .monitor {
+    padding: 8px;
+  }
+
+  /* the panel starts closer to the top of the window */
+  .overlay.floating {
+    padding-top: 6px;
+  }
+
+  /* wider, shorter thumbnails */
+  .pthumb {
+    aspect-ratio: 2 / 1;
+  }
+}
+
+/* =================================================================================================
+   ENLARGED PROJECTS SCREEN
+   ================================================================================================= */
+
+/* the bare screen is clickable: it enlarges, or with pfocus puts itself back */
+.screen {
+  cursor: var(--hand);
+  transition: box-shadow 0.2s steps(3);
+}
+
+/* hovered screen (not a card): a brighter glow and a lit-up rim say it can be clicked */
+.screen:hover:not(:has(.pcard:hover, .pscroll:hover)) {
+  box-shadow:
+    inset 0 0 0 3px #5cf2c6,
+    inset 0 0 48px rgba(92, 242, 198, 0.34);
+}
+
+/* cards and the scrollbar keep their own cursor */
+.screen .pcard,
+.screen .pscroll {
+  cursor: var(--hand);
+}
+
+/* enlarge / shrink chip in the screen's top right corner, in terminal green */
+.pzoom {
+  all: unset;
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  font: 600 0.75rem var(--display);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #9ff5dc;
+  border: 2px solid #2f8f78;
+  opacity: 0.55;
+  cursor: var(--hand);
+  transition:
+    opacity 0.15s steps(3),
+    background 0.15s steps(3),
+    color 0.15s steps(3);
+}
+
+/* the chip wakes up while the screen is hovered */
+.screen:hover .pzoom {
+  opacity: 1;
+  border-color: #5cf2c6;
+}
+
+/* hovered or focused chip: filled green */
+.pzoom:hover,
+.pzoom:focus-visible {
+  opacity: 1;
+  background: #5cf2c6;
+  color: #0b2030;
+}
+
+/* amber ring on keyboard focus */
+.pzoom:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 2px;
+}
+
+/* touch screens have no hover: the chip is always awake */
+@media (hover: none) {
+  .pzoom {
+    opacity: 1;
+  }
+}
+
+/* enlarged: the overlay sits above the banner, darker, with no room kept for the banner */
+body.pfocus .overlay.floating {
+  z-index: 7;
+  background: rgba(8, 6, 14, 0.9);
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  transition: background 0.25s;
+}
+
+/* enlarged: the banner and the hero step down out of the way */
+body.pfocus .banner {
+  visibility: hidden;
+}
+
+/* enlarged: the screen takes nearly the whole window */
+body.pfocus .dialog.wide[data-panel="projects"] {
+  width: min(1600px, 100%);
+  align-self: center;
+}
+
+/* enlarged: the stand and the side screens go, so the screen can grow */
+body.pfocus .stand,
+body.pfocus .sidescreen {
+  display: none;
+}
+
+/* enlarged: full 16:9 thumbnails again, even on short windows */
+body.pfocus .pthumb {
+  aspect-ratio: 16 / 9;
+}
+
+/* enlarged: bigger cards, sized from the whole window height */
+body.pfocus .pcards {
+  --cw: clamp(260px, min((min(1600px, 100vw) - 170px) / 3, 178vh - 716px), 520px);
+}
+
+/* enlarged: room for the bigger text */
+body.pfocus .screen {
+  padding: 34px 18px 26px;
+}
+
+/* enlarged: a little bigger title and text on the cards */
+body.pfocus .ptitle {
+  font-size: 1.3rem;
+}
+
+/* enlarged: card blurb */
+body.pfocus .pdesc {
+  font-size: 0.95rem;
+}
+
+/* phones: the chip gets its own line above the prompt, and an enlarged screen shows one wide card at a time */
+@media (max-width: 640px) {
+  /* room for the chip above the prompt */
+  .screen,
+  body.pfocus .screen {
+    padding-top: 40px;
+  }
+
+  /* enlarged: one wide card */
+  body.pfocus .pcards > .pcard {
+    flex-basis: 86%;
+  }
+
+  /* enlarged: the blurb keeps its normal size so it isn't cut */
+  body.pfocus .pdesc {
+    font-size: 0.84rem;
+  }
+}
+
+/* reduced motion: cards change size without stepping */
+@media (prefers-reduced-motion: reduce) {
+  .pcards > .pcard,
+  .close:hover .pxi {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* Tunisia: the "where it started" line above the corkboard */
+.tnstory {
+  margin: 0 auto 10px !important;
+  max-width: 46ch;
+  text-align: center;
+  line-height: 1.5;
+}

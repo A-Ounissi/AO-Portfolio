@@ -1,0 +1,42 @@
+{
+  "about": "Animation sheets, edited on the editor's Animation page. The room reads each animation's frame count from here.",
+  "entities": [
+    {
+      "id": "hero",
+      "name": "Hero",
+      "frame": 300,
+      "cols": 5,
+      "foot": 292,
+      "anims": [
+        {
+          "id": "idle",
+          "name": "Idle",
+          "sheet": "assets/hero-sheet-idle.png",
+          "frames": 27,
+          "fps": 5
+        },
+        {
+          "id": "idle2",
+          "name": "Idle variation",
+          "sheet": "assets/hero-sheet-idle2.png",
+          "frames": 25,
+          "fps": 6
+        },
+        {
+          "id": "walk",
+          "name": "Walk",
+          "sheet": "assets/hero-sheet-walk.png",
+          "frames": 5,
+          "fps": 10
+        },
+        {
+          "id": "jump",
+          "name": "Jump",
+          "sheet": "assets/hero-sheet-jump.png",
+          "frames": 5,
+          "fps": 6
+        }
+      ]
+    }
+  ]
+}

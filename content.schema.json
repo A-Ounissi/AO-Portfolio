@@ -1,0 +1,644 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Portfolio Room content",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "site",
+    "projects",
+    "cv",
+    "contact"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "site": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "description"
+      ],
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text",
+          "description": "at most 60 characters per language"
+        },
+        "description": {
+          "$ref": "#/$defs/text",
+          "description": "at most 160 characters per language"
+        },
+        "previewImage": {
+          "type": "string",
+          "description": "path or URL, 1200x630, empty = none"
+        }
+      }
+    },
+    "projects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "placeholder": {
+          "type": "boolean",
+          "description": "true shows the purple 'Placeholder content' tag"
+        },
+        "intro": {
+          "$ref": "#/$defs/text",
+          "description": "older files only: the editor moves it to ui.dialogue.<section>.intro"
+        },
+        "items": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "name",
+              "description"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$"
+              },
+              "name": {
+                "$ref": "#/$defs/text",
+                "description": "at most 28 characters per language"
+              },
+              "thumbnail": {
+                "type": "string",
+                "description": "16:9 photo, GIF or MP4/WebM clip (path or URL); empty = generated placeholder art"
+              },
+              "description": {
+                "$ref": "#/$defs/text",
+                "description": "at most 80 characters per language"
+              },
+              "tags": {
+                "type": "array",
+                "maxItems": 3,
+                "items": {
+                  "type": "string",
+                  "maxLength": 14
+                }
+              },
+              "badge": {
+                "type": "string",
+                "maxLength": 10,
+                "description": "Featured, New, Soon... or empty"
+              },
+              "cta": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "label",
+                  "url"
+                ],
+                "properties": {
+                  "label": {
+                    "$ref": "#/$defs/text",
+                    "description": "at most 14 characters per language"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                }
+              },
+              "say": {
+                "$ref": "#/$defs/text",
+                "description": "what the hero says when the card is hovered; at most 100 characters per language"
+              },
+              "detail": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "the detail view the card grows into when clicked",
+                "properties": {
+                  "summary": {
+                    "$ref": "#/$defs/text",
+                    "description": "at most 400 characters per language"
+                  },
+                  "role": {
+                    "$ref": "#/$defs/text",
+                    "description": "also shown on the card footer; at most 40 characters per language"
+                  },
+                  "stack": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "highlight": {
+                    "$ref": "#/$defs/text",
+                    "description": "at most 160 characters per language"
+                  },
+                  "gallery": {
+                    "type": "array",
+                    "maxItems": 6,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "type",
+                        "src"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "type": {
+                          "enum": [
+                            "image",
+                            "video"
+                          ]
+                        },
+                        "src": {
+                          "type": "string"
+                        },
+                        "alt": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "links": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "label",
+                        "url"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "label": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "cv": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "role"
+      ],
+      "properties": {
+        "placeholder": {
+          "type": "boolean"
+        },
+        "intro": {
+          "$ref": "#/$defs/text",
+          "description": "older files only: the editor moves it to ui.dialogue.<section>.intro"
+        },
+        "photo": {
+          "type": "string",
+          "description": "square image path/URL, empty = silhouette"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "role": {
+          "$ref": "#/$defs/text",
+          "description": "at most 48 characters per language"
+        },
+        "summary": {
+          "$ref": "#/$defs/text",
+          "description": "at most 240 characters per language"
+        },
+        "experience": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "company",
+              "role"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "company": {
+                "type": "string"
+              },
+              "role": {
+                "$ref": "#/$defs/text"
+              },
+              "start": {
+                "type": "string"
+              },
+              "end": {
+                "type": "string"
+              },
+              "bullets": {
+                "type": "array",
+                "maxItems": 2,
+                "items": {
+                  "$ref": "#/$defs/text",
+                  "description": "at most 90 characters per language"
+                }
+              }
+            }
+          }
+        },
+        "education": {
+          "type": "array",
+          "maxItems": 2,
+          "items": {
+            "type": "object",
+            "required": [
+              "school",
+              "degree"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "school": {
+                "type": "string"
+              },
+              "degree": {
+                "$ref": "#/$defs/text"
+              },
+              "start": {
+                "type": "string"
+              },
+              "end": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "skills": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "items"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "group": {
+                "$ref": "#/$defs/text"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "languages": {
+          "description": "spoken languages as one line, e.g. Arabic (native), French; older files used a list",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/text"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "pdf": {
+          "$ref": "#/$defs/text",
+          "description": "path/URL of the CV PDF, one per language; empty hides the Download button"
+        },
+        "location": {
+          "$ref": "#/$defs/text",
+          "description": "city on the A4 CV contact line; at most 40 characters per language"
+        },
+        "website": {
+          "type": "string",
+          "description": "portfolio link on the A4 CV contact line"
+        },
+        "say": {
+          "$ref": "#/$defs/text",
+          "description": "the hero's line while the CV paper is hovered; at most 100 characters per language"
+        },
+        "expTitle": {
+          "$ref": "#/$defs/text",
+          "description": "title of the experience section (default: ui cv.experience)"
+        },
+        "eduTitle": {
+          "$ref": "#/$defs/text",
+          "description": "title of the education section (default: ui cv.education)"
+        }
+      }
+    },
+    "contact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "links"
+      ],
+      "properties": {
+        "placeholder": {
+          "type": "boolean"
+        },
+        "intro": {
+          "$ref": "#/$defs/text",
+          "description": "older files only: the editor moves it to ui.dialogue.<section>.intro"
+        },
+        "links": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "label",
+              "url"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "$ref": "#/$defs/text",
+                "description": "at most 14 characters per language"
+              },
+              "url": {
+                "type": "string",
+                "description": "https://..., mailto:..., or tel:..."
+              },
+              "icon": {
+                "type": "string",
+                "description": "linkedin | github | gmail | link (default)"
+              },
+              "iconImage": {
+                "type": "string",
+                "description": "optional 24x24 pixel PNG, used when icon is not a built-in one"
+              },
+              "say": {
+                "$ref": "#/$defs/text",
+                "description": "the hero's line while this pin is hovered; at most 100 characters per language"
+              }
+            }
+          }
+        },
+        "story": {
+          "$ref": "#/$defs/text",
+          "description": "Tunisia: the where-it-started line above the corkboard"
+        }
+      }
+    },
+    "ui": {
+      "type": "object",
+      "description": "Every fixed piece of room text, grouped by type, keyed by id. Missing lines use the defaults.",
+      "additionalProperties": false,
+      "properties": {
+        "dialogue": {
+          "$ref": "#/$defs/uiGroup"
+        },
+        "titles": {
+          "$ref": "#/$defs/uiGroup"
+        },
+        "buttons": {
+          "$ref": "#/$defs/uiGroup"
+        },
+        "hints": {
+          "$ref": "#/$defs/uiGroup"
+        },
+        "screenReader": {
+          "$ref": "#/$defs/uiGroup"
+        }
+      }
+    },
+    "malta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "role"
+      ],
+      "properties": {
+        "placeholder": {
+          "type": "boolean"
+        },
+        "intro": {
+          "$ref": "#/$defs/text",
+          "description": "older files only: the editor moves it to ui.dialogue.<section>.intro"
+        },
+        "photo": {
+          "type": "string",
+          "description": "square image path/URL, empty = silhouette"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "role": {
+          "$ref": "#/$defs/text",
+          "description": "at most 48 characters per language"
+        },
+        "summary": {
+          "$ref": "#/$defs/text",
+          "description": "at most 240 characters per language"
+        },
+        "experience": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "company",
+              "role"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "company": {
+                "type": "string"
+              },
+              "role": {
+                "$ref": "#/$defs/text"
+              },
+              "start": {
+                "type": "string"
+              },
+              "end": {
+                "type": "string"
+              },
+              "bullets": {
+                "type": "array",
+                "maxItems": 2,
+                "items": {
+                  "$ref": "#/$defs/text",
+                  "description": "at most 90 characters per language"
+                }
+              }
+            }
+          }
+        },
+        "education": {
+          "type": "array",
+          "maxItems": 2,
+          "items": {
+            "type": "object",
+            "required": [
+              "school",
+              "degree"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "school": {
+                "type": "string"
+              },
+              "degree": {
+                "$ref": "#/$defs/text"
+              },
+              "start": {
+                "type": "string"
+              },
+              "end": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "skills": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "items"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "group": {
+                "$ref": "#/$defs/text"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "languages": {
+          "description": "spoken languages as one line, e.g. Arabic (native), French; older files used a list",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/text"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "pdf": {
+          "$ref": "#/$defs/text",
+          "description": "path/URL of the CV PDF, one per language; empty hides the Download button"
+        },
+        "location": {
+          "$ref": "#/$defs/text",
+          "description": "city on the A4 CV contact line; at most 40 characters per language"
+        },
+        "website": {
+          "type": "string",
+          "description": "portfolio link on the A4 CV contact line"
+        },
+        "say": {
+          "$ref": "#/$defs/text",
+          "description": "the hero's line while the CV paper is hovered; at most 100 characters per language"
+        },
+        "expTitle": {
+          "$ref": "#/$defs/text",
+          "description": "title of the experience section (default: ui cv.experience)"
+        },
+        "eduTitle": {
+          "$ref": "#/$defs/text",
+          "description": "title of the education section (default: ui cv.education)"
+        }
+      },
+      "description": "Malta chapter paper, same shape as cv"
+    }
+  },
+  "$defs": {
+    "text": {
+      "description": "Translatable text: a plain string (English) or one string per language (gaps use English).",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "en"
+          ],
+          "properties": {
+            "en": {
+              "type": "string"
+            },
+            "aeb": {
+              "type": "string"
+            },
+            "fr": {
+              "type": "string"
+            },
+            "de": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "uiLine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "section",
+        "where",
+        "text"
+      ],
+      "properties": {
+        "section": {
+          "enum": [
+            "global",
+            "projects",
+            "cv",
+            "contact"
+          ],
+          "description": "which editor page shows it; global lines are on the Translation screen"
+        },
+        "where": {
+          "type": "string",
+          "description": "where the line appears in the room (kept up to date by the editor)"
+        },
+        "text": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "uiGroup": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/uiLine"
+      }
+    }
+  }
+}

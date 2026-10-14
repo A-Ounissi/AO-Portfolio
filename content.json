@@ -1,0 +1,805 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "title": "Ahmed Ounissi | AI & Automation Engineer",
+    "description": "Ahmed Ounissi builds AI agents and automation. Spin the globe and follow the story from Tunisia to Canada, Malta and the US.",
+    "previewImage": ""
+  },
+  "projects": {
+    "placeholder": false,
+    "items": [
+      {
+        "id": "pulpoid",
+        "name": "Pulpoid",
+        "thumbnail": "",
+        "description": {
+          "en": "AI automation studio: agents, RAG and voice for businesses.",
+          "fr": "Studio d'automatisation IA : agents, RAG et voix pour les entreprises."
+        },
+        "tags": [
+          "n8n",
+          "Make.com",
+          "RAG"
+        ],
+        "badge": "Featured",
+        "cta": {
+          "label": "Website",
+          "url": "https://www.pulpoid.com/en"
+        },
+        "say": {
+          "en": "Pulpoid. The pitch: what would your business look like if it ran itself?",
+          "fr": "Pulpoid. L'idée : et si ton entreprise tournait toute seule ?"
+        },
+        "detail": {
+          "summary": {
+            "en": "Pulpoid builds custom AI automation for local businesses and founders. I co-founded it and built the systems: n8n and Make.com workflows tied to LLMs, APIs and databases, plus a RAG assistant connected to Relevance AI, Retell AI, Telegram, Supabase and Airtable.",
+            "fr": "Pulpoid crée de l'automatisation IA sur mesure pour les PME et fondateurs. Je l'ai cofondé et j'ai construit les systèmes : workflows n8n et Make.com reliés aux LLM, API et bases de données, plus un assistant RAG connecté à Relevance AI, Retell AI, Telegram, Supabase et Airtable."
+          },
+          "role": {
+            "en": "Co-Founder, Mar 2025 - Aug 2025",
+            "fr": "Cofondateur, mars 2025 - août 2025"
+          },
+          "stack": [
+            "n8n",
+            "Make.com",
+            "OpenAI",
+            "RAG",
+            "Relevance AI",
+            "Retell AI",
+            "Supabase",
+            "Airtable",
+            "Telegram"
+          ],
+          "highlight": {
+            "en": "Making multi-step automations reliable: validation, retries, fallbacks and error handling.",
+            "fr": "Rendre les automatisations fiables : validation, relances, solutions de repli et gestion des erreurs."
+          },
+          "gallery": [],
+          "links": []
+        }
+      },
+      {
+        "id": "real-estate-agent",
+        "name": "Real Estate AI",
+        "thumbnail": "",
+        "description": {
+          "en": "Agentic pipeline that qualifies property leads and calls homeowners.",
+          "fr": "Pipeline IA qui qualifie des biens et appelle les propriétaires."
+        },
+        "tags": [
+          "n8n",
+          "Retell AI",
+          "Supabase"
+        ],
+        "badge": "",
+        "cta": {
+          "label": "Repo",
+          "url": "https://github.com/A-Ounissi/ai-real-estate-acquisition-agent"
+        },
+        "say": {
+          "en": "This one made real phone calls to homeowners. With an AI voice.",
+          "fr": "Celui-là appelait de vrais propriétaires. Avec une voix IA."
+        },
+        "detail": {
+          "summary": {
+            "en": "Built for a US real estate acquisition client in 2025. A new file in Google Drive kicks off n8n workflows that dedupe and screen properties, compute two offers in JavaScript, store everything in Supabase, then a Retell AI voice agent calls the homeowner. Accepted deals go to the client, and call outcomes feed back into the knowledge base.",
+            "fr": "Construit pour un client d'acquisition immobilière aux États-Unis en 2025. Un nouveau fichier Drive lance des workflows n8n qui filtrent les biens, calculent deux offres en JavaScript, stockent tout dans Supabase, puis un agent vocal Retell AI appelle le propriétaire. Les résultats des appels enrichissent la base de connaissances."
+          },
+          "role": {
+            "en": "Client engagement, 2025",
+            "fr": "Mission client, 2025"
+          },
+          "stack": [
+            "n8n",
+            "OpenAI",
+            "Retell AI",
+            "Supabase",
+            "JavaScript",
+            "Apify",
+            "Google Drive",
+            "RAG"
+          ],
+          "highlight": {
+            "en": "Deterministic JS for the numbers, LLM for the reasoning, and a feedback loop from every call into RAG.",
+            "fr": "Du JS déterministe pour les chiffres, un LLM pour le raisonnement, et chaque appel qui nourrit le RAG."
+          },
+          "gallery": [],
+          "links": []
+        }
+      },
+      {
+        "id": "twenty-agents",
+        "name": "Super Agent Team",
+        "thumbnail": "",
+        "description": {
+          "en": "20 agents, 50+ tools: one request runs a whole multi-step workflow.",
+          "fr": "20 agents, 50+ outils : une demande lance tout un workflow."
+        },
+        "tags": [
+          "Relevance AI",
+          "Make.com",
+          "Unipile"
+        ],
+        "badge": "",
+        "cta": {
+          "label": "Repo",
+          "url": "https://github.com/A-Ounissi/multi-agent-ai-automation-system"
+        },
+        "say": {
+          "en": "One message in, twenty agents get to work.",
+          "fr": "Un message, et vingt agents se mettent au travail."
+        },
+        "detail": {
+          "summary": {
+            "en": "A client system where one plain-English request goes to an Executive Director agent, which routes it to four managers (Communication, Project, Research, Content) and their specialist agents. They work across WhatsApp, Slack, email, calendar, LinkedIn, HubSpot, Notion, search and publishing tools, then report back.",
+            "fr": "Un système client où une simple demande va à un agent directeur, qui la répartit entre quatre managers (Communication, Projet, Recherche, Contenu) et leurs agents spécialisés. Ils travaillent sur WhatsApp, Slack, e-mail, agenda, LinkedIn, HubSpot, Notion, recherche et publication, puis rendent compte."
+          },
+          "role": {
+            "en": "Built all the tech, client project",
+            "fr": "Toute la technique, projet client"
+          },
+          "stack": [
+            "Relevance AI",
+            "Make.com",
+            "Unipile",
+            "GPT agents"
+          ],
+          "highlight": {
+            "en": "Keeping 50+ tools reliable with narrow per-agent scopes and output checks at every level.",
+            "fr": "Garder 50+ outils fiables avec des agents spécialisés et des vérifications à chaque niveau."
+          },
+          "gallery": [],
+          "links": []
+        }
+      }
+    ]
+  },
+  "cv": {
+    "placeholder": false,
+    "photo": "assets/picture.png",
+    "name": "Ahmed Ounissi",
+    "role": {
+      "en": "Chapter 2 · Canada",
+      "fr": "Chapitre 2 · Canada"
+    },
+    "summary": {
+      "en": "Canada is where coding became my job. Algonquin College in Ottawa, then two internships back to back: a full website for an industrial company in Quebec, then features at SurveyMonkey. Then almost a year of IT support at TD.",
+      "fr": "Le Canada, c'est là où coder est devenu mon métier. Le Collège Algonquin à Ottawa, puis deux stages à la suite : un site complet pour une entreprise industrielle au Québec, puis des fonctionnalités chez SurveyMonkey. Ensuite, presque un an de support informatique chez TD."
+    },
+    "experience": [
+      {
+        "company": "TD, Ottawa",
+        "role": {
+          "en": "IT Support Specialist",
+          "fr": "Spécialiste support informatique"
+        },
+        "start": "Nov 2023",
+        "end": "Aug 2024",
+        "bullets": [
+          {
+            "en": "Kept a bank running: hardware, software, network and account access issues.",
+            "fr": "Faire tourner une banque : matériel, logiciel, réseau et accès aux comptes."
+          },
+          {
+            "en": "Tracked down login and config problems, escalated the big ones by the security book.",
+            "fr": "Résoudre les problèmes de connexion et de config, escalader le reste selon la sécurité."
+          }
+        ]
+      },
+      {
+        "company": "SurveyMonkey, Ottawa",
+        "role": {
+          "en": "Software Engineer Intern",
+          "fr": "Stagiaire ingénieur logiciel"
+        },
+        "start": "Apr 2023",
+        "end": "Jul 2023",
+        "bullets": [
+          {
+            "en": "Shipped features and data-processing scripts in Python and JavaScript.",
+            "fr": "Livré des fonctionnalités et des scripts de données en Python et JavaScript."
+          },
+          {
+            "en": "Worked on REST APIs and backend services in an Agile team, on Git.",
+            "fr": "Travaillé sur des API REST et des services backend, en équipe Agile, sur Git."
+          }
+        ]
+      },
+      {
+        "company": "Pont Roulant Servi-Tech, Blainville QC",
+        "role": {
+          "en": "Full-Stack Web Developer Intern",
+          "fr": "Stagiaire développeur web full-stack"
+        },
+        "start": "Jan 2023",
+        "end": "Apr 2023",
+        "bullets": [
+          {
+            "en": "Built the company's whole website, React and Node.js front to back.",
+            "fr": "Construit tout le site de l'entreprise, en React et Node.js de A à Z."
+          }
+        ]
+      }
+    ],
+    "education": [
+      {
+        "school": "Algonquin College",
+        "degree": {
+          "en": "Diploma, Computer Programming",
+          "fr": "Diplôme, programmation informatique"
+        },
+        "start": "Jan 2022",
+        "end": "Apr 2023"
+      }
+    ],
+    "skills": [
+      {
+        "group": "Code",
+        "items": [
+          "Python",
+          "JavaScript",
+          "SQL",
+          "React",
+          "Node.js",
+          "Git"
+        ]
+      },
+      {
+        "group": {
+          "en": "Spoken",
+          "fr": "Langues"
+        },
+        "items": [
+          "English",
+          "French",
+          "Spanish",
+          "Arabic"
+        ]
+      }
+    ],
+    "languages": [],
+    "pdf": "content/cv/Ahmed_Ounissi_Resume.pdf",
+    "expTitle": {
+      "en": "Work",
+      "fr": "Expérience"
+    },
+    "say": {
+      "en": "Two internships and a bank job, all in under two years.",
+      "fr": "Deux stages et un job en banque, en moins de deux ans."
+    }
+  },
+  "contact": {
+    "placeholder": false,
+    "links": [
+      {
+        "id": "linkedin",
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/ahmed-ounissi-94b851253",
+        "icon": "linkedin"
+      },
+      {
+        "id": "github",
+        "label": "GitHub",
+        "url": "https://github.com/A-Ounissi",
+        "icon": "github"
+      },
+      {
+        "id": "email",
+        "label": "Gmail",
+        "url": "mailto:ounissi.a.career@gmail.com",
+        "icon": "gmail"
+      }
+    ],
+    "story": {
+      "en": "I grew up in Tunisia, between Arabic and French, and picked up English and Spanish later. This is chapter one. From here the story goes west: Canada, Malta, then the US. Spin the globe to follow it, or find me on the board below.",
+      "fr": "J'ai grandi en Tunisie, entre l'arabe et le français, et j'ai appris l'anglais et l'espagnol plus tard. C'est le premier chapitre. Ensuite l'histoire part vers l'ouest : le Canada, Malte, puis les États-Unis. Fais tourner le globe pour la suivre, ou retrouve-moi sur le tableau en dessous."
+    }
+  },
+  "ui": {
+    "dialogue": {
+      "projects.intro": {
+        "section": "projects",
+        "where": "Dialogue banner when the hero reaches the USA (Projects).",
+        "text": {
+          "en": "The US. This is where I started building\nAI systems for real clients.",
+          "fr": "Les États-Unis. C'est ici que j'ai commencé\nà construire des systèmes IA pour de vrais clients."
+        }
+      },
+      "cv.intro": {
+        "section": "cv",
+        "where": "Dialogue banner when the hero reaches Canada (CV).",
+        "text": {
+          "en": "Canada. This is where I learned\nto code for a living.",
+          "fr": "Le Canada. C'est ici que j'ai appris\nà coder pour de vrai."
+        }
+      },
+      "contact.intro": {
+        "section": "contact",
+        "where": "Dialogue banner when the hero reaches Tunisia (Contact).",
+        "text": {
+          "en": "Tunisia. Home.\nThis is where the story starts.",
+          "fr": "La Tunisie. Chez moi.\nC'est ici que l'histoire commence."
+        }
+      },
+      "projects.hoverFallback": {
+        "section": "projects",
+        "where": "Dialogue banner while a project card with no line of its own is hovered ({name} = project name).",
+        "text": {
+          "en": "{name}. Ask me about it.",
+          "fr": "{name}. Pose-moi la question."
+        }
+      },
+      "malta.intro": {
+        "section": "global",
+        "where": "Dialogue banner when the hero reaches Malta.",
+        "text": {
+          "en": "Malta. The engineering degree,\nand a capstone that runs AI pipelines.",
+          "fr": "Malte. Le diplôme d'ingénieur,\net un projet qui fait tourner des pipelines IA."
+        }
+      }
+    },
+    "titles": {
+      "site.name": {
+        "section": "global",
+        "where": "Room title (top left, top centre on phones) and start screen title. The {braced} part is amber.",
+        "text": {
+          "en": "Ahmed {Ounissi}",
+          "fr": "Ahmed {Ounissi}"
+        }
+      },
+      "name.projects": {
+        "section": "global",
+        "where": "The Projects shortcut button and the Projects panel title.",
+        "text": {
+          "en": "USA",
+          "fr": "États-Unis"
+        }
+      },
+      "name.cv": {
+        "section": "global",
+        "where": "The CV shortcut button and the CV panel title.",
+        "text": {
+          "en": "Canada",
+          "fr": "Canada"
+        }
+      },
+      "name.contact": {
+        "section": "global",
+        "where": "The Contact shortcut button and the Contact panel title.",
+        "text": {
+          "en": "Tunisia",
+          "fr": "Tunisie"
+        }
+      },
+      "banner.name": {
+        "section": "global",
+        "where": "Name plate on the dialogue banner.",
+        "text": {
+          "en": "Ahmed",
+          "fr": "Ahmed"
+        }
+      },
+      "cv.experience": {
+        "section": "cv",
+        "where": "Section heading on the CV paper.",
+        "text": {
+          "en": "Experience",
+          "fr": "Expérience"
+        }
+      },
+      "cv.education": {
+        "section": "cv",
+        "where": "Section heading on the CV paper.",
+        "text": {
+          "en": "Education",
+          "fr": "Formation"
+        }
+      },
+      "cv.skills": {
+        "section": "cv",
+        "where": "Section heading on the CV paper.",
+        "text": {
+          "en": "Skills",
+          "fr": "Compétences"
+        }
+      },
+      "cv.languages": {
+        "section": "cv",
+        "where": "Section heading on the CV paper (shown when languages are filled in).",
+        "text": {
+          "en": "Languages",
+          "fr": "Langues"
+        }
+      },
+      "projects.detail.highlight": {
+        "section": "projects",
+        "where": "Heading of the highlight box in a project's detail view.",
+        "text": {
+          "en": "Highlight",
+          "fr": "Point fort"
+        }
+      },
+      "projects.detail.stack": {
+        "section": "projects",
+        "where": "Heading above the tech chips in a project's detail view.",
+        "text": {
+          "en": "Built with",
+          "fr": "Réalisé avec"
+        }
+      },
+      "place.projects": {
+        "section": "global",
+        "where": "Label on the globe over the USA (Projects).",
+        "text": {
+          "en": "USA",
+          "fr": "États-Unis"
+        }
+      },
+      "place.cv": {
+        "section": "global",
+        "where": "Label on the globe over Canada (CV).",
+        "text": {
+          "en": "Canada",
+          "fr": "Canada"
+        }
+      },
+      "place.socials": {
+        "section": "global",
+        "where": "Label on the globe over Tunisia (Contact).",
+        "text": {
+          "en": "Tunisia",
+          "fr": "Tunisie"
+        }
+      },
+      "name.malta": {
+        "section": "global",
+        "where": "Malta's shortcut button and panel title.",
+        "text": {
+          "en": "Malta",
+          "fr": "Malte"
+        }
+      },
+      "place.malta": {
+        "section": "global",
+        "where": "Label on the globe over Malta.",
+        "text": {
+          "en": "Malta",
+          "fr": "Malte"
+        }
+      }
+    },
+    "buttons": {
+      "panel.back": {
+        "section": "global",
+        "where": "Back button at the top right of every panel.",
+        "text": {
+          "en": "Back",
+          "fr": "Retour"
+        }
+      },
+      "projects.ctaFallback": {
+        "section": "projects",
+        "where": "Link text at the bottom right of a project card that has no button text.",
+        "text": {
+          "en": "Open",
+          "fr": "Ouvrir"
+        }
+      },
+      "cv.download": {
+        "section": "cv",
+        "where": "Button at the bottom of the CV paper (shown once a PDF is set).",
+        "text": {
+          "en": "Download CV",
+          "fr": "Télécharger le CV"
+        }
+      },
+      "projects.detail.close": {
+        "section": "projects",
+        "where": "Close button at the top right of a project's detail view.",
+        "text": {
+          "en": "Close",
+          "fr": "Fermer"
+        }
+      },
+      "contact.mail.gmail": {
+        "section": "contact",
+        "where": "Menu under the email pin: writes the email in Gmail, in the browser.",
+        "text": {
+          "en": "Write in Gmail",
+          "fr": "Écrire dans Gmail"
+        }
+      },
+      "contact.mail.outlook": {
+        "section": "contact",
+        "where": "Menu under the email pin: writes the email in Outlook, in the browser.",
+        "text": {
+          "en": "Write in Outlook",
+          "fr": "Écrire dans Outlook"
+        }
+      },
+      "contact.mail.app": {
+        "section": "contact",
+        "where": "Menu under the email pin: opens the visitor's own mail app.",
+        "text": {
+          "en": "Open my mail app",
+          "fr": "Ouvrir mon appli mail"
+        }
+      },
+      "contact.mail.copy": {
+        "section": "contact",
+        "where": "Menu under the email pin: copies the email address.",
+        "text": {
+          "en": "Copy address",
+          "fr": "Copier l'adresse"
+        }
+      },
+      "contact.mail.copied": {
+        "section": "contact",
+        "where": "The copy line of the email pin's menu, right after the address was copied.",
+        "text": {
+          "en": "Copied!",
+          "fr": "Copié !"
+        }
+      },
+      "projects.enlarge": {
+        "section": "projects",
+        "where": "Chip in the top right corner of the Projects screen; it makes the screen bigger.",
+        "text": {
+          "en": "Enlarge",
+          "fr": "Agrandir"
+        }
+      },
+      "projects.shrink": {
+        "section": "projects",
+        "where": "Same chip while the Projects screen is enlarged; it puts the screen back.",
+        "text": {
+          "en": "Shrink",
+          "fr": "Réduire"
+        }
+      }
+    },
+    "hints": {
+      "start.click": {
+        "section": "global",
+        "where": "Hint under the title on the start screen, on computers.",
+        "text": {
+          "en": "Click a country or drag the globe",
+          "fr": "Clique sur un pays ou fais tourner le globe"
+        }
+      },
+      "start.tap": {
+        "section": "global",
+        "where": "Hint under the title on the start screen, on phones and tablets.",
+        "text": {
+          "en": "Tap a country or drag the globe",
+          "fr": "Touche un pays ou fais tourner le globe"
+        }
+      },
+      "start.quick": {
+        "section": "global",
+        "where": "Start screen, before the quick links that open a panel without walking.",
+        "text": {
+          "en": "Short on time? Jump to",
+          "fr": "Pas le temps ? Va direct à"
+        }
+      },
+      "placeholder.tag": {
+        "section": "global",
+        "where": "Purple tag in the panels while \"Show Placeholder content tag\" is ticked.",
+        "text": {
+          "en": "Placeholder content",
+          "fr": "Contenu provisoire"
+        }
+      },
+      "projects.prompt": {
+        "section": "projects",
+        "where": "Green terminal prompt at the top of the Projects screen.",
+        "text": {
+          "en": "C:\\AHMED\\USA>",
+          "fr": "C:\\AHMED\\USA>"
+        }
+      },
+      "projects.pick": {
+        "section": "projects",
+        "where": "Line after the terminal prompt on the Projects screen.",
+        "text": {
+          "en": "Pick a project...",
+          "fr": "Choisis un projet..."
+        }
+      },
+      "contact.pick": {
+        "section": "contact",
+        "where": "Line above the corkboard in the Contact panel.",
+        "text": {
+          "en": "Want to talk? Pick one.",
+          "fr": "Envie de discuter ? Choisis."
+        }
+      }
+    },
+    "screenReader": {
+      "sr.start": {
+        "section": "global",
+        "where": "Read aloud for the start screen.",
+        "text": {
+          "en": "Ahmed Ounissi's portfolio. Click anywhere to start.",
+          "fr": "Le portfolio d'Ahmed Ounissi. Clique n'importe où pour commencer."
+        }
+      },
+      "sr.loading": {
+        "section": "global",
+        "where": "Read aloud for the loading bar on the start screen.",
+        "text": {
+          "en": "Loading the globe",
+          "fr": "Chargement du globe"
+        }
+      },
+      "sr.room": {
+        "section": "global",
+        "where": "Read aloud for the globe.",
+        "text": {
+          "en": "A globe. Tap a country to walk there, or drag the globe and stop on a country to visit it.",
+          "fr": "Un globe. Touche un pays pour y aller, ou fais tourner le globe et arrête-toi sur un pays pour le visiter."
+        }
+      },
+      "sr.shortcuts": {
+        "section": "global",
+        "where": "Read aloud for the row of shortcut buttons.",
+        "text": {
+          "en": "Shortcuts",
+          "fr": "Raccourcis"
+        }
+      },
+      "sr.back": {
+        "section": "global",
+        "where": "Read aloud for the Back button.",
+        "text": {
+          "en": "Back to the room",
+          "fr": "Retour à la chambre"
+        }
+      },
+      "sr.portrait": {
+        "section": "global",
+        "where": "Read aloud for the hero's portrait on the dialogue banner.",
+        "text": {
+          "en": "Ahmed, in a blue coat, talking",
+          "fr": "Ahmed, en manteau bleu, qui parle"
+        }
+      },
+      "sr.language": {
+        "section": "global",
+        "where": "Read aloud for the flag button. {name} becomes the language name.",
+        "text": {
+          "en": "Language: {name}",
+          "fr": "Langue : {name}"
+        }
+      },
+      "sr.cv": {
+        "section": "cv",
+        "where": "Read aloud for the CV paper.",
+        "text": {
+          "en": "Chapter paper. Press Enter to zoom.",
+          "fr": "Page du chapitre. Appuie sur Entrée pour zoomer."
+        }
+      },
+      "sr.photo": {
+        "section": "cv",
+        "where": "Read aloud for the CV photo. {name} becomes your name.",
+        "text": {
+          "en": "Photo of {name}",
+          "fr": "Photo de {name}"
+        }
+      },
+      "sr.noPhoto": {
+        "section": "cv",
+        "where": "Read aloud for the empty CV photo.",
+        "text": {
+          "en": "Photo placeholder",
+          "fr": "Emplacement de la photo"
+        }
+      },
+      "sr.projectDetail": {
+        "section": "projects",
+        "where": "Read aloud when a project's detail view opens ({name} = project name).",
+        "text": {
+          "en": "Project details: {name}",
+          "fr": "Détails du projet : {name}"
+        }
+      },
+      "projects.media.prev": {
+        "section": "projects",
+        "where": "Read aloud for the left arrow on a project's pictures in the detail view.",
+        "text": {
+          "en": "Previous picture",
+          "fr": "Image précédente"
+        }
+      },
+      "projects.media.next": {
+        "section": "projects",
+        "where": "Read aloud for the right arrow on a project's pictures in the detail view.",
+        "text": {
+          "en": "Next picture",
+          "fr": "Image suivante"
+        }
+      }
+    }
+  },
+  "malta": {
+    "placeholder": false,
+    "photo": "assets/picture.png",
+    "name": "Ahmed Ounissi",
+    "role": {
+      "en": "Chapter 3 · Malta",
+      "fr": "Chapitre 3 · Malte"
+    },
+    "summary": {
+      "en": "College taught me to build. AUM is where I learned the engineering behind it: a B.S. in Software Engineering, wrapping up in January 2027 with a capstone that runs AI document pipelines end to end.",
+      "fr": "Le collège m'a appris à construire. L'AUM, c'est là où j'ai appris l'ingénierie derrière : une licence en génie logiciel, qui se termine en janvier 2027 avec un projet qui fait tourner des pipelines IA de documents de bout en bout."
+    },
+    "expTitle": {
+      "en": "Capstone",
+      "fr": "Projet de fin d'études"
+    },
+    "experience": [
+      {
+        "company": "AUM",
+        "role": {
+          "en": "Configurable AI Workflow Orchestrator",
+          "fr": "Orchestrateur de workflows IA configurable"
+        },
+        "start": "",
+        "end": "2026",
+        "bullets": [
+          {
+            "en": "Docker stack: FastAPI, Celery, Redis and MySQL, with OCR and GPT doing the extraction.",
+            "fr": "Stack Docker : FastAPI, Celery, Redis et MySQL, avec OCR et GPT pour l'extraction."
+          },
+          {
+            "en": "Runs steps as a DAG (Kahn's algorithm), takes plugins, and resumes after a crash.",
+            "fr": "Exécute les étapes en DAG (algorithme de Kahn), accepte des plugins et reprend après un crash."
+          }
+        ]
+      }
+    ],
+    "education": [
+      {
+        "school": "American University of Malta",
+        "degree": {
+          "en": "B.S. Software Engineering",
+          "fr": "Licence en génie logiciel"
+        },
+        "start": "Sep 2024",
+        "end": "Jan 2027"
+      }
+    ],
+    "skills": [
+      {
+        "group": "Stack",
+        "items": [
+          "Python",
+          "FastAPI",
+          "Celery",
+          "Redis",
+          "MySQL",
+          "Docker"
+        ]
+      },
+      {
+        "group": {
+          "en": "Certs",
+          "fr": "Certifs"
+        },
+        "items": [
+          "IBM AI Fundamentals",
+          "IBM Data Fundamentals",
+          "PMI Agile"
+        ]
+      }
+    ],
+    "languages": [],
+    "pdf": "content/cv/Ahmed_Ounissi_Resume.pdf",
+    "say": {
+      "en": "Zoom in, the capstone is the good part.",
+      "fr": "Zoome, le projet de fin d'études c'est le meilleur."
+    }
+  }
+}
