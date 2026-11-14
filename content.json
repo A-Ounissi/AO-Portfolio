@@ -157,8 +157,8 @@
   "cv": {
     "placeholder": false,
     "summary": {
-      "en": "Canada is where coding turned into a job. A computer programming diploma in Ottawa, a web internship in Quebec during it, a summer at SurveyMonkey, then almost a year of IT support at TD.",
-      "fr": "Le Canada, c'est là où coder est devenu un métier. Un diplôme en programmation à Ottawa, un stage web au Québec en parallèle, un été chez SurveyMonkey, puis presque un an de support informatique chez TD."
+      "en": "Canada is where coding became a job. I studied computer programming at Algonquin College in Ottawa, built a full company website during my studies, spent a summer as a software engineering intern at SurveyMonkey, then supported the staff of one of Canada's biggest banks.",
+      "fr": "Le Canada, c'est là où coder est devenu un métier. J'ai étudié la programmation au Collège Algonquin à Ottawa, construit le site complet d'une entreprise pendant mes études, passé un été en stage d'ingénieur logiciel chez SurveyMonkey, puis assuré le support des équipes d'une des plus grandes banques du pays."
     },
     "pdf": "content/cv/Ahmed_Ounissi_Resume.pdf",
     "stops": [
@@ -174,8 +174,8 @@
         },
         "where": "Ottawa, ON",
         "role": {
-          "en": "Diploma, Computer Programming",
-          "fr": "Diplôme, programmation informatique"
+          "en": "Ontario College Diploma, Computer Programming",
+          "fr": "Diplôme collégial, programmation informatique"
         },
         "story": {
           "en": "Where it got serious. Java and design patterns, databases, web and mobile, four semesters straight, ending with a software project built for a real client.",
@@ -190,7 +190,33 @@
         "say": {
           "en": "Algonquin. Sixteen months, no summer break.",
           "fr": "Algonquin. Seize mois, sans pause estivale."
-        }
+        },
+        "from": {
+          "en": "Jan 2022",
+          "fr": "janv. 2022"
+        },
+        "to": {
+          "en": "Apr 2023",
+          "fr": "avr. 2023"
+        },
+        "points": [
+          {
+            "en": "Two-year program done in four back-to-back semesters, 3.5 GPA",
+            "fr": "Programme de deux ans en quatre sessions d'affilée, moyenne de 3,5"
+          },
+          {
+            "en": "Object-oriented programming in Java, design patterns and enterprise application programming",
+            "fr": "Programmation orientée objet en Java, design patterns et applications d'entreprise"
+          },
+          {
+            "en": "Web, mobile GUI and network programming, database systems, systems analysis, Linux",
+            "fr": "Programmation web, mobile et réseau, bases de données, analyse de systèmes, Linux"
+          },
+          {
+            "en": "Final-semester software project built for an external client; hackathons and programming clubs",
+            "fr": "Projet logiciel de fin de programme pour un client externe ; hackathons et clubs de programmation"
+          }
+        ]
       },
       {
         "id": "pont-roulant",
@@ -220,7 +246,29 @@
         "say": {
           "en": "My first real client: a crane company that needed a website.",
           "fr": "Mon premier vrai client : une entreprise de ponts roulants qui avait besoin d'un site."
-        }
+        },
+        "from": {
+          "en": "Sep 2022",
+          "fr": "sept. 2022"
+        },
+        "to": {
+          "en": "Dec 2022",
+          "fr": "déc. 2022"
+        },
+        "points": [
+          {
+            "en": "Designed and built the company's full website with React, Node.js, SQL, HTML and CSS",
+            "fr": "Conçu et développé tout le site de l'entreprise avec React, Node.js, SQL, HTML et CSS"
+          },
+          {
+            "en": "Turned business requirements into user-facing features",
+            "fr": "Transformé les besoins de l'entreprise en fonctionnalités concrètes"
+          },
+          {
+            "en": "Worked with the marketing and design teams on look and usability",
+            "fr": "Travaillé avec les équipes marketing et design sur le rendu et l'ergonomie"
+          }
+        ]
       },
       {
         "id": "surveymonkey",
@@ -250,7 +298,33 @@
         "say": {
           "en": "SurveyMonkey. Code that real people actually click on.",
           "fr": "SurveyMonkey. Du code sur lequel de vraies personnes cliquent."
-        }
+        },
+        "from": {
+          "en": "May 2023",
+          "fr": "mai 2023"
+        },
+        "to": {
+          "en": "Aug 2023",
+          "fr": "août 2023"
+        },
+        "points": [
+          {
+            "en": "Built and maintained product features in Python and JavaScript",
+            "fr": "Développé et maintenu des fonctionnalités en Python et JavaScript"
+          },
+          {
+            "en": "Wrote Python scripts that automated data-processing and development tasks",
+            "fr": "Écrit des scripts Python qui automatisent le traitement de données et des tâches de développement"
+          },
+          {
+            "en": "Worked with REST APIs and backend services; debugged, tested and fixed issues",
+            "fr": "Travaillé sur des API REST et des services backend ; débogage, tests et corrections"
+          },
+          {
+            "en": "Git, code reviews and documentation in an Agile team",
+            "fr": "Git, revues de code et documentation en équipe Agile"
+          }
+        ]
       },
       {
         "id": "td",
@@ -264,8 +338,8 @@
         },
         "where": "Ottawa, ON",
         "role": {
-          "en": "IT Support Specialist",
-          "fr": "Spécialiste support informatique"
+          "en": "Information Technology Support Specialist",
+          "fr": "Spécialiste du support informatique"
         },
         "story": {
           "en": "Keeping a bank's people working: hardware, software, network and account access. I tracked down login and config problems and escalated the big ones by the security book.",
@@ -280,6 +354,68 @@
         "say": {
           "en": "TD. You learn fast when people can't log in to a bank.",
           "fr": "TD. On apprend vite quand les gens n'arrivent plus à se connecter à une banque."
+        },
+        "from": {
+          "en": "Nov 2023",
+          "fr": "nov. 2023"
+        },
+        "to": {
+          "en": "Aug 2024",
+          "fr": "août 2024"
+        },
+        "points": [
+          {
+            "en": "Troubleshot hardware, software, network and system issues for bank employees",
+            "fr": "Résolu des problèmes matériels, logiciels, réseau et système pour les employés de la banque"
+          },
+          {
+            "en": "Handled password resets, account access, permissions and system configuration",
+            "fr": "Géré les réinitialisations de mots de passe, accès, permissions et configurations"
+          },
+          {
+            "en": "Supported people remotely and in person, and escalated complex incidents",
+            "fr": "Assisté à distance et sur place, et escaladé les incidents complexes"
+          },
+          {
+            "en": "Followed banking IT security, access-control and data-protection procedures",
+            "fr": "Appliqué les procédures bancaires de sécurité, de contrôle d'accès et de protection des données"
+          }
+        ]
+      }
+    ],
+    "span": {
+      "en": "2022 to 2024",
+      "fr": "2022 à 2024"
+    },
+    "facts": [
+      {
+        "label": {
+          "en": "Cities",
+          "fr": "Villes"
+        },
+        "value": {
+          "en": "Ottawa, Ontario and Blainville, Quebec",
+          "fr": "Ottawa (Ontario) et Blainville (Québec)"
+        }
+      },
+      {
+        "label": {
+          "en": "Diploma",
+          "fr": "Diplôme"
+        },
+        "value": {
+          "en": "Ontario College Diploma, Computer Programming, GPA 3.5",
+          "fr": "Diplôme collégial de l'Ontario, programmation, moyenne 3,5"
+        }
+      },
+      {
+        "label": {
+          "en": "Worked with",
+          "fr": "Outils"
+        },
+        "value": {
+          "en": "Java, Python, JavaScript, React, Node.js, SQL, Git",
+          "fr": "Java, Python, JavaScript, React, Node.js, SQL, Git"
         }
       }
     ]
@@ -319,8 +455,48 @@
       }
     ],
     "story": {
-      "en": "I grew up in Tunisia speaking Arabic, French and English, and picked up Spanish later. This is chapter one. From here the story goes west: Canada, Malta, then the US. Want to talk? Reach me below.",
-      "fr": "J'ai grandi en Tunisie en parlant arabe, français et anglais, et j'ai appris l'espagnol plus tard. C'est le premier chapitre. Ensuite l'histoire part vers l'ouest : le Canada, Malte, puis les États-Unis. Envie de discuter ? Écris-moi ci-dessous."
+      "en": "I grew up in Tunisia and earned my baccalaureate in the mathematics section. Arabic, French and English were part of everyday life; Spanish came later. From here the story heads west, to Canada.",
+      "fr": "J'ai grandi en Tunisie et j'ai eu mon bac en section mathématiques. L'arabe, le français et l'anglais faisaient partie du quotidien ; l'espagnol est venu plus tard. D'ici, l'histoire part vers l'ouest, au Canada."
+    },
+    "span": {
+      "en": "Where it starts",
+      "fr": "Là où tout commence"
+    },
+    "facts": [
+      {
+        "label": {
+          "en": "School",
+          "fr": "École"
+        },
+        "value": {
+          "en": "Baccalaureate, mathematics section",
+          "fr": "Baccalauréat, section mathématiques"
+        }
+      },
+      {
+        "label": {
+          "en": "Languages",
+          "fr": "Langues"
+        },
+        "value": {
+          "en": "Arabic, French and English fluently, conversational Spanish",
+          "fr": "Arabe, français et anglais couramment, espagnol conversationnel"
+        }
+      },
+      {
+        "label": {
+          "en": "Based in",
+          "fr": "Basé à"
+        },
+        "value": {
+          "en": "Dallas-Fort Worth, Texas",
+          "fr": "Dallas-Fort Worth, Texas"
+        }
+      }
+    ],
+    "reach": {
+      "en": "Get in touch",
+      "fr": "Me contacter"
     }
   },
   "ui": {
@@ -818,8 +994,8 @@
   "malta": {
     "placeholder": false,
     "summary": {
-      "en": "College taught me to build. AUM is where I learned the engineering behind it, and it ends with a capstone that runs AI pipelines on its own.",
-      "fr": "Le collège m'a appris à construire. L'AUM, c'est là où j'ai appris l'ingénierie derrière, et ça se termine par un projet qui fait tourner des pipelines IA tout seul."
+      "en": "My Algonquin credits transferred into a four-year Bachelor of Science in Software Engineering at the American University of Malta. Where college taught me to build, this degree covers the engineering around it: architecture, testing, security and AI. It ends with my capstone.",
+      "fr": "Mes crédits d'Algonquin ont été transférés vers une licence en génie logiciel de quatre ans à l'American University of Malta. Le collège m'a appris à construire, ce diplôme couvre l'ingénierie autour : architecture, tests, sécurité et IA. Il se termine par mon projet de fin d'études."
     },
     "pdf": "content/cv/Ahmed_Ounissi_Resume.pdf",
     "stops": [
@@ -835,8 +1011,8 @@
         },
         "where": "Cospicua, Malta",
         "role": {
-          "en": "B.S. Software Engineering",
-          "fr": "Licence en génie logiciel"
+          "en": "Bachelor of Science, Software Engineering",
+          "fr": "Licence (BSc) en génie logiciel"
         },
         "story": {
           "en": "An American-style university in a restored building on Dock No. 1, across the Grand Harbour from Valletta. Four years, 240 ECTS, taught in English.",
@@ -850,7 +1026,33 @@
         "say": {
           "en": "AUM. A university on an old dockyard. Not bad.",
           "fr": "AUM. Une université sur un ancien chantier naval. Pas mal."
-        }
+        },
+        "from": {
+          "en": "Sep 2024",
+          "fr": "sept. 2024"
+        },
+        "to": {
+          "en": "Jan 2027",
+          "fr": "janv. 2027"
+        },
+        "points": [
+          {
+            "en": "Machine learning, AI and expert systems, data science with Python, big data analytics",
+            "fr": "Machine learning, IA et systèmes experts, science des données en Python, big data"
+          },
+          {
+            "en": "Data structures and algorithms, software design and architecture, requirements analysis",
+            "fr": "Structures de données et algorithmes, conception et architecture logicielle, analyse des besoins"
+          },
+          {
+            "en": "Software testing and QA, project management, software and information security",
+            "fr": "Tests et assurance qualité, gestion de projet, sécurité logicielle et de l'information"
+          },
+          {
+            "en": "Campus on Dock No. 1 in Cospicua, across the Grand Harbour from Valletta",
+            "fr": "Campus sur le Dock No. 1 à Cospicua, face à La Valette"
+          }
+        ]
       },
       {
         "id": "capstone",
@@ -864,7 +1066,7 @@
         },
         "where": "AUM",
         "role": {
-          "en": "Final-year project",
+          "en": "Capstone project",
           "fr": "Projet de fin d'études"
         },
         "story": {
@@ -881,6 +1083,68 @@
         "say": {
           "en": "The capstone. It runs a pipeline and survives a crash.",
           "fr": "Le projet de fin. Il fait tourner un pipeline et survit à un crash."
+        },
+        "from": {
+          "en": "2026",
+          "fr": "2026"
+        },
+        "to": {
+          "en": "Jan 2027",
+          "fr": "janv. 2027"
+        },
+        "points": [
+          {
+            "en": "Containerized pipeline: Docker, FastAPI, Celery workers, Redis and MySQL",
+            "fr": "Pipeline conteneurisé : Docker, FastAPI, workers Celery, Redis et MySQL"
+          },
+          {
+            "en": "Reads documents with OCR and extracts structured data with GPT",
+            "fr": "Lit les documents par OCR et en extrait des données structurées avec GPT"
+          },
+          {
+            "en": "Runs each workflow as a DAG ordered with Kahn's algorithm, with a plugin system for new steps",
+            "fr": "Exécute chaque workflow comme un DAG ordonné avec l'algorithme de Kahn, avec des plugins pour ajouter des étapes"
+          },
+          {
+            "en": "Crash-resume logic picks a job back up exactly where it stopped",
+            "fr": "La reprise après crash relance un traitement exactement là où il s'était arrêté"
+          }
+        ]
+      }
+    ],
+    "span": {
+      "en": "2024 to 2027",
+      "fr": "2024 à 2027"
+    },
+    "facts": [
+      {
+        "label": {
+          "en": "Degree",
+          "fr": "Diplôme"
+        },
+        "value": {
+          "en": "BSc Software Engineering, 240 ECTS, taught in English",
+          "fr": "Licence en génie logiciel, 240 ECTS, en anglais"
+        }
+      },
+      {
+        "label": {
+          "en": "Graduating",
+          "fr": "Fin"
+        },
+        "value": {
+          "en": "January 2027",
+          "fr": "Janvier 2027"
+        }
+      },
+      {
+        "label": {
+          "en": "Certifications",
+          "fr": "Certifications"
+        },
+        "value": {
+          "en": "IBM AI Fundamentals, IBM Data Fundamentals, IBM Getting Started with AI, PMI Agile Project Management",
+          "fr": "IBM AI Fundamentals, IBM Data Fundamentals, IBM Getting Started with AI, PMI Agile Project Management"
         }
       }
     ]

@@ -2,7 +2,7 @@
 // MALTA ZONE
 // =================================================================================================
 
-// Malta: the degree chapter, the same route of tickets as Canada (routePanel() lives in cv.js).
+// Malta: the degree chapter, the same spread as Canada (chapterSpread() and itinerary() live in cv.js).
 zone({
   // <zone-settings> written by the editor's Zones page; edit it there, or by hand keeping both marker lines
   id: "malta", // panel id: shortcut button, dialogue and room.css rules ([data-panel="malta"])
@@ -31,8 +31,9 @@ zone({
     },
   },
 
-  // Builds the Malta panel from CONTENT.malta.
+  // Builds the Malta spread from CONTENT.malta.
   build() {
-    return routePanel(CONTENT.malta || { stops: [] });
+    const M = CONTENT.malta || { stops: [] };
+    return chapterSpread(M, itinerary(M.stops));
   },
 });

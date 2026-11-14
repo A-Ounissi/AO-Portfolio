@@ -250,7 +250,7 @@
 
   // Draws the sky, the glow around the globe and the globe for view v.
   function drawGlobe(v, t) {
-    ctx.fillStyle = "#04060d";
+    ctx.fillStyle = "#060d22"; // night-sky navy, the same as the page around the canvas
     ctx.fillRect(0, 0, ROOM_W, ROOM_H);
     // A few stars twinkle; the rest stay still.
     for (const s of STARS) {

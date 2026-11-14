@@ -2,8 +2,8 @@
 // CANADA ZONE
 // =================================================================================================
 
-// Canada: the route of stops (college, internships, first job), each a paper ticket with a stamp on top.
-// routePanel() below is shared with Malta.
+// Canada: a two-column chapter spread, the story on the left and the itinerary of stops on the right.
+// chapterSpread() and itinerary() below are shared with Malta and Tunisia.
 zone({
   // <zone-settings> written by the editor's Zones page; edit it there, or by hand keeping both marker lines
   id: "cv", // panel id: shortcut button, dialogue and room.css rules ([data-panel="cv"])
@@ -16,85 +16,113 @@ zone({
   at: [57, -103], // where he stands, [lat, lon]: the globe turns this spot under his feet
   // </zone-settings>
 
-  // Builds the Canada panel from CONTENT.cv.
+  // Builds the Canada spread from CONTENT.cv.
   build() {
-    return routePanel(CONTENT.cv);
+    return chapterSpread(CONTENT.cv, itinerary(CONTENT.cv.stops));
   },
 });
 
 // =================================================================================================
-// routePanel()
+// chapterSpread()
 // =================================================================================================
 
-// Builds a chapter as a travel route: an intro line, then one ticket per stop, left to right in time order,
-// joined by a dashed flight path. Data C: { summary, stops: [...], pdf }. Each stop:
-//   { id, name, logo, initials, accent, when, where, role, story, tags: [], url, say }
-// The stamp shows the logo when the file loads, and the initials when it is missing.
-function routePanel(C) {
+// Builds a chapter spread from data C: { span, summary, facts: [{label, value}], pdf }. The left column holds the
+// years, the story, the key facts and the CV download; `right` (an element) fills the right column.
+function chapterSpread(C, right) {
   const f = document.createDocumentFragment(),
-    wrap = el("div", "route");
+    spread = el("div", "spread"),
+    side = el("div", "spread-side");
 
-  // Intro line and the CV download, on one row above the tickets.
-  const top = el("div", "route-top");
-  if (tr(C.summary)) top.append(el("p", "route-intro", tr(C.summary)));
+  if (tr(C.span)) side.append(el("p", "spread-span", tr(C.span)));
+  if (tr(C.summary || C.story)) side.append(el("p", "spread-lede", tr(C.summary || C.story)));
+
+  // Key facts as a definition list: a quiet label above each value.
+  if ((C.facts || []).length) {
+    const dl = el("dl", "spread-facts");
+    C.facts.forEach((x) => dl.append(el("dt", null, tr(x.label)), el("dd", null, tr(x.value))));
+    side.append(dl);
+  }
+
   const pdf = safeUrl(tr(C.pdf));
   if (pdf) {
-    const a = el("a", "route-cv", ui("cv.download"));
-    a.prepend(pxi("download", 18));
+    const a = el("a", "spread-cv", ui("cv.download"));
+    a.prepend(pxi("download", 16));
     a.href = pdf;
     a.download = "";
-    top.append(a);
+    side.append(a);
   }
-  wrap.append(top);
 
-  // The row of tickets, with the flight path drawn behind the stamps.
-  const row = el("ol", "route-stops");
-  (C.stops || []).forEach((s, i) => {
+  spread.append(side, right);
+  f.append(spread);
+  return f;
+}
+
+// =================================================================================================
+// itinerary()
+// =================================================================================================
+
+// Builds the right column: one stop per entry along a vertical rail, in time order. Each stop:
+//   { name, logo, initials, accent, from, to, where, role, points: [], tags: [], url, say }
+// The logo tile shows the logo when the file loads, and the initials when it is missing.
+function itinerary(stops) {
+  const ol = el("ol", "itin");
+  (stops || []).forEach((s, i) => {
     const li = el("li", "stop");
-    li.style.setProperty("--accent", s.accent || "#ffb347");
+    li.style.setProperty("--accent", s.accent || "#f2b04a");
     li.style.setProperty("--i", i);
     li.tabIndex = 0;
-    if (tr(s.say)) li.dataset.say = tr(s.say); // the hero's line while this ticket is hovered
+    if (tr(s.say)) li.dataset.say = tr(s.say); // the hero's line while this stop is hovered
 
-    // The stamp: logo image, or the initials when there is no logo (or it fails to load).
-    const stamp = el("div", "stamp");
-    const ini = el("span", "stamp-ini", s.initials || (s.name || "?").slice(0, 2).toUpperCase());
-    stamp.append(ini);
+    // Dates on the rail: start above end, so the timeline reads top to bottom.
+    const when = el("div", "stop-when");
+    when.append(el("span", null, tr(s.from) || tr(s.when)));
+    if (tr(s.to)) when.append(el("span", "stop-to", tr(s.to)));
+
+    // Logo tile, then name, role and place.
+    const tile = el("span", "stop-logo");
+    tile.append(el("span", "stop-ini", s.initials || (s.name || "?").slice(0, 2).toUpperCase()));
     if (s.logo) {
       const im = el("img");
       im.alt = "";
-      im.addEventListener("load", () => stamp.classList.add("has-logo"));
+      im.addEventListener("load", () => tile.classList.add("has-logo"));
       im.addEventListener("error", () => im.remove());
       im.src = s.logo;
-      stamp.append(im);
+      tile.append(im);
     }
-    li.append(stamp);
 
-    // The ticket: when and where, name, role, story, tags, website.
-    const card = el("div", "ticket");
-    card.append(el("p", "ticket-when", [tr(s.when), tr(s.where)].filter(Boolean).join(" · ")));
-    card.append(el("h3", "ticket-name", s.name));
-    if (tr(s.role)) card.append(el("p", "ticket-role", tr(s.role)));
-    if (tr(s.story)) card.append(el("p", "ticket-story", tr(s.story)));
-    if ((s.tags || []).length) {
-      const tags = el("div", "ticket-tags");
-      s.tags.forEach((t) => tags.append(el("span", null, t)));
-      card.append(tags);
-    }
+    const head = el("div", "stop-head"),
+      who = el("div", "stop-who");
+    who.append(el("h3", "stop-name", s.name));
+    if (tr(s.role)) who.append(el("p", "stop-role", tr(s.role)));
+    if (s.where) who.append(el("p", "stop-where", s.where));
+    head.append(tile, who);
+
+    const body = el("div", "stop-body");
+    body.append(head);
+
+    // What happened there, as short bullet points (or the older one-paragraph story).
+    if ((s.points || []).length) {
+      const ul = el("ul", "stop-points");
+      s.points.forEach((p) => ul.append(el("li", null, tr(p))));
+      body.append(ul);
+    } else if (tr(s.story)) body.append(el("p", "stop-story", tr(s.story)));
+
+    // Tools as a plain comma list, and the organization's website.
+    const foot = el("div", "stop-foot");
+    if ((s.tags || []).length) foot.append(el("span", "stop-tags", s.tags.join(", ")));
     const url = safeUrl(s.url);
     if (url) {
-      const a = el("a", "ticket-link", url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""));
-      a.prepend(pxi("link", 14));
+      const a = el("a", "stop-link", url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""));
       a.href = url;
       a.target = "_blank";
       a.rel = "noopener";
-      card.append(a);
+      foot.append(a);
     }
-    li.append(card);
-    row.append(li);
+
+    if (foot.childNodes.length) body.append(foot);
+    li.append(when, body);
+    ol.append(li);
   });
 
-  wrap.append(row);
-  f.append(wrap);
-  return f;
+  return ol;
 }

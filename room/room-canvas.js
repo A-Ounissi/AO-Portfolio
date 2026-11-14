@@ -516,7 +516,7 @@
   // Draws the floating name labels above the zones on the visible side of the globe. The zone he stands on has
   // none (he is there), and a label that would cover another one moves up above it.
   function drawLabels(t, v) {
-    ctx.font = `600 11px "Space Grotesk", "Inter", system-ui, sans-serif`;
+    ctx.font = `600 11px "Bricolage Grotesque", system-ui, sans-serif`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     labelBoxes = [];

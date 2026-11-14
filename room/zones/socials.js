@@ -62,15 +62,14 @@ zone({
 
   // Builds the Contact panel: pixel icons pinned on the corkboard.
   build() {
-    // The contact content and a fragment to fill.
-    const K = CONTENT.contact,
-      f = document.createDocumentFragment();
+    // The contact content.
+    const K = CONTENT.contact;
 
-    // "Where it started": the chapter's story, above the contact rows.
-    if (tr(K.story)) f.append(el("p", "tnstory", tr(K.story)));
+    // The right column: a heading, then one row per way to reach me.
     const list = el("div", "contacts");
+    if (tr(K.reach)) list.append(el("h3", "contacts-head", tr(K.reach)));
 
-    // One row per contact link: icon, name, the address itself, and an arrow.
+    // One row per contact link: icon, name and the address itself.
     K.links.forEach((l) => {
       const url = safeUrl(l.url),
         mail = /^mailto:/i.test(url),
@@ -89,13 +88,13 @@ zone({
         tx = el("span", "contact-tx");
       ic.append(pxi(mail ? "message" : "link", 20));
       tx.append(el("span", "contact-label", tr(l.label)), el("span", "contact-handle", handle));
-      a.append(ic, tx, el("span", "contact-go", mail ? "→" : "↗"));
+      a.append(ic, tx);
       if (tr(l.say)) a.dataset.say = tr(l.say); // the hero's line while this row is hovered
       list.append(a);
     });
 
-    f.append(list);
-    return f;
+    // Story, facts and contacts laid out as a chapter spread, like Canada and Malta.
+    return chapterSpread(K, list);
   },
 
   // Puts away the email menu along with the panel.
