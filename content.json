@@ -157,8 +157,8 @@
   "cv": {
     "placeholder": false,
     "summary": {
-      "en": "Canada is where coding turned into a job. A college diploma in Ottawa, two internships back to back, then almost a year inside one of the country's biggest banks.",
-      "fr": "Le Canada, c'est là où coder est devenu un métier. Un diplôme collégial à Ottawa, deux stages à la suite, puis presque un an dans une des plus grandes banques du pays."
+      "en": "Canada is where coding turned into a job. A college diploma in Ottawa, two internships along the way, then almost a year inside one of the country's biggest banks.",
+      "fr": "Le Canada, c'est là où coder est devenu un métier. Un diplôme collégial à Ottawa, deux stages en chemin, puis presque un an dans une des plus grandes banques du pays."
     },
     "pdf": "content/cv/Ahmed_Ounissi_Resume.pdf",
     "stops": [
@@ -199,8 +199,8 @@
         "initials": "PR",
         "accent": "#ff8a3d",
         "when": {
-          "en": "Jan - Apr 2023",
-          "fr": "janv. - avr. 2023"
+          "en": "Sep - Dec 2022",
+          "fr": "sept. - déc. 2022"
         },
         "where": "Blainville, QC",
         "role": {
@@ -229,8 +229,8 @@
         "initials": "SM",
         "accent": "#00bf6f",
         "when": {
-          "en": "Apr - Jul 2023",
-          "fr": "avr. - juil. 2023"
+          "en": "May - Aug 2023",
+          "fr": "mai - août 2023"
         },
         "where": "Ottawa, ON",
         "role": {
@@ -290,7 +290,7 @@
       {
         "id": "linkedin",
         "label": "LinkedIn",
-        "url": "https://www.linkedin.com/in/ahmed-ounissi-94b851253",
+        "url": "https://www.linkedin.com/in/ahmed-ounissi",
         "icon": "linkedin"
       },
       {

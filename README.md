@@ -42,4 +42,4 @@ Icons from [Pixelarticons](https://pixelarticons.com) (MIT). Country outlines fr
 
 ## Contact
 
-[LinkedIn](https://www.linkedin.com/in/ahmed-ounissi-94b851253) · [GitHub](https://github.com/A-Ounissi) · ounissi.a.career@gmail.com
+[LinkedIn](https://www.linkedin.com/in/ahmed-ounissi) · [GitHub](https://github.com/A-Ounissi) · ounissi.a.career@gmail.com
