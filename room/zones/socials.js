@@ -62,29 +62,19 @@ zone({
 
   // Builds the Contact panel: pixel icons pinned on the corkboard.
   build() {
-    // The Contact content, a fragment to fill, and the hint line above the board.
+    // The contact content and a fragment to fill.
     const K = CONTENT.contact,
-      f = document.createDocumentFragment(),
-      note = el("p", "sample-note");
+      f = document.createDocumentFragment();
 
-    // "Where it started": a short story line above the board, when one is set.
+    // "Where it started": the chapter's story, above the contact rows.
     if (tr(K.story)) f.append(el("p", "tnstory", tr(K.story)));
-    if (K.placeholder) note.append(el("span", "sample", ui("placeholder.tag")), " ");
-    note.append(ui("contact.pick"));
-    f.append(note);
-    // The corkboard, the icon grid pinned on it and the number of links.
-    const cork = el("div", "cork"),
-      grid = el("div", "socials"),
-      n = K.links.length;
+    const list = el("div", "contacts");
 
-    // =============================================================================================
-    // K.links.forEach(...)
-    // =============================================================================================
-
-    // One pinned icon per contact link.
-    K.links.forEach((l, i) => {
-      const a = el("a", "sicon");
-      const url = safeUrl(l.url);
+    // One row per contact link: icon, name, the address itself, and an arrow.
+    K.links.forEach((l) => {
+      const url = safeUrl(l.url),
+        mail = /^mailto:/i.test(url),
+        a = el("a", "contact");
       a.href = url || "#";
       // Opens outside links in a new tab.
       if (/^https?:/i.test(url)) {
@@ -92,29 +82,19 @@ zone({
         a.rel = "noopener";
       }
 
-      // An email pin opens a small menu to write from the browser (Gmail, Outlook) or a mail app, or copy it.
-      if (/^mailto:/i.test(url)) a.addEventListener("click", (e) => (e.preventDefault(), mailMenu(a, url)));
-      if (n % 2 === 1 && i === n - 1 && n > 1) a.classList.add("mail"); // an odd last icon sits centered underneath
-      // Logo badge styled per brand and the 24px canvas the logo is drawn on.
-      const lg = el("span", "slogo " + ({ linkedin: "li", github: "gh", gmail: "gm" }[l.icon] || "gm")),
-        cv = el("canvas");
-
-      cv.width = 24;
-      cv.height = 24;
-      cv.setAttribute("aria-hidden", "true");
-      // Uses a built-in logo, the link's own image, or the generic link pin.
-      if (LOGOS[l.icon]) cv.dataset.logo = l.icon;
-      else if (l.iconImage) cv.dataset.img = l.iconImage;
-      else cv.dataset.logo = "link";
-
-      lg.append(cv);
-      a.append(lg, el("span", "slabel", tr(l.label)));
-      if (tr(l.say)) a.dataset.say = tr(l.say); // the hero's line while this pin is hovered
-      grid.append(a);
+      // An email row opens a small menu to write from the browser (Gmail, Outlook) or a mail app, or copy it.
+      if (mail) a.addEventListener("click", (e) => (e.preventDefault(), mailMenu(a, url)));
+      const handle = url.replace(/^mailto:/i, "").replace(/^https?:\/\/(www\.)?/i, "").replace(/\/$/, ""),
+        ic = el("span", "contact-ic"),
+        tx = el("span", "contact-tx");
+      ic.append(pxi(mail ? "message" : "link", 20));
+      tx.append(el("span", "contact-label", tr(l.label)), el("span", "contact-handle", handle));
+      a.append(ic, tx, el("span", "contact-go", mail ? "→" : "↗"));
+      if (tr(l.say)) a.dataset.say = tr(l.say); // the hero's line while this row is hovered
+      list.append(a);
     });
 
-    cork.append(grid);
-    f.append(cork);
+    f.append(list);
     return f;
   },
 
@@ -124,14 +104,7 @@ zone({
   },
 
   // Draws the pinned logos once the panel is up, each with a little random tilt.
-  opened() {
-    document.querySelectorAll("#dlg-body canvas[data-logo], #dlg-body canvas[data-img]").forEach(drawLogo);
-    // Gives each contact logo a small random tilt, like a pinned note.
-    document
-      .querySelectorAll("#dlg-body .slogo")
-      // a little random tilt each time
-      .forEach((el) => el.style.setProperty("--tilt", (Math.random() * 14 - 7).toFixed(1) + "deg"));
-  },
+  opened() {},
 });
 
 // =================================================================================================

@@ -1,0 +1,831 @@
+/* =================================================================================================
+   Premium theme layer
+   Loaded after room.css. The globe and the pixel character keep their pixel look; everything around
+   them (type, panels, buttons, motion) is modern: Space Grotesk / Inter, dark glass, soft shadows,
+   rounded corners and smooth easing instead of hard pixel outlines and stepped animation.
+   ================================================================================================= */
+
+:root {
+  --arrow: default; /* system cursors instead of the pixel ones */
+  --hand: pointer;
+  --text: #eeebf5;
+  --soft: #c8c4d6;
+  --dim: #9a96ad;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-2: rgba(255, 255, 255, 0.16);
+  --glass: rgba(17, 16, 30, 0.72);
+  --glass-hi: rgba(255, 255, 255, 0.045);
+  --amber: #f6b354;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.42);
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+/* slim, quiet scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+
+/* ---- calm motion: these replace the bouncy, stepped keyframes of room.css ---------------------- */
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes slideup {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+@keyframes hintpulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* =================================================================================================
+   Start screen
+   ================================================================================================= */
+
+.title {
+  background: radial-gradient(ellipse at 50% 42%, rgba(18, 16, 34, 0.5), rgba(7, 7, 14, 0.86) 70%);
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  backdrop-filter: blur(16px) saturate(1.1);
+  gap: clamp(12px, 2.2vh, 22px);
+}
+
+.title::before {
+  display: none; /* no CRT scanlines */
+}
+
+.title-name {
+  font: 700 clamp(2.6rem, 7.4vw, 5.6rem) / 1 var(--display);
+  letter-spacing: -0.03em;
+  color: var(--text);
+  text-shadow: none;
+  animation: rise 0.8s var(--ease) backwards;
+}
+
+.title-role {
+  font: 600 0.78rem var(--display);
+  letter-spacing: 0.34em;
+  color: var(--amber);
+  text-shadow: none;
+}
+
+.title-about {
+  max-width: 54ch;
+  font: 400 clamp(0.98rem, 1.6vw, 1.1rem) / 1.65 var(--body);
+  color: var(--soft);
+  text-shadow: none;
+}
+
+.title-quick {
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.title-quick small {
+  margin-bottom: -2px;
+  font: 500 0.78rem var(--body);
+  letter-spacing: 0.01em;
+  color: var(--dim);
+}
+
+.title-quick button {
+  width: 196px;
+  gap: 4px;
+  padding: 16px 18px 18px;
+  border-radius: 16px;
+  background: var(--glass-hi);
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transition:
+    transform 0.25s var(--ease),
+    border-color 0.25s,
+    background 0.25s;
+  animation: pop 0.6s var(--ease) backwards;
+}
+
+.title-quick button:hover,
+.title-quick button:focus-visible {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(246, 179, 84, 0.55);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+}
+
+/* a hairline between chapters instead of the dashed pixel path */
+.title-quick button + button::before {
+  left: -15px;
+  width: 15px;
+  border-top: 1px solid var(--line-2);
+}
+
+.q-num {
+  font: 600 0.7rem var(--display);
+  letter-spacing: 0.14em;
+}
+
+.q-name {
+  font: 600 1.15rem / 1.15 var(--display);
+  letter-spacing: -0.01em;
+}
+
+.q-what {
+  font: 400 0.82rem / 1.45 var(--body);
+  color: var(--dim);
+}
+
+.title-hint {
+  font: 500 0.92rem var(--body);
+  letter-spacing: 0.02em;
+  color: var(--soft);
+  text-shadow: none;
+  animation: hintpulse 2.6s ease-in-out infinite 0.8s;
+}
+
+.title-load {
+  height: 4px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.title-load i {
+  background: var(--amber);
+}
+
+/* =================================================================================================
+   Header, shortcut buttons
+   ================================================================================================= */
+
+h1 {
+  font: 600 1.05rem var(--display);
+  letter-spacing: -0.01em;
+}
+
+nav button {
+  font: 500 0.76rem var(--body);
+  letter-spacing: 0.04em;
+  text-transform: none;
+  border-radius: 999px;
+  background: rgba(17, 16, 30, 0.7);
+  border: 1px solid var(--line);
+  padding: 6px 14px;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+
+nav button:hover,
+nav button:focus-visible {
+  border-color: rgba(246, 179, 84, 0.6);
+  color: var(--amber);
+}
+
+/* =================================================================================================
+   Panels: the room blurs behind them, so globe labels and the big character don't show through
+   ================================================================================================= */
+
+.overlay.floating {
+  background: rgba(7, 7, 14, 0.58);
+  -webkit-backdrop-filter: blur(14px) saturate(1.05);
+  backdrop-filter: blur(14px) saturate(1.05);
+}
+
+.dialog.wide h2,
+#dlg-title {
+  font: 600 1.7rem var(--display);
+  letter-spacing: -0.02em;
+  color: var(--text);
+  text-shadow: none;
+}
+
+.close {
+  gap: 6px;
+  font: 500 0.82rem var(--body);
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 14px 6px 10px;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+
+.close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--line-2);
+  transform: none;
+  box-shadow: none;
+}
+
+.close:hover .pxi {
+  animation: none;
+}
+
+.close:active {
+  transform: scale(0.98);
+}
+
+/* =================================================================================================
+   Dialogue banner: a glass speech panel under the pixel character
+   ================================================================================================= */
+
+.banner-inner {
+  animation: slideup 0.4s var(--ease);
+}
+
+.banner-box {
+  min-height: 92px;
+  padding: 24px 26px 18px;
+  border-radius: 18px;
+  background: rgba(17, 16, 30, 0.84);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--line);
+  outline: 0;
+  box-shadow: var(--shadow);
+}
+
+.banner-name {
+  top: -12px;
+  font: 600 0.72rem var(--display);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1a1426;
+  background: var(--amber);
+  border: 0;
+  outline: 0;
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+.banner-text {
+  font: 500 1.04rem / 1.6 var(--body);
+  color: var(--text);
+}
+
+.banner-next {
+  animation: blink 1.4s ease-in-out infinite;
+}
+
+.banner-portrait {
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.55));
+}
+
+/* =================================================================================================
+   Tunisia: story + contact rows
+   ================================================================================================= */
+
+.dialog.wide[data-panel="socials"] {
+  width: min(560px, 100%);
+}
+
+.tnstory {
+  margin: 4px 0 18px !important;
+  max-width: 52ch;
+  text-align: left;
+  font: 400 1rem / 1.65 var(--body);
+  color: var(--soft);
+  text-shadow: none;
+}
+
+.contacts {
+  display: grid;
+  gap: 10px;
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  color: var(--text);
+  text-decoration: none;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+  transition:
+    transform 0.25s var(--ease),
+    border-color 0.25s,
+    background 0.25s;
+  animation: pop 0.55s var(--ease) backwards;
+}
+
+.contact:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.contact:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.contact:hover,
+.contact:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(246, 179, 84, 0.55);
+  background: rgba(24, 22, 40, 0.85);
+  outline: none;
+}
+
+.contact-ic {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(246, 179, 84, 0.12);
+  color: var(--amber);
+}
+
+.contact-tx {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.contact-label {
+  font: 600 1rem var(--display);
+}
+
+.contact-handle {
+  font: 400 0.86rem var(--body);
+  color: var(--dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contact-go {
+  margin-left: auto;
+  font-size: 1.1rem;
+  color: var(--dim);
+  transition:
+    color 0.2s,
+    transform 0.25s var(--ease);
+}
+
+.contact:hover .contact-go {
+  color: var(--amber);
+  transform: translate(2px, -2px);
+}
+
+.mailmenu {
+  border-radius: 14px;
+  background: rgba(17, 16, 30, 0.95);
+  border: 1px solid var(--line-2);
+  box-shadow: var(--shadow);
+  font-family: var(--body);
+  overflow: hidden;
+}
+
+/* =================================================================================================
+   Canada and Malta: glass cards with a logo tile instead of paper tickets with stamps
+   ================================================================================================= */
+
+.route-intro {
+  font: 400 1rem / 1.65 var(--body);
+  color: var(--soft);
+  text-shadow: none;
+}
+
+.route-cv {
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font: 600 0.82rem var(--body);
+  letter-spacing: 0;
+  text-transform: none;
+  color: #1a1426;
+  background: var(--amber);
+  box-shadow: 0 8px 22px rgba(246, 179, 84, 0.22);
+  transition:
+    transform 0.2s var(--ease),
+    background 0.2s;
+}
+
+.route-cv:hover,
+.route-cv:focus-visible {
+  background: #ffc46f;
+  transform: translateY(-1px);
+}
+
+.route-stops {
+  gap: 18px;
+  padding-top: 40px;
+}
+
+.route-stops::before {
+  top: 40px;
+  border-top: 1px solid var(--line-2);
+}
+
+.stop,
+.stop:nth-child(odd),
+.stop:nth-child(even) {
+  --tilt: 0deg;
+  transform: none;
+  animation: pop 0.6s var(--ease) backwards;
+  animation-delay: calc(0.08s + var(--i) * 0.08s);
+  transition: transform 0.3s var(--ease);
+}
+
+.stop:hover,
+.stop:focus-visible {
+  transform: translateY(-4px);
+}
+
+.stamp {
+  top: -26px;
+  left: 18px;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.2),
+    0 10px 24px rgba(0, 0, 0, 0.4);
+  transform: none;
+}
+
+.stop:hover .stamp,
+.stop:focus-visible .stamp {
+  transform: none;
+}
+
+.stamp img {
+  width: 38px;
+  height: 38px;
+}
+
+.stamp-ini {
+  font: 700 1rem var(--display);
+  letter-spacing: -0.01em;
+  color: #1a1426;
+  filter: none;
+}
+
+.ticket {
+  gap: 6px;
+  padding: 42px 18px 16px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025)), var(--glass);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s;
+}
+
+.stop:hover .ticket,
+.stop:focus-visible .ticket {
+  border-color: var(--line-2);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+.ticket-when {
+  font: 600 0.7rem var(--body);
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.ticket-name {
+  font: 600 1.15rem / 1.25 var(--display);
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.ticket-role {
+  font: 500 0.88rem / 1.4 var(--body);
+  color: var(--soft);
+}
+
+.ticket-story {
+  font: 400 0.86rem / 1.6 var(--body);
+  color: var(--dim);
+}
+
+.ticket-tags {
+  gap: 6px;
+}
+
+.ticket-tags span {
+  font: 500 0.7rem var(--body);
+  letter-spacing: 0.01em;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  color: var(--soft);
+}
+
+.ticket-link {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  font: 500 0.8rem var(--body);
+  color: var(--soft);
+}
+
+.ticket-link:hover,
+.ticket-link:focus-visible {
+  color: var(--amber);
+  text-decoration: none;
+}
+
+/* =================================================================================================
+   USA: a glass panel of project cards instead of the CRT monitor
+   ================================================================================================= */
+
+.stand,
+.sidescreen,
+.monitor::after,
+.screen::before,
+.screen .sample-note::before {
+  display: none;
+}
+
+.monitor {
+  padding: 8px;
+  border-radius: 24px;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  animation: rise 0.6s var(--ease) backwards;
+}
+
+.screen,
+.screen:hover:not(:has(.pcard:hover, .pscroll:hover)) {
+  background: transparent;
+  box-shadow: none;
+  padding: 14px 10px 10px;
+}
+
+.screen .sample-note {
+  margin: 0 8px 12px !important;
+  font: 500 0.86rem var(--body);
+  color: var(--dim);
+  text-shadow: none;
+}
+
+.pzoom {
+  font: 500 0.74rem var(--body);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--soft);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: none;
+}
+
+.pcard {
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  transition:
+    transform 0.3s var(--ease),
+    border-color 0.25s,
+    box-shadow 0.25s;
+  animation: pop 0.6s var(--ease) backwards;
+}
+
+.pcard:hover,
+.pcard:focus-visible {
+  transform: translateY(-4px);
+  border-color: rgba(246, 179, 84, 0.5);
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.45);
+  outline: none;
+}
+
+.pthumb {
+  border: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.pbadge {
+  font: 600 0.66rem var(--body);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #1a1426;
+  background: var(--amber);
+  border: 0;
+  border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  padding: 4px 10px;
+}
+
+.ptitle {
+  font: 600 1.1rem var(--display);
+  letter-spacing: -0.01em;
+}
+
+.pdesc {
+  font: 400 0.86rem / 1.55 var(--body);
+  color: var(--dim);
+}
+
+.ptags span,
+.pstack span {
+  font: 500 0.7rem var(--body);
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  color: var(--soft);
+}
+
+.pfoot {
+  font: 500 0.78rem var(--body);
+  color: var(--dim);
+  border-top: 1px solid var(--line);
+}
+
+.pfoot > span:first-child {
+  color: var(--soft);
+}
+
+.pcta {
+  font: 600 0.78rem var(--body);
+  letter-spacing: 0;
+  text-transform: none;
+  color: #1a1426;
+  background: var(--amber);
+  border: 0;
+  border-radius: 999px;
+  box-shadow: none;
+  padding: 6px 12px;
+}
+
+.pcta:hover {
+  background: #ffc46f;
+  transform: none;
+  box-shadow: none;
+}
+
+/* project details */
+.pback {
+  background: rgba(7, 7, 14, 0.6);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.pmodal {
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(17, 16, 30, 0.96);
+  border: 1px solid var(--line-2);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+  transition: transform 0.35s var(--ease);
+}
+
+.pclose {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--line);
+}
+
+.pmedia {
+  background: rgba(0, 0, 0, 0.25);
+  border-right: 1px solid var(--line);
+}
+
+.phero {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.pname {
+  font: 600 1.7rem var(--display);
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.prole {
+  font: 500 0.9rem var(--body);
+  color: var(--amber);
+}
+
+.plead,
+.psum {
+  font: 400 0.95rem / 1.65 var(--body);
+  color: var(--soft);
+}
+
+.pinfo h3 {
+  font: 600 0.72rem var(--body);
+  letter-spacing: 0.1em;
+  color: var(--dim);
+}
+
+.phigh {
+  border-left: 2px solid var(--amber);
+  border-radius: 0 12px 12px 0;
+  background: rgba(246, 179, 84, 0.07);
+}
+
+.pbtn {
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  background: rgba(255, 255, 255, 0.05);
+  font: 500 0.84rem var(--body);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.pbtn.main {
+  color: #1a1426;
+  background: var(--amber);
+  border-color: transparent;
+}
+
+.pbtn.main:hover,
+.pbtn.main:focus-visible {
+  background: #ffc46f;
+}
+
+@media (max-width: 720px) {
+  .pmedia {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+/* phones: chapters two by two, tighter panels */
+@media (max-width: 760px) {
+  .title-quick {
+    gap: 10px;
+  }
+
+  .title-quick button {
+    width: calc(50% - 5px);
+    min-width: 0;
+    padding: 12px 14px 14px;
+  }
+
+  .title-quick button + button::before {
+    display: none;
+  }
+
+  .dialog.wide h2,
+  #dlg-title {
+    font-size: 1.35rem;
+  }
+}
+
+/* reduced motion: everything appears in place */
+@media (prefers-reduced-motion: reduce) {
+  .title-quick button,
+  .contact,
+  .stop,
+  .pcard,
+  .monitor,
+  .banner-inner {
+    animation: none;
+    transition: none;
+  }
+}

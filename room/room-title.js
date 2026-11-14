@@ -39,9 +39,9 @@
     title.querySelector(".title-quick")?.addEventListener("pointerdown", (e) => e.stopPropagation());
   }
 
-  // show the title in its pixel font only, never a fallback flash (give up waiting after 1.5 s)
+  // show the title in its title font only, never a fallback flash (give up waiting after 1.5 s)
   Promise.race([
-    document.fonts ? document.fonts.load('600 1em "Pixelify Sans"') : 0,
+    document.fonts ? document.fonts.load('700 1em "Space Grotesk"') : 0,
     new Promise((r) => setTimeout(r, 1500)),
   ]).then(() => document.documentElement.classList.add("fonts"));
 

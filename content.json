@@ -157,8 +157,8 @@
   "cv": {
     "placeholder": false,
     "summary": {
-      "en": "Canada is where coding turned into a job. A college diploma in Ottawa, two internships along the way, then almost a year inside one of the country's biggest banks.",
-      "fr": "Le Canada, c'est là où coder est devenu un métier. Un diplôme collégial à Ottawa, deux stages en chemin, puis presque un an dans une des plus grandes banques du pays."
+      "en": "Canada is where coding turned into a job. A computer programming diploma in Ottawa, a web internship in Quebec during it, a summer at SurveyMonkey, then almost a year of IT support at TD.",
+      "fr": "Le Canada, c'est là où coder est devenu un métier. Un diplôme en programmation à Ottawa, un stage web au Québec en parallèle, un été chez SurveyMonkey, puis presque un an de support informatique chez TD."
     },
     "pdf": "content/cv/Ahmed_Ounissi_Resume.pdf",
     "stops": [
@@ -178,8 +178,8 @@
           "fr": "Diplôme, programmation informatique"
         },
         "story": {
-          "en": "Where it got serious. Java, databases and web development, four semesters back to back.",
-          "fr": "Là où c'est devenu sérieux. Java, bases de données et développement web, quatre sessions d'affilée."
+          "en": "Where it got serious. Java and design patterns, databases, web and mobile, four semesters straight, ending with a software project built for a real client.",
+          "fr": "Là où c'est devenu sérieux. Java et design patterns, bases de données, web et mobile, quatre sessions d'affilée, avec à la fin un projet logiciel pour un vrai client."
         },
         "tags": [
           "Java",
@@ -218,8 +218,8 @@
         ],
         "url": "https://service-tech.ca/",
         "say": {
-          "en": "My first real client. A crane company, in French.",
-          "fr": "Mon premier vrai client. Une entreprise de ponts roulants, en français."
+          "en": "My first real client: a crane company that needed a website.",
+          "fr": "Mon premier vrai client : une entreprise de ponts roulants qui avait besoin d'un site."
         }
       },
       {
@@ -291,24 +291,36 @@
         "id": "linkedin",
         "label": "LinkedIn",
         "url": "https://www.linkedin.com/in/ahmed-ounissi",
-        "icon": "linkedin"
+        "icon": "linkedin",
+        "say": {
+          "en": "LinkedIn. Where my work history lives.",
+          "fr": "LinkedIn. Tout mon parcours pro."
+        }
       },
       {
         "id": "github",
         "label": "GitHub",
         "url": "https://github.com/A-Ounissi",
-        "icon": "github"
+        "icon": "github",
+        "say": {
+          "en": "GitHub. The code behind the projects.",
+          "fr": "GitHub. Le code derrière les projets."
+        }
       },
       {
         "id": "email",
-        "label": "Gmail",
+        "label": "Email",
         "url": "mailto:ounissi.a.career@gmail.com",
-        "icon": "gmail"
+        "icon": "gmail",
+        "say": {
+          "en": "Email is the fastest way to reach me.",
+          "fr": "L'e-mail, c'est le plus rapide pour me joindre."
+        }
       }
     ],
     "story": {
-      "en": "I grew up in Tunisia speaking Arabic, French and English, and picked up Spanish later. This is chapter one. From here the story goes west: Canada, Malta, then the US. Spin the globe to follow it, or find me on the board below.",
-      "fr": "J'ai grandi en Tunisie en parlant arabe, français et anglais, et j'ai appris l'espagnol plus tard. C'est le premier chapitre. Ensuite l'histoire part vers l'ouest : le Canada, Malte, puis les États-Unis. Fais tourner le globe pour la suivre, ou retrouve-moi sur le tableau en dessous."
+      "en": "I grew up in Tunisia speaking Arabic, French and English, and picked up Spanish later. This is chapter one. From here the story goes west: Canada, Malta, then the US. Want to talk? Reach me below.",
+      "fr": "J'ai grandi en Tunisie en parlant arabe, français et anglais, et j'ai appris l'espagnol plus tard. C'est le premier chapitre. Ensuite l'histoire part vers l'ouest : le Canada, Malte, puis les États-Unis. Envie de discuter ? Écris-moi ci-dessous."
     }
   },
   "ui": {
@@ -675,8 +687,8 @@
         "section": "projects",
         "where": "Green terminal prompt at the top of the Projects screen.",
         "text": {
-          "en": "C:\\AHMED\\USA>",
-          "fr": "C:\\AHMED\\USA>"
+          "en": "Projects",
+          "fr": "Projets"
         }
       },
       "projects.pick": {
