@@ -516,7 +516,7 @@
   // Draws the floating name labels above the zones on the visible side of the globe. The zone he stands on has
   // none (he is there), and a label that would cover another one moves up above it.
   function drawLabels(t, v) {
-    ctx.font = `600 11px "Bricolage Grotesque", system-ui, sans-serif`;
+    ctx.font = `600 12px "Pixelify Sans", monospace`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     labelBoxes = [];
@@ -544,14 +544,8 @@
       }
 
       ctx.globalAlpha = Math.min(1, d * 4);
-      // a soft rounded glass chip with a hairline edge
-      ctx.fillStyle = "rgba(12,12,22,.78)";
-      ctx.strokeStyle = hover === o.id ? "rgba(127,243,255,.55)" : "rgba(255,255,255,.14)";
-      ctx.lineWidth = 0.5;
-      ctx.beginPath();
-      ctx.roundRect(x0, cy - 10, w, 20, 10);
-      ctx.fill();
-      ctx.stroke();
+      ctx.fillStyle = "rgba(14,10,22,.85)";
+      ctx.fillRect(x0, cy - 10, w, 20);
       ctx.fillStyle = hover === o.id ? zoneColor(o, true) : "#f4ead8";
       labelIcon(o.icon, x0 + 6, Math.round(cy) - 6);
       ctx.fillText(text, x0 + 22 + (w - 30) / 2, cy + 1);

@@ -1,1006 +1,769 @@
 /* =================================================================================================
-   Theme: "night flight"
-   Loaded after room.css. The globe and the pixel character keep their pixel look; around them the site
-   reads like a travel journal at night: a navy sky taken from the globe's ocean, Bricolage Grotesque for
-   headings and the interface, Newsreader for the story, and one beacon amber reserved for the route,
-   the years and the actions. Each chapter opens as a single wide spread (story left, itinerary right)
-   rather than a grid of identical cards.
+   Pixel game layer, loaded after room.css
    ================================================================================================= */
 
+/* Keeps the room's pixel look and adds three things on top: a night sky that runs edge to edge (no frame
+   around the room), the chapter panels for Tunisia, Canada and Malta as pixel RPG windows, and the itinerary
+   of stops as a quest log. */
+
 :root {
-  --arrow: default; /* system cursors instead of the pixel ones */
-  --hand: pointer;
-  --sky: #060d22; /* page and globe background */
-  --deep: #0b1a3a; /* panel surface */
-  --panel: rgba(11, 26, 58, 0.82);
-  --text: #e9eefb; /* moonlight */
-  --soft: #c3cce6;
-  --dim: #93a0c4; /* slate */
-  --line: rgba(147, 160, 196, 0.18);
-  --line-2: rgba(147, 160, 196, 0.32);
-  --amber: #f2b04a; /* beacon: route, years, actions */
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --reserve: 124px; /* room kept under an open panel for the compact dialogue banner */
+  --sky: #04060d; /* the same colour the globe's sky is painted in, so the room has no visible edge */
+  --win-top: #2b2140; /* RPG window gradient, the same as the dialogue banner */
+  --win-bottom: #1c1530;
+  /* height left for a chapter panel: the screen minus the dialogue banner and portrait under it */
+  --spread-h: calc(100dvh - 190px - var(--ph) * 0.6 - 74px);
 }
 
-/* ---- the whole page is the night sky, so the globe's canvas has no visible edges ----------------- */
+/* =================================================================================================
+   Edge-to-edge night sky
+   ================================================================================================= */
 
+html,
 body {
-  background-color: var(--sky);
-  background-image:
-    radial-gradient(1px 1px at 12% 18%, rgba(207, 216, 255, 0.55), transparent 60%),
-    radial-gradient(1px 1px at 78% 12%, rgba(207, 216, 255, 0.45), transparent 60%),
-    radial-gradient(1px 1px at 34% 72%, rgba(207, 216, 255, 0.4), transparent 60%),
-    radial-gradient(1.5px 1.5px at 88% 64%, rgba(255, 246, 216, 0.6), transparent 60%),
-    radial-gradient(1px 1px at 6% 86%, rgba(207, 216, 255, 0.4), transparent 60%),
-    radial-gradient(1px 1px at 58% 40%, rgba(207, 216, 255, 0.3), transparent 60%);
-  background-size: 420px 420px;
-  -webkit-font-smoothing: antialiased;
+  background: var(--sky);
 }
 
+/* the room uses the whole window on desktop; header and nav already float over it */
+@media (min-width: 641px) {
+  .app {
+    padding: 0;
+  }
+}
+
+/* no frame, radius or shadow: the room's sky melts into the page */
+canvas {
+  background: var(--sky);
+  border-radius: 0;
+  box-shadow: none;
+  height: auto !important; /* keeps the globe round when the window is narrower than the room */
+}
+
+/* pixel stars across the whole page, behind the room (they show around it on wide or tall screens) */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* far stars: dim and still */
+body::before {
+  box-shadow:
+    663px 308px 0 #2c3760,
+    1333px 98px 0 #3b4a7a,
+    1681px 1097px 0 #3b4a7a,
+    748px 1193px 0 #3b4a7a,
+    1863px 1039px 0 #55608f,
+    76px 176px 0 #2c3760,
+    856px 143px 0 #55608f,
+    185px 1128px 0 #2c3760,
+    121px 1158px 0 #3b4a7a,
+    1940px 457px 0 #3b4a7a,
+    1181px 1199px 0 #2c3760,
+    101px 452px 0 #3b4a7a,
+    1140px 272px 0 #8a93c0,
+    858px 295px 0 #3b4a7a,
+    1169px 631px 0 #55608f,
+    211px 1191px 0 #55608f,
+    762px 199px 0 #3b4a7a,
+    1155px 122px 0 #55608f,
+    1016px 1088px 0 #2c3760,
+    1591px 643px 0 #2c3760,
+    1199px 928px 0 #8a93c0,
+    613px 508px 0 #55608f,
+    1431px 499px 0 #3b4a7a,
+    1176px 614px 0 #2c3760,
+    1792px 703px 0 #2c3760,
+    589px 149px 0 #3b4a7a,
+    1048px 856px 0 #55608f,
+    1550px 700px 0 #55608f,
+    1911px 1001px 0 #2c3760,
+    80px 158px 0 #8a93c0,
+    696px 717px 0 #2c3760,
+    1187px 934px 0 #3b4a7a,
+    1720px 191px 0 #8a93c0,
+    970px 133px 0 #3b4a7a,
+    1497px 634px 0 #2c3760,
+    582px 790px 0 #8a93c0,
+    46px 945px 0 #8a93c0,
+    344px 239px 0 #2c3760,
+    120px 446px 0 #8a93c0,
+    264px 507px 0 #2c3760,
+    800px 1016px 0 #3b4a7a,
+    340px 919px 0 #2c3760,
+    1125px 569px 0 #55608f,
+    1677px 881px 0 #8a93c0,
+    1446px 850px 0 #8a93c0,
+    1398px 779px 0 #55608f,
+    309px 169px 0 #55608f,
+    309px 475px 0 #55608f,
+    24px 993px 0 #55608f,
+    538px 577px 0 #3b4a7a,
+    298px 858px 0 #8a93c0,
+    1248px 1159px 0 #8a93c0,
+    1951px 257px 0 #3b4a7a,
+    935px 1145px 0 #2c3760,
+    815px 817px 0 #2c3760,
+    212px 986px 0 #2c3760,
+    127px 390px 0 #3b4a7a,
+    427px 902px 0 #55608f,
+    225px 696px 0 #3b4a7a,
+    209px 0px 0 #55608f,
+    1098px 207px 0 #8a93c0,
+    1256px 52px 0 #3b4a7a,
+    1790px 425px 0 #2c3760,
+    304px 516px 0 #8a93c0,
+    1233px 745px 0 #2c3760,
+    251px 236px 0 #2c3760,
+    954px 983px 0 #2c3760,
+    638px 175px 0 #55608f,
+    209px 701px 0 #8a93c0,
+    980px 330px 0 #3b4a7a,
+    420px 1081px 0 #8a93c0,
+    300px 1112px 0 #3b4a7a,
+    1552px 1081px 0 #8a93c0,
+    1316px 186px 0 #8a93c0,
+    1061px 751px 0 #55608f,
+    728px 456px 0 #8a93c0,
+    1303px 456px 0 #55608f,
+    1650px 490px 0 #2c3760,
+    1515px 464px 0 #55608f,
+    1060px 1009px 0 #8a93c0,
+    1497px 59px 0 #3b4a7a,
+    1618px 572px 0 #2c3760,
+    530px 396px 0 #8a93c0,
+    915px 715px 0 #8a93c0,
+    164px 451px 0 #3b4a7a,
+    464px 962px 0 #55608f,
+    691px 418px 0 #2c3760,
+    1278px 3px 0 #2c3760,
+    1862px 704px 0 #3b4a7a,
+    1709px 245px 0 #2c3760,
+    1602px 408px 0 #2c3760,
+    1820px 365px 0 #2c3760,
+    1616px 680px 0 #3b4a7a,
+    1640px 810px 0 #2c3760,
+    822px 173px 0 #55608f,
+    348px 260px 0 #3b4a7a,
+    309px 953px 0 #55608f,
+    1252px 971px 0 #8a93c0,
+    319px 1123px 0 #55608f,
+    43px 29px 0 #3b4a7a,
+    1078px 285px 0 #2c3760,
+    1785px 398px 0 #55608f,
+    57px 515px 0 #55608f,
+    599px 1026px 0 #55608f,
+    1564px 667px 0 #8a93c0,
+    1114px 858px 0 #55608f,
+    124px 724px 0 #2c3760,
+    1356px 1194px 0 #2c3760,
+    1693px 1027px 0 #55608f,
+    1089px 310px 0 #3b4a7a,
+    1787px 901px 0 #55608f,
+    1246px 8px 0 #55608f,
+    352px 289px 0 #2c3760,
+    1267px 246px 0 #3b4a7a,
+    667px 1061px 0 #2c3760,
+    1606px 217px 0 #3b4a7a,
+    508px 391px 0 #8a93c0,
+    86px 200px 0 #2c3760,
+    1150px 57px 0 #3b4a7a,
+    907px 666px 0 #55608f,
+    1418px 567px 0 #2c3760,
+    1040px 1092px 0 #2c3760,
+    1039px 507px 0 #8a93c0,
+    1889px 1145px 0 #55608f,
+    1720px 916px 0 #55608f,
+    853px 249px 0 #2c3760,
+    905px 647px 0 #3b4a7a,
+    1374px 492px 0 #2c3760,
+    149px 435px 0 #8a93c0,
+    1605px 250px 0 #55608f,
+    1924px 749px 0 #55608f,
+    518px 281px 0 #2c3760,
+    449px 192px 0 #2c3760,
+    1812px 997px 0 #55608f,
+    1367px 458px 0 #55608f,
+    1446px 883px 0 #2c3760,
+    694px 862px 0 #55608f,
+    730px 652px 0 #3b4a7a,
+    1478px 749px 0 #3b4a7a,
+    692px 1134px 0 #2c3760;
+}
+
+/* near stars: bright, blinking in two steps */
+body::after {
+  box-shadow:
+    902px 37px 0 #ffe9b8,
+    678px 1059px 0 #7ff3ff,
+    605px 1049px 0 #f4ead8,
+    231px 468px 0 #f4ead8,
+    172px 543px 0 #ffe9b8,
+    81px 371px 0 #ffe9b8,
+    1547px 265px 0 #ffe9b8,
+    1739px 529px 0 #ffe9b8,
+    305px 1098px 0 #7ff3ff,
+    1168px 1012px 0 #7ff3ff,
+    669px 183px 0 #ffe9b8,
+    117px 375px 0 #ffe9b8,
+    1833px 148px 0 #ffe9b8,
+    1921px 34px 0 #7ff3ff,
+    181px 533px 0 #f4ead8,
+    1245px 455px 0 #f4ead8,
+    541px 249px 0 #ffe9b8,
+    23px 694px 0 #7ff3ff,
+    855px 548px 0 #7ff3ff,
+    264px 88px 0 #7ff3ff,
+    1453px 488px 0 #f4ead8,
+    1984px 330px 0 #ffe9b8,
+    103px 370px 0 #f4ead8,
+    1909px 638px 0 #7ff3ff,
+    624px 1087px 0 #f4ead8,
+    593px 912px 0 #7ff3ff,
+    1376px 364px 0 #ffe9b8,
+    710px 37px 0 #ffe9b8,
+    75px 31px 0 #f4ead8,
+    1501px 1035px 0 #7ff3ff,
+    388px 1053px 0 #ffe9b8,
+    503px 915px 0 #f4ead8,
+    1348px 885px 0 #7ff3ff,
+    1013px 1118px 0 #ffe9b8,
+    1987px 1037px 0 #ffe9b8,
+    1408px 440px 0 #f4ead8,
+    701px 406px 0 #7ff3ff,
+    1492px 286px 0 #ffe9b8,
+    711px 111px 0 #f4ead8,
+    29px 144px 0 #7ff3ff;
+  animation: blink 3.2s steps(2) infinite;
+}
+
+/* blink: the bright stars dim for a moment */
+@keyframes blink {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* the app and the overlays stay above the stars */
 .app {
+  z-index: 1;
+}
+
+/* =================================================================================================
+   Chapter spread: an RPG window on the left, the quest log or corkboard on the right
+   ================================================================================================= */
+
+/* the chapter panels use the wide floating dialog, sized like the projects screen */
+.dialog.wide[data-panel="socials"] {
+  width: min(1080px, 100%);
+}
+
+/* two columns: the window is fixed width, the log takes the rest */
+.spread {
+  display: grid;
+  grid-template-columns: minmax(0, 330px) minmax(0, 1fr);
+  gap: 26px;
+  align-items: start;
+  text-align: left;
+}
+
+/* ---------------------------------------------------------------- the window */
+
+/* purple RPG window with a gold pixel border, a dark outline and a hard drop shadow */
+.spread-side {
+  position: relative;
+  max-height: var(--spread-h);
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 20px 20px 18px;
+  background: linear-gradient(var(--win-top), var(--win-bottom));
+  border: 3px solid var(--gold);
+  outline: 3px solid var(--outline);
+  box-shadow: 8px 8px 0 3px rgba(0, 0, 0, 0.45);
+  animation: rise 0.26s steps(4) backwards;
+}
+
+/* little gold corner studs, like the frame of a game menu */
+.spread-side::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--gold-light) 0 0) top left / 4px 4px no-repeat,
+    linear-gradient(var(--gold-light) 0 0) top right / 4px 4px no-repeat,
+    linear-gradient(var(--gold-light) 0 0) bottom left / 4px 4px no-repeat,
+    linear-gradient(var(--gold-light) 0 0) bottom right / 4px 4px no-repeat;
+}
+
+/* the years, as an amber pixel badge */
+.spread-span {
+  display: inline-block;
+  margin: 0 0 12px !important;
+  padding: 3px 10px 4px;
+  font: 600 1.05rem var(--display);
+  color: var(--outline);
+  background: var(--amber);
+  box-shadow:
+    0 0 0 2px var(--outline),
+    3px 3px 0 2px rgba(0, 0, 0, 0.4);
+}
+
+/* the chapter story */
+.spread-lede {
+  margin: 0 0 16px !important;
+  font: 400 1rem/1.6 var(--body);
+  color: var(--ink);
+}
+
+/* key facts: a pixel label in gold above each value, on a dashed pixel rule */
+.spread-facts {
+  margin: 0 0 18px;
   padding: 0;
 }
 
-canvas {
-  background: none;
-  border-radius: 0;
-  box-shadow: none;
-}
-
-* {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(147, 160, 196, 0.35) transparent;
-}
-
-:focus-visible {
-  outline: 2px solid var(--amber);
-  outline-offset: 3px;
-}
-
-/* ---- motion: one calm entrance per panel, nothing bouncy ---------------------------------------- */
-
-@keyframes pop {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-}
-
-@keyframes slideup {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-}
-
-@keyframes hintpulse {
-  50% {
-    opacity: 0.5;
-  }
-}
-
-@keyframes blink {
-  50% {
-    opacity: 0.3;
-  }
-}
-
-/* =================================================================================================
-   Start screen
-   ================================================================================================= */
-
-.title {
-  background: radial-gradient(ellipse at 50% 42%, rgba(11, 26, 58, 0.45), rgba(6, 13, 34, 0.9) 72%);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-  gap: clamp(12px, 2.2vh, 22px);
-}
-
-.title::before {
-  display: none;
-}
-
-.title-name {
-  font: 700 clamp(2.8rem, 8vw, 6.2rem) / 0.95 var(--display);
-  letter-spacing: -0.04em;
-  color: var(--text);
-  text-shadow: none;
-  animation: rise 0.9s var(--ease) backwards;
-}
-
-.title-name span {
-  color: var(--text); /* one colour for the whole name: the amber is kept for the route */
-}
-
-.title-role {
-  font: 500 1.05rem var(--display);
-  letter-spacing: 0;
-  text-transform: none;
-  color: var(--amber);
-  text-shadow: none;
-}
-
-.title-about {
-  max-width: 50ch;
-  font: 400 clamp(1.05rem, 1.7vw, 1.22rem) / 1.6 var(--read);
-  color: var(--soft);
-  text-shadow: none;
-}
-
-.title-quick {
-  gap: 0;
-  margin-top: 14px;
-  align-items: stretch;
-}
-
-.title-quick small {
-  margin-bottom: 12px;
-  font: 400 0.92rem var(--read);
-  font-style: italic;
-  color: var(--dim);
-}
-
-/* the four chapters as stops on one route line, not as separate cards */
-.title-quick button {
-  position: relative;
-  width: 200px;
-  gap: 4px;
-  padding: 22px 18px 8px;
-  border: 0;
-  border-top: 1px solid var(--line-2);
-  border-radius: 0;
-  background: none;
-  box-shadow: none;
-  text-align: left;
-  transition: border-color 0.25s;
-  animation: none;
-}
-
-.title-quick button::after {
-  content: "";
-  position: absolute;
-  left: 18px;
-  top: -5px;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--sky);
-  box-shadow: inset 0 0 0 2px var(--amber);
-  transition: background 0.2s;
-}
-
-.title-quick button + button::before {
-  display: none;
-}
-
-.title-quick button:hover,
-.title-quick button:focus-visible {
-  transform: none;
-  background: none;
-  border-top-color: var(--amber);
-  box-shadow: none;
-}
-
-.title-quick button:hover::after,
-.title-quick button:focus-visible::after {
-  background: var(--amber);
-}
-
-.q-num {
-  font: 500 0.82rem var(--display);
-  letter-spacing: 0;
-  color: var(--amber);
-}
-
-.q-name {
-  font: 600 1.3rem / 1.1 var(--display);
-  letter-spacing: -0.02em;
-}
-
-.q-what {
-  font: 400 0.95rem / 1.4 var(--read);
-  color: var(--dim);
-}
-
-.title-hint {
-  font: 500 0.95rem var(--display);
-  letter-spacing: 0;
-  color: var(--soft);
-  text-shadow: none;
-  animation: hintpulse 2.8s ease-in-out infinite 1s;
-}
-
-.title-load {
-  height: 3px;
-  border-radius: 99px;
-  background: var(--line);
-  box-shadow: none;
-  overflow: hidden;
-}
-
-.title-load i {
-  background: var(--amber);
-}
-
-/* =================================================================================================
-   Header and shortcut buttons
-   ================================================================================================= */
-
-header {
-  top: 16px;
-  left: 22px;
-  right: 22px;
-}
-
-h1 {
-  font: 600 1.05rem var(--display);
-  letter-spacing: -0.01em;
-}
-
-h1 span {
-  color: var(--text);
-}
-
-nav {
-  bottom: 18px;
-}
-
-nav button {
-  font: 500 0.85rem var(--display);
-  letter-spacing: 0;
-  text-transform: none;
-  border-radius: 999px;
-  background: rgba(11, 26, 58, 0.7);
-  border: 1px solid var(--line);
-  padding: 7px 16px;
-  transition:
-    border-color 0.2s,
-    color 0.2s;
-}
-
-nav button:hover,
-nav button:focus-visible {
-  border-color: var(--amber);
-  color: var(--text);
-}
-
-/* =================================================================================================
-   Panels
-   ================================================================================================= */
-
-.overlay.floating {
-  background: rgba(6, 13, 34, 0.62);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-}
-
-.dialog.wide[data-panel="cv"],
-.dialog.wide[data-panel="malta"],
-.dialog.wide[data-panel="socials"] {
-  width: min(1240px, 100%);
-}
-
-.dialog.wide .dialog-head {
-  align-items: flex-end;
-  margin-bottom: 14px;
-  padding: 0 4px;
-}
-
-.dialog.wide h2,
-#dlg-title {
-  font: 700 clamp(2.2rem, 4.6vw, 3.4rem) / 1 var(--display);
-  letter-spacing: -0.04em;
-  color: var(--text);
-  text-shadow: none;
-}
-
-.close {
-  gap: 6px;
-  font: 500 0.88rem var(--display);
-  text-transform: none;
-  letter-spacing: 0;
-  color: var(--soft);
-  background: none;
-  border: 1px solid var(--line-2);
-  border-radius: 999px;
-  padding: 7px 16px 7px 12px;
-  transition:
-    color 0.2s,
-    border-color 0.2s;
-}
-
-.close:hover {
-  color: var(--text);
-  border-color: var(--text);
-  background: none;
-  transform: none;
-  box-shadow: none;
-}
-
-.close:hover .pxi {
-  animation: none;
-}
-
-/* =================================================================================================
-   Chapter spread: story on the left, itinerary on the right (Canada, Malta, Tunisia)
-   ================================================================================================= */
-
-.spread {
-  display: grid;
-  grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.6fr);
-  gap: clamp(24px, 4vw, 56px);
-  max-height: calc(100dvh - var(--reserve) - 120px);
-  padding: clamp(22px, 3vw, 36px);
-  border-radius: 22px;
-  background: var(--panel);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--line);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
-  animation: rise 0.55s var(--ease) backwards;
-}
-
-.spread-side,
-.itin,
-.contacts {
-  min-height: 0;
-  max-height: calc(100dvh - var(--reserve) - 120px - 2 * clamp(22px, 3vw, 36px));
-  overflow-y: auto;
-}
-
-.spread-side {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  padding-right: 6px;
-}
-
-.spread-span {
-  margin: 0 !important;
-  font: 600 1rem var(--display);
-  color: var(--amber);
-}
-
-.spread-lede {
-  margin: 0 !important;
-  max-width: 46ch;
-  font: 400 1.16rem / 1.62 var(--read);
-  color: var(--text);
-}
-
-.spread-facts {
-  display: grid;
-  gap: 14px;
-  margin: 4px 0 0;
-  padding-top: 18px;
-  border-top: 1px solid var(--line);
-}
-
 .spread-facts dt {
-  font: 500 0.82rem var(--display);
-  color: var(--dim);
+  margin: 12px 0 2px;
+  padding-top: 10px;
+  font: 600 0.82rem var(--display);
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  background: repeating-linear-gradient(90deg, rgba(232, 201, 138, 0.45) 0 4px, transparent 4px 8px) top / 100% 2px no-repeat;
+}
+
+.spread-facts dt:first-child {
+  margin-top: 0;
 }
 
 .spread-facts dd {
-  margin: 3px 0 0;
-  font: 400 1rem / 1.45 var(--read);
-  color: var(--soft);
+  margin: 0;
+  font: 400 0.95rem/1.45 var(--body);
+  color: var(--ink);
 }
 
+/* Download CV: a chunky gold game button that presses down */
 .spread-cv {
-  align-self: flex-start;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-top: 4px;
-  padding: 10px 18px;
-  border-radius: 999px;
-  font: 600 0.9rem var(--display);
-  color: #1a1203;
-  background: var(--amber);
+  padding: 8px 14px 9px;
+  font: 600 1rem var(--display);
+  color: var(--outline);
   text-decoration: none;
-  transition: background 0.2s;
+  background: var(--gold);
+  border-bottom: 4px solid var(--gold-dark);
+  box-shadow: 0 0 0 3px var(--outline);
+  cursor: var(--hand);
+  /* stays in view at the bottom of the window while the story scrolls */
+  position: sticky;
+  bottom: 0;
+  margin-top: 4px;
 }
 
-.spread-cv:hover {
-  background: #ffc469;
+.spread-cv:hover,
+.spread-cv:focus-visible {
+  background: var(--gold-light);
 }
 
-/* the itinerary: dates on the left of a rail, one dot per stop */
-.itin {
+.spread-cv:active {
+  transform: translateY(3px);
+  border-bottom-width: 1px;
+}
+
+.spread-cv .pxi {
+  color: var(--outline);
+}
+
+/* (Canada and Malta use the card row further down) */
+
+/* ---------------------------------------------------------------- Tunisia: the corkboard on the right */
+
+.tn-board {
+  max-height: var(--spread-h);
+  overflow: auto;
+  padding: 4px 22px 28px;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  min-height: 100%;
+}
+
+.tn-board .sample-note {
+  text-align: center;
+  text-shadow: 2px 2px 0 var(--outline);
+}
+
+/* the corkboard keeps its frame inside the scroll area */
+.tn-board .cork {
+  margin: 18px auto 22px;
+}
+
+/* =================================================================================================
+   Canada and Malta: a row of pixel cards
+   ================================================================================================= */
+
+.dialog.wide[data-panel="cv"],
+.dialog.wide[data-panel="malta"] {
+  width: min(1180px, 100%);
+}
+
+.route {
+  max-height: var(--spread-h);
+  overflow: auto;
+  padding: 4px 10px 10px 4px;
+  text-align: left;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-dark) transparent;
+}
+
+/* years badge and story on the left, the CV button on the right */
+.route-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.route-lead {
+  max-width: 100ch;
+}
+
+.route-span {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 3px 10px 4px;
+  font: 600 1rem var(--display);
+  color: var(--outline);
+  background: var(--amber);
+  box-shadow:
+    0 0 0 2px var(--outline),
+    3px 3px 0 2px rgba(0, 0, 0, 0.4);
+}
+
+.route .route-intro {
+  max-width: none;
+  margin: 0 !important;
+  font: 400 1rem/1.55 var(--body);
+  color: var(--ink);
+  text-shadow: 2px 2px 0 var(--outline);
+}
+
+/* Download CV: a chunky gold game button that presses down */
+.route-cv {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 9px;
+  font: 600 1rem var(--display);
+  color: var(--outline);
+  text-decoration: none;
+  background: var(--gold);
+  border-bottom: 4px solid var(--gold-dark);
+  box-shadow: 0 0 0 3px var(--outline), 4px 5px 0 3px rgba(0, 0, 0, 0.4);
+  cursor: var(--hand);
+}
+
+.route-cv:hover,
+.route-cv:focus-visible {
+  background: var(--gold-light);
+}
+
+.route-cv:active {
+  transform: translateY(3px);
+  border-bottom-width: 1px;
+}
+
+.route-cv .pxi {
+  color: var(--outline);
+}
+
+/* the cards side by side, with a dotted flight path running behind the logo tiles */
+.route-stops {
+  position: relative;
   list-style: none;
   margin: 0;
-  padding: 4px 8px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 34px 22px;
 }
 
+.route-stops::before {
+  content: "";
+  position: absolute;
+  top: 26px;
+  left: 30px;
+  right: 30px;
+  height: 4px;
+  background: repeating-linear-gradient(90deg, var(--gold-dark) 0 6px, transparent 6px 12px);
+}
+
+/* Malta has two stops: keep the cards a sensible width */
+.dialog.wide[data-panel="malta"] .route-stops {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 420px));
+  width: fit-content;
+  max-width: 100%;
+}
+
+/* one stop: a logo tile on the path, the card under it; each slaps in like a sticker, one after another */
 .stop {
   position: relative;
-  display: grid;
-  grid-template-columns: 84px minmax(0, 1fr);
-  gap: 0 30px;
-  padding-bottom: 30px;
-  outline: none;
-  animation: pop 0.5s var(--ease) backwards;
-  animation-delay: calc(0.15s + var(--i) * 0.07s);
-}
-
-.stop::before {
-  content: "";
-  position: absolute;
-  left: 99px;
-  top: 10px;
-  bottom: -10px;
-  width: 1px;
-  background: var(--line-2);
-}
-
-.stop:last-child::before {
-  display: none;
-}
-
-.stop::after {
-  content: "";
-  position: absolute;
-  left: 95px;
-  top: 5px;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 4px rgba(6, 13, 34, 0.9);
-}
-
-.stop:focus-visible .stop-name {
-  text-decoration: underline;
-  text-decoration-color: var(--amber);
-  text-underline-offset: 4px;
-}
-
-.stop-when {
-  display: grid;
-  gap: 2px;
-  align-content: start;
-  text-align: right;
-  font: 500 0.88rem / 1.3 var(--display);
-  color: var(--soft);
-}
-
-.stop-to {
-  color: var(--dim);
-}
-
-.stop-head {
   display: flex;
-  align-items: center;
-  gap: 14px;
+  flex-direction: column;
+  outline: none;
+  animation: pop 0.5s backwards;
+  animation-delay: calc(0.1s + var(--i, 0) * 0.1s);
 }
 
-.stop-logo {
+/* the logo on a white pixel tile, sitting on the top edge of the card */
+.stamp {
   position: relative;
-  flex: none;
+  z-index: 2;
+  width: 56px;
+  height: 56px;
+  margin: 0 0 -24px 16px;
   display: grid;
   place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
   background: #fff;
-  overflow: hidden;
+  box-shadow:
+    0 0 0 3px var(--outline),
+    0 0 0 6px var(--accent),
+    0 0 0 9px var(--outline),
+    5px 6px 0 9px rgba(0, 0, 0, 0.4);
+  transition: transform 0.15s steps(3);
 }
 
-.stop-logo img {
-  width: 34px;
-  height: 34px;
+.stamp img {
+  position: absolute;
+  inset: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
   object-fit: contain;
 }
 
-.stop-ini {
-  font: 700 0.95rem var(--display);
-  color: #0b1a3a;
+.stamp-ini {
+  font: 700 1.1rem var(--display);
+  color: var(--outline);
 }
 
-.stop-logo.has-logo .stop-ini {
-  display: none;
+.stamp.has-logo .stamp-ini {
+  visibility: hidden;
 }
 
-.stop-who {
-  display: grid;
-  gap: 1px;
-  min-width: 0;
-}
-
-.stop-name {
-  margin: 0;
-  font: 600 1.25rem / 1.2 var(--display);
-  letter-spacing: -0.02em;
-  color: var(--text);
-}
-
-.stop-role,
-.stop-where {
-  margin: 0 !important;
-  font: 500 0.92rem / 1.35 var(--display);
-  color: var(--soft);
-}
-
-.stop-where {
-  font-weight: 400;
-  color: var(--dim);
-}
-
-.stop-points {
-  margin: 14px 0 0;
-  padding-left: 1.1em;
-  display: grid;
-  gap: 6px;
-  font: 400 1.02rem / 1.55 var(--read);
-  color: var(--soft);
-}
-
-.stop-points li::marker {
-  color: var(--accent);
-}
-
-.stop-story {
-  margin: 12px 0 0 !important;
-  font: 400 1.02rem / 1.55 var(--read);
-  color: var(--soft);
-}
-
-.stop-foot {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 18px;
-  margin-top: 12px;
-  font: 400 0.86rem var(--display);
-  color: var(--dim);
-}
-
-.stop-link {
-  color: var(--soft);
-  text-decoration: underline;
-  text-decoration-color: var(--line-2);
-  text-underline-offset: 3px;
-}
-
-.stop-link:hover {
-  color: var(--text);
-  text-decoration-color: var(--amber);
-}
-
-/* ---- Tunisia: contacts in the right column ------------------------------------------------------ */
-
-.contacts {
+/* the card: a pixel window with a stripe of the organization's colour along the top */
+.ticket {
+  position: relative;
+  flex: 1;
   display: flex;
   flex-direction: column;
+  padding: 36px 16px 14px;
+  background: linear-gradient(var(--win-top), var(--win-bottom));
+  border: 3px solid var(--gold);
+  box-shadow:
+    0 0 0 3px var(--outline),
+    6px 7px 0 3px rgba(0, 0, 0, 0.45);
+  transition: transform 0.12s steps(2), box-shadow 0.12s steps(2);
 }
 
-.contacts-head {
-  margin: 0 0 6px;
-  font: 600 1.25rem var(--display);
-  letter-spacing: -0.02em;
+.ticket::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: var(--accent);
+  box-shadow: 0 2px 0 var(--outline);
 }
 
-.contact {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 18px 2px;
-  border-bottom: 1px solid var(--line);
-  color: var(--text);
-  text-decoration: none;
+/* hover or keyboard focus lifts the card and bumps the logo, like a selected menu item */
+.stop:hover .ticket,
+.stop:focus-visible .ticket {
+  transform: translate(-3px, -3px);
+  box-shadow:
+    0 0 0 3px var(--outline),
+    9px 10px 0 3px rgba(0, 0, 0, 0.45);
 }
 
-.contact-ic {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: rgba(242, 176, 74, 0.12);
-  color: var(--amber);
+.stop:hover .stamp,
+.stop:focus-visible .stamp {
+  transform: translateY(-4px) rotate(-4deg);
 }
 
-.contact-tx {
-  display: grid;
-  gap: 2px;
-  min-width: 0;
+.stop:focus-visible .ticket {
+  border-color: var(--gold-light);
 }
 
-.contact-label {
-  font: 600 1.1rem var(--display);
-  transition: color 0.2s;
+.ticket .ticket-when {
+  display: inline;
+  margin: 0 8px 0 0 !important;
+  font: 600 0.92rem var(--display);
+  color: var(--accent);
+  text-shadow: 2px 2px 0 var(--outline);
 }
 
-.contact-handle {
-  font: 400 1rem var(--read);
-  color: var(--dim);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.contact:hover .contact-label,
-.contact:focus-visible .contact-label {
-  color: var(--amber);
-}
-
-.mailmenu {
-  border-radius: 14px;
-  background: var(--deep);
-  border: 1px solid var(--line-2);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-  font-family: var(--display);
-  overflow: hidden;
-}
-
-/* =================================================================================================
-   USA: projects on the same night-panel surface
-   ================================================================================================= */
-
-.stand,
-.sidescreen,
-.monitor::after,
-.screen::before,
-.screen .sample-note::before,
-.pcta .pxi {
-  display: none;
-}
-
-.monitor {
-  padding: 10px;
-  border-radius: 22px;
-  background: var(--panel);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--line);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
-  animation: rise 0.55s var(--ease) backwards;
-}
-
-.screen,
-.screen:hover:not(:has(.pcard:hover, .pscroll:hover)) {
-  background: transparent;
-  box-shadow: none;
-  padding: 14px 10px 10px;
-}
-
-.screen .sample-note {
-  margin: 0 8px 14px !important;
-  font: 400 1rem var(--read);
-  font-style: italic;
-  color: var(--dim);
-  text-shadow: none;
-}
-
-.pzoom {
+.ticket .ticket-where {
+  display: inline;
+  margin: 0 !important;
   font: 500 0.8rem var(--display);
-  letter-spacing: 0;
-  text-transform: none;
-  color: var(--soft);
-  background: none;
-  border: 1px solid var(--line-2);
-  border-radius: 999px;
-  box-shadow: none;
+  color: var(--muted);
 }
 
-.pcard {
-  border-radius: 16px;
-  overflow: hidden;
-  background: rgba(6, 13, 34, 0.55);
-  border: 1px solid var(--line);
-  box-shadow: none;
-  transition: border-color 0.25s;
-  animation: pop 0.5s var(--ease) backwards;
-}
-
-.pcard:hover,
-.pcard:focus-visible {
-  transform: none;
-  border-color: var(--line-2);
-  box-shadow: none;
-  outline: none;
-}
-
-.pthumb {
-  border: 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.pbadge {
-  font: 600 0.75rem var(--display);
-  letter-spacing: 0;
-  text-transform: none;
-  color: #1a1203;
-  background: var(--amber);
-  border: 0;
-  border-radius: 999px;
-  box-shadow: none;
-  padding: 3px 10px;
-}
-
-.ptitle {
-  font: 600 1.2rem var(--display);
-  letter-spacing: -0.02em;
-  color: var(--text);
-}
-
-.pdesc {
-  font: 400 1rem / 1.5 var(--read);
-  color: var(--soft);
-}
-
-.ptags span,
-.pstack span {
-  font: 400 0.8rem var(--display);
-  padding: 2px 9px;
-  border-radius: 999px;
-  background: none;
-  border: 1px solid var(--line-2);
-  color: var(--soft);
-}
-
-.pfoot {
-  font: 400 0.86rem var(--display);
-  color: var(--dim);
-  border-top: 1px solid var(--line);
-}
-
-.pfoot > span:first-child {
-  color: var(--soft);
-}
-
-.pcta {
-  font: 600 0.84rem var(--display);
-  letter-spacing: 0;
-  text-transform: none;
-  color: #1a1203;
-  background: var(--amber);
-  border: 0;
-  border-radius: 999px;
-  box-shadow: none;
-  padding: 6px 14px;
-}
-
-.pcta:hover {
-  background: #ffc469;
-  transform: none;
-  box-shadow: none;
-}
-
-/* project details */
-.pback {
-  background: rgba(6, 13, 34, 0.65);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-}
-
-.pmodal {
-  border-radius: 24px;
-  overflow: hidden;
-  background: var(--deep);
-  border: 1px solid var(--line-2);
-  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
-  transition: transform 0.35s var(--ease);
-}
-
-.pclose {
-  border-radius: 999px;
-  background: none;
-  border: 1px solid var(--line-2);
-}
-
-.pmedia {
-  background: rgba(6, 13, 34, 0.6);
-  border-right: 1px solid var(--line);
-}
-
-.phero {
-  border: 1px solid var(--line);
-  border-radius: 14px;
-}
-
-.pname {
-  font: 700 2rem / 1.05 var(--display);
-  letter-spacing: -0.03em;
-  color: var(--text);
-}
-
-.prole {
-  font: 600 0.95rem var(--display);
+.ticket-name {
+  margin: 8px 0 0;
+  font: 600 1.25rem/1.15 var(--display);
   color: var(--amber);
+  text-shadow: 2px 2px 0 var(--outline);
 }
 
-.plead,
-.psum {
-  font: 400 1.05rem / 1.6 var(--read);
-  color: var(--soft);
+.ticket-role {
+  margin: 4px 0 0 !important;
+  font: 700 0.9rem/1.35 var(--body);
+  color: var(--ink);
 }
 
-.pinfo h3 {
-  font: 500 0.85rem var(--display);
-  letter-spacing: 0;
-  text-transform: none;
-  color: var(--dim);
+.ticket-story {
+  margin: 8px 0 12px !important;
+  font: 400 0.9rem/1.5 var(--body);
+  color: #d9cfe6;
 }
 
-.phigh {
-  border-left: 2px solid var(--amber);
-  border-radius: 0 12px 12px 0;
-  background: rgba(242, 176, 74, 0.07);
+/* tool chips and the website, pinned to the bottom of the card */
+.ticket-foot {
+  margin-top: auto;
 }
 
-.phigh p {
-  font: 400 1.05rem / 1.5 var(--read);
+.ticket-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
 }
 
-.pbtn {
-  border-radius: 999px;
-  border: 1px solid var(--line-2);
-  background: none;
-  font: 500 0.9rem var(--display);
-  text-transform: none;
-  letter-spacing: 0;
+.ticket-tags span {
+  padding: 2px 7px 3px;
+  font: 500 0.8rem var(--display);
+  color: var(--ink);
+  background: var(--outline);
+  border: 2px solid var(--accent);
 }
 
-.pbtn.main {
-  color: #1a1203;
-  background: var(--amber);
-  border-color: transparent;
+.ticket-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding-top: 10px;
+  font: 600 0.85rem var(--display);
+  color: #7ff3ff;
+  text-decoration: none;
+  background: repeating-linear-gradient(90deg, rgba(232, 201, 138, 0.35) 0 4px, transparent 4px 8px) top / 100% 2px no-repeat;
+  cursor: var(--hand);
 }
 
-.pbtn.main:hover,
-.pbtn.main:focus-visible {
-  background: #ffc469;
+.ticket-link:hover,
+.ticket-link:focus-visible {
+  color: var(--gold-light);
 }
 
-/* =================================================================================================
-   Dialogue banner: a quiet speech line under the pixel character
-   ================================================================================================= */
-
-.banner-inner {
-  animation: slideup 0.4s var(--ease);
+/* key facts as pixel plaques under the cards */
+.route-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 30px 0 4px;
 }
 
-.banner-box {
-  min-height: 88px;
-  padding: 24px 26px 18px;
-  border-radius: 18px;
-  background: rgba(11, 26, 58, 0.9);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--line);
-  outline: 0;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+.route-facts > div {
+  padding: 10px 12px;
+  background: rgba(18, 14, 26, 0.85);
+  border: 2px dashed var(--gold-dark);
 }
 
-.banner-name {
-  top: -12px;
+.route-facts dt {
   font: 600 0.82rem var(--display);
-  letter-spacing: 0;
-  text-transform: none;
-  color: #1a1203;
-  background: var(--amber);
-  border: 0;
-  outline: 0;
-  border-radius: 999px;
-  padding: 3px 12px;
+  color: var(--gold);
 }
 
-.banner-text {
-  font: 400 1.12rem / 1.55 var(--read);
-  color: var(--text);
-}
-
-.banner-next {
-  animation: blink 1.6s ease-in-out infinite;
-}
-
-.banner-portrait {
-  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.55));
-}
-
-/* while a chapter is open, the portrait tucks inside a compact banner so the chapter gets the height */
-.overlay.floating {
-  padding-bottom: calc(var(--reserve) + env(safe-area-inset-bottom, 0px));
-}
-
-body.floating .banner-box {
-  min-height: 0;
-  padding: 16px 22px 14px 92px;
-}
-
-body.floating .banner-portrait {
-  left: 18px;
-  bottom: 10px;
-  width: 58px;
-}
-
-body.floating .banner-name {
-  left: 92px;
-}
-
-body.floating .banner-text {
-  font-size: 1.02rem;
-  min-height: 0;
+.route-facts dd {
+  margin: 3px 0 0;
+  font: 400 0.92rem/1.45 var(--body);
+  color: var(--ink);
 }
 
 /* =================================================================================================
-   Smaller screens
+   Scrollbars inside the chapter panels: gold pixel thumbs
    ================================================================================================= */
 
-@media (max-width: 860px) {
+.spread-side,
+.tn-board {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-dark) transparent;
+}
+
+/* =================================================================================================
+   Phones and narrow windows: one column that scrolls as a whole
+   ================================================================================================= */
+
+@media (max-width: 760px) {
   .spread {
-    grid-template-columns: 1fr;
-    max-height: calc(100dvh - var(--reserve) - 100px);
-    overflow-y: auto;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+    max-height: var(--spread-h);
+    overflow: auto;
+    padding: 4px 8px 12px 4px;
   }
 
   .spread-side,
-  .itin,
-  .contacts {
+  .tn-board {
     max-height: none;
     overflow: visible;
   }
-}
 
-@media (max-width: 760px) {
-  .title-quick button {
-    width: 50%;
-    padding: 18px 12px 10px;
+  .route-top {
+    flex-direction: column;
+    gap: 14px;
   }
 
-  .dialog.wide h2,
-  #dlg-title {
-    font-size: 2rem;
-  }
-
-  .stop {
-    grid-template-columns: 1fr;
-    padding-left: 22px;
-  }
-
-  .stop::before {
-    left: 4px;
-  }
-
-  .stop::after {
-    left: 0;
-  }
-
-  .stop-when {
-    grid-auto-flow: column;
-    justify-content: start;
-    gap: 6px;
-    margin-bottom: 8px;
-    text-align: left;
-  }
-
-  .stop-to::before {
-    content: "– ";
+  .route-stops::before {
+    display: none;
   }
 }
+
+@media (max-width: 520px) {
+  :root {
+    --spread-h: calc(100dvh - 176px - var(--ph) * 0.6 - 72px);
+  }
+
+  .spread-side {
+    padding: 16px 14px 14px;
+  }
+
+  .ticket {
+    padding: 36px 12px 12px;
+  }
+}
+
+/* =================================================================================================
+   Reduced motion: no star blink, no sticker pops
+   ================================================================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .spread,
-  .stop,
-  .pcard,
-  .monitor,
-  .banner-inner,
-  .title-name {
+  body::after,
+  .spread-side,
+  .stop {
     animation: none;
+  }
+
+  .ticket,
+  .stamp {
+    transition: none;
   }
 }

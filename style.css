@@ -15,9 +15,8 @@
   --amber: #ffb347; /* monitor glow, accent */
   --panel: #241d33;
   --muted: #b9aecb;
-  --display: "Bricolage Grotesque", system-ui, sans-serif;
-  --body: "Bricolage Grotesque", system-ui, sans-serif;
-  --read: "Newsreader", Georgia, serif; /* story text */
+  --display: "Pixelify Sans", "Courier New", monospace;
+  --body: "Atkinson Hyperlegible", system-ui, sans-serif;
   --gold: #e8c98a; /* frames, buttons and scrollbar thumbs */
   --gold-light: #ffe9b8;
   --gold-dark: #b8935a;

@@ -62,18 +62,28 @@ zone({
 
   // Builds the Contact panel: pixel icons pinned on the corkboard.
   build() {
-    // The contact content.
-    const K = CONTENT.contact;
+    // The Contact content, a fragment to fill, and the hint line above the board.
+    const K = CONTENT.contact,
+      f = el("div", "tn-board"),
+      note = el("p", "sample-note");
 
-    // The right column: a heading, then one row per way to reach me.
-    const list = el("div", "contacts");
-    if (tr(K.reach)) list.append(el("h3", "contacts-head", tr(K.reach)));
+    // The story, facts and CV sit in the left column (chapterSpread); the corkboard fills the right.
+    if (K.placeholder) note.append(el("span", "sample", ui("placeholder.tag")), " ");
+    note.append(ui("contact.pick"));
+    f.append(note);
+    // The corkboard, the icon grid pinned on it and the number of links.
+    const cork = el("div", "cork"),
+      grid = el("div", "socials"),
+      n = K.links.length;
 
-    // One row per contact link: icon, name and the address itself.
-    K.links.forEach((l) => {
-      const url = safeUrl(l.url),
-        mail = /^mailto:/i.test(url),
-        a = el("a", "contact");
+    // =============================================================================================
+    // K.links.forEach(...)
+    // =============================================================================================
+
+    // One pinned icon per contact link.
+    K.links.forEach((l, i) => {
+      const a = el("a", "sicon");
+      const url = safeUrl(l.url);
       a.href = url || "#";
       // Opens outside links in a new tab.
       if (/^https?:/i.test(url)) {
@@ -81,20 +91,30 @@ zone({
         a.rel = "noopener";
       }
 
-      // An email row opens a small menu to write from the browser (Gmail, Outlook) or a mail app, or copy it.
-      if (mail) a.addEventListener("click", (e) => (e.preventDefault(), mailMenu(a, url)));
-      const handle = url.replace(/^mailto:/i, "").replace(/^https?:\/\/(www\.)?/i, "").replace(/\/$/, ""),
-        ic = el("span", "contact-ic"),
-        tx = el("span", "contact-tx");
-      ic.append(pxi(mail ? "message" : "link", 20));
-      tx.append(el("span", "contact-label", tr(l.label)), el("span", "contact-handle", handle));
-      a.append(ic, tx);
-      if (tr(l.say)) a.dataset.say = tr(l.say); // the hero's line while this row is hovered
-      list.append(a);
+      // An email pin opens a small menu to write from the browser (Gmail, Outlook) or a mail app, or copy it.
+      if (/^mailto:/i.test(url)) a.addEventListener("click", (e) => (e.preventDefault(), mailMenu(a, url)));
+      if (n % 2 === 1 && i === n - 1 && n > 1) a.classList.add("mail"); // an odd last icon sits centered underneath
+      // Logo badge styled per brand and the 24px canvas the logo is drawn on.
+      const lg = el("span", "slogo " + ({ linkedin: "li", github: "gh", gmail: "gm" }[l.icon] || "gm")),
+        cv = el("canvas");
+
+      cv.width = 24;
+      cv.height = 24;
+      cv.setAttribute("aria-hidden", "true");
+      // Uses a built-in logo, the link's own image, or the generic link pin.
+      if (LOGOS[l.icon]) cv.dataset.logo = l.icon;
+      else if (l.iconImage) cv.dataset.img = l.iconImage;
+      else cv.dataset.logo = "link";
+
+      lg.append(cv);
+      a.append(lg, el("span", "slabel", tr(l.label)));
+      if (tr(l.say)) a.dataset.say = tr(l.say); // the hero's line while this pin is hovered
+      grid.append(a);
     });
 
-    // Story, facts and contacts laid out as a chapter spread, like Canada and Malta.
-    return chapterSpread(K, list);
+    cork.append(grid);
+    f.append(cork);
+    return chapterSpread(K, f);
   },
 
   // Puts away the email menu along with the panel.
@@ -103,7 +123,14 @@ zone({
   },
 
   // Draws the pinned logos once the panel is up, each with a little random tilt.
-  opened() {},
+  opened() {
+    document.querySelectorAll("#dlg-body canvas[data-logo], #dlg-body canvas[data-img]").forEach(drawLogo);
+    // Gives each contact logo a small random tilt, like a pinned note.
+    document
+      .querySelectorAll("#dlg-body .slogo")
+      // a little random tilt each time
+      .forEach((el) => el.style.setProperty("--tilt", (Math.random() * 14 - 7).toFixed(1) + "deg"));
+  },
 });
 
 // =================================================================================================
