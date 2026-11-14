@@ -5,7 +5,7 @@
 A pixel-art globe instead of a plain resume page. I've lived and worked in a few countries, so the site follows that
 path: drag the globe, walk the character to a country, and that chapter of the story opens.
 
-![The globe](docs/preview.png)
+![The globe](docs/globe.png)
 
 | Country | Chapter |
 | ------- | ------- |
@@ -14,8 +14,18 @@ path: drag the globe, walk the character to a country, and that chapter of the s
 | Malta   | B.S. Software Engineering at the American University of Malta, and my capstone |
 | USA     | Pulpoid and the AI systems I built for clients |
 
-![Canada chapter](docs/canada.png)
-![USA projects](docs/usa.png)
+## Screenshots
+
+| | |
+| --- | --- |
+| ![Start screen](docs/title.png) | ![Tunisia: story and contact corkboard](docs/tunisia.png) |
+| **Start screen:** what the site is and the four chapters | **Tunisia:** where it started, and how to reach me |
+| ![Canada: college, internships and TD](docs/canada.png) | ![Malta: degree and capstone](docs/malta.png) |
+| **Canada:** college, two internships, first job | **Malta:** software engineering degree and capstone |
+
+![USA: projects on the pixel monitor](docs/usa.png)
+
+**USA:** the projects, on a pixel computer screen.
 
 ## How it works
 
