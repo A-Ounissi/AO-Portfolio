@@ -251,6 +251,7 @@ const FLAG_W = 22,
 const LANGS = [
   { code: "en", name: "English", paint: flagUk },
   { code: "fr", name: "Français", paint: flagFr },
+  { code: "de", name: "Deutsch", paint: flagDe },
 ];
 
 // Union Jack: blue field, white and red diagonals, white-edged red cross.
